@@ -8,6 +8,11 @@ public class DevWindowResize : MonoBehaviour {
     int lastHeight = Screen.height;
     bool isReseting = false;
 
+    private void Start()
+    {
+        Screen.SetResolution(750, 1334, false);
+    }
+
     void LateUpdate()
     {
         if (Camera.main.aspect != 0.375f && !isReseting)
@@ -24,7 +29,7 @@ public class DevWindowResize : MonoBehaviour {
     IEnumerator SetResolution()
     {
         isReseting = true;
-        Screen.fullScreen = !Screen.fullScreen;
+        Screen.fullScreen = false;
         Screen.SetResolution(Screen.height * 9/16, Screen.height, false);
         yield return new WaitForSeconds(0.5F);
         isReseting = false;

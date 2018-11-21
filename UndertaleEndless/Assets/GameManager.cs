@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour {
     public bool isDead;
     public float bulletAmount = 0;
     public TextMeshProUGUI Score;
-    public float score;
+    public static float score;
 
     void Start()
     {
