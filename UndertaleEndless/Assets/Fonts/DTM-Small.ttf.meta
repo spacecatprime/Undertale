@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 4f18394de25fc9c4eb30dd9a2ed42778
+guid: 63005d872e9e4bc4793f961212b6d9f1
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -8,12 +8,12 @@ TrueTypeFontImporter:
   characterSpacing: 0
   characterPadding: 1
   includeFontData: 1
-  fontName: Determination Mono
+  fontName: Undertale Small Font
   fontNames:
-  - Determination Mono
+  - Determination Small
   fallbackFontReferences: []
   customCharacters: 
-  fontRenderingMode: 0
+  fontRenderingMode: 2
   ascentCalculationMode: 1
   useLegacyBoundsCalculation: 0
   shouldRoundAdvanceValue: 1
