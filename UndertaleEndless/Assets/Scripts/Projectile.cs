@@ -9,27 +9,34 @@ public enum Location
 
 public enum MovementType
 {
-    Straight, FollowPlayer, Magnet, Random
+    Straight, DirectPlayer, Magnet, Random
+}
+
+public enum ProjectileType
+{
+    Regular, BlueNoMove, OrangeYesMove, Heal
 }
 
 
 [CreateAssetMenu(fileName = "New Projectile", menuName = "Projectile")]
 public class Projectile : ScriptableObject {
 
-    public Color SpriteTint = new Color(100f, 100f, 100f);
+
+    public ProjectileType projectileType;
+    public Location spawnLocation;
+    public MovementType ProjectileMovementType;
+
+    public Color SpriteTint = new Color(1.0f, 1.0f, 1.0f);
 
     public AnimationCurve SpawnFrequency;
 
     public Sprite image;
 
-    public Location spawnLocation;
-    public MovementType ProjectileMovementType;
-
     public AudioClip spawnSound;
     public AudioClip flightSound;
 
     public float speed;
-    public float rotationSpeed;
+    public float rotationModifier;
 
     public float damage;
     public bool destroyOnTouch;

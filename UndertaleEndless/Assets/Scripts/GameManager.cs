@@ -7,8 +7,14 @@ using TMPro;
 
 public class GameManager : MonoBehaviour {
 
+    public GameObject player;
+
     public bool isDead;
     private float maxHealth;
+
+    public static int healthCondition = 0; //HEAL: -1, NONE: 0, DAMAGE: 1
+
+    public static bool isInvincible;
 
     public TextMeshProUGUI Score;
     public TextMeshProUGUI Health;
@@ -21,6 +27,10 @@ public class GameManager : MonoBehaviour {
 
     void Start()
     {
+        level = PersistentData.Level;
+
+        player = GameObject.Find("Player");
+
         maxHealth = 20 + (level - 1) * 4;
         healthBar.maxValue = maxHealth;
         score = 0;
@@ -46,12 +56,15 @@ public class GameManager : MonoBehaviour {
         if (health > maxHealth)
             health = maxHealth;
 
-        if (isDead == true)
+        //DO ALL THE PERSISTENT DATA HERE
+        PersistentData.LastDeathLocation = player.transform.position;
+        PersistentData.Experience = Mathf.RoundToInt(score);
+
+        if (isDead)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            SceneManager.LoadScene("DeathScreen");
         }
 
     }
-
 
 }

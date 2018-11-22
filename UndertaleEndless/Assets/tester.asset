@@ -11,13 +11,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9079cb58a4ae48d4abd03fd6a2d1bbd, type: 3}
   m_Name: tester
   m_EditorClassIdentifier: 
-  SpriteTint: {r: 1, g: 1, b: 1, a: 1}
+  projectileType: 1
+  spawnLocation: 1
+  ProjectileMovementType: 1
+  SpriteTint: {r: 0, g: 1, b: 1, a: 1}
   SpawnFrequency:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.45951843
+      value: 0.46281433
       inSlope: 0
       outSlope: 0
       tangentMode: 34
@@ -26,7 +29,7 @@ MonoBehaviour:
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
-      value: 0.45951843
+      value: 0.46281433
       inSlope: 0
       outSlope: 0
       tangentMode: 34
@@ -36,12 +39,10 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  image: {fileID: 21300000, guid: ad9e732cc2b7743f689986621d8a0e8e, type: 3}
-  spawnLocation: 4
-  ProjectileMovementType: 1
+  image: {fileID: 21300000, guid: a6e43f9c787501040aecd2f833cb4843, type: 3}
   spawnSound: {fileID: 0}
   flightSound: {fileID: 0}
-  speed: 5
-  rotationSpeed: 0
+  speed: 2
+  rotationModifier: -180
   damage: 1
   destroyOnTouch: 0

@@ -11,13 +11,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9079cb58a4ae48d4abd03fd6a2d1bbd, type: 3}
   m_Name: TestHealing
   m_EditorClassIdentifier: 
+  projectileType: 3
+  spawnLocation: 0
+  ProjectileMovementType: 2
   SpriteTint: {r: 0, g: 1, b: 0, a: 1}
   SpawnFrequency:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 4.8967667
+      value: 2.9969254
       inSlope: 0
       outSlope: 0
       tangentMode: 34
@@ -26,7 +29,7 @@ MonoBehaviour:
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
-      value: 4.8967667
+      value: 2.9969254
       inSlope: 0
       outSlope: 0
       tangentMode: 34
@@ -37,11 +40,9 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   image: {fileID: 21300000, guid: 75dc395145bb14f2bbb0419ddf82fc18, type: 3}
-  spawnLocation: 0
-  ProjectileMovementType: 2
   spawnSound: {fileID: 0}
   flightSound: {fileID: 0}
-  speed: 0.25
-  rotationSpeed: 0
+  speed: 1
+  rotationModifier: 90
   damage: -5
   destroyOnTouch: 1

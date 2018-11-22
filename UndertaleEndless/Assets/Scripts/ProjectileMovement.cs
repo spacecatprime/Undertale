@@ -7,7 +7,11 @@ public class ProjectileMovement : MonoBehaviour {
     public List<Projectile> projectilePropertiesList;
     public Projectile projectileProperties;
 
+    public GameObject gameManager;
+
     public GameObject player;
+
+    public float damage;
 
     public float x;
     public float y;
@@ -18,17 +22,22 @@ public class ProjectileMovement : MonoBehaviour {
 
     public string movementType;
     public Vector3 movementDir;
-    
+    public Vector3 vectorToTarget;
 
+    public AudioClip damaged;
+    public AudioClip healed;
+    public AudioSource audioSource;
 
     // Use this for initialization
     void Start () {
+        gameManager = GameObject.Find("GameManager");
+        audioSource = gameManager.GetComponent<AudioSource>();
 
         Class = Mathf.RoundToInt(this.transform.localScale.z);
 
         projectileProperties = ProjectileManager.staticProjectileList[Class];
     
-
+        //Variables
         var instanceSprite = this.gameObject.GetComponent<SpriteRenderer>();
         instanceSprite.sprite = ProjectileManager.staticProjectileList[Class].image;                   //Assign Sprite
         this.gameObject.AddComponent<PolygonCollider2D>();                                             //Add Collider with sprite collision
@@ -43,32 +52,63 @@ public class ProjectileMovement : MonoBehaviour {
 
         getMovement();
     }
-	
-	// Update is called once per frame
-	void Update () {
-        Move();
 
+    public enum FacingDirection //Facing2D
+    {
+        UP = 270,
+        DOWN = 90,
+        LEFT = 180,
+        RIGHT = 0
+    }
+
+    public static Quaternion FaceObject(Vector2 startingPosition, Vector2 targetPosition, FacingDirection facing) //Facing2D
+    {
+        Vector2 direction = targetPosition - startingPosition;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        angle -= (float)facing;
+        return Quaternion.AngleAxis(angle, Vector3.forward);
+    }
+
+    // Update is called once per frame
+    void Update () {
+
+
+
+        if(GameManager.isInvincible)
+        {
+            damage = 0;
+        }
+        else
+        {
+            damage = projectileProperties.damage;
+        }
+
+        //Destroy if out of bounds
         if (this.gameObject.transform.position.x > 10 || this.gameObject.transform.position.x < -10 || this.gameObject.transform.position.y > 10 || this.gameObject.transform.position.x < -10)
         {
             Destroy(this.gameObject);
         }
 
-        if(watchPlayer)
+        //Continually Rotate Towards Player and move
+        if(watchPlayer && movementType == "Magnet")
         {
-            movementDir = player.transform.position - this.gameObject.transform.position;
-            var dir = movementDir - transform.position;
-            var angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.AngleAxis(angle - 90.0f, Vector3.forward);
+            movementDir = player.transform.position - transform.position;
+            var tempFacing = ProjectileMovement.FaceObject(transform.position, player.transform.position, FacingDirection.UP + Mathf.RoundToInt(projectileProperties.rotationModifier));
+            transform.rotation = tempFacing;
         }
 
-    }
-
-    public void rotate(bool singleTime)
-    {
-        if(singleTime)
+        //Set rotation to player and then move
+        else if(watchPlayer && movementType == "DirectPlayer")
+        {
+            movementDir = player.transform.position - transform.position;
+            var tempFacing = ProjectileMovement.FaceObject(transform.position, player.transform.position, FacingDirection.UP + Mathf.RoundToInt(projectileProperties.rotationModifier));
+            transform.rotation = tempFacing;
             watchPlayer = false;
-        else
-            watchPlayer = true;
+
+        }
+
+        Move();
+
     }
 
 
@@ -76,9 +116,23 @@ public class ProjectileMovement : MonoBehaviour {
     {
         if(other.tag == "Player")
         {
-            GameManager.health -= projectileProperties.damage;
-
-            if(projectileProperties.destroyOnTouch)
+            if (damage > 0 && !GameManager.isInvincible)
+            {
+                //Play Damage
+                GameManager.isInvincible = true;
+                GameManager.health -= damage;
+                audioSource.clip = damaged;
+                audioSource.Play();
+            }
+            if (damage < 0)
+            {
+                //Play Heal
+                GameManager.health -= damage;
+                audioSource.clip = healed;
+                audioSource.Play();
+            }
+                        //Destroy if on touch and you can hit player                         Destroy if healing item anyway if player is invincible
+            if(projectileProperties.destroyOnTouch && !GameManager.isInvincible || projectileProperties.destroyOnTouch && GameManager.isInvincible && damage < 0)
             {
                 Destroy(this.gameObject);
             }
@@ -91,13 +145,13 @@ public class ProjectileMovement : MonoBehaviour {
         {
             movementDir = this.gameObject.transform.up;
         }
-        if (movementType == "FollowPlayer")
+        if (movementType == "DirectPlayer")
         {
-            rotate(true);
+            watchPlayer = true;
         }
         if (movementType == "Magnet")
         {
-            rotate(false);
+            watchPlayer = true;
         }
         if (movementType == "Random")
         {
@@ -109,11 +163,15 @@ public class ProjectileMovement : MonoBehaviour {
     {
         if (movementType == "Straight")
         {
-            this.gameObject.transform.position += movementDir * speed * Time.deltaTime;
+            transform.position += movementDir * speed * Time.deltaTime;
         }
-        if(movementType == "FollowPlayer")
+        if(movementType == "DirectPlayer")
         {
-            this.gameObject.transform.position += movementDir * speed * Time.deltaTime;
+            transform.position += movementDir * speed * Time.deltaTime;
+        }
+        if (movementType == "Magnet")
+        {
+            transform.position += -movementDir * speed * 1/(movementDir.x + movementDir.y) * Time.deltaTime;
         }
     }
 }

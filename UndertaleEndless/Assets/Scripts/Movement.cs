@@ -8,11 +8,19 @@ public class Movement : MonoBehaviour {
     public float x = 0;
     public float y = 0;
 
+    public bool currentlyInvincible;
+
     public float speed;
     public Rigidbody2D rb;
 
+    public Sprite normal;
+    public Sprite invincible;
+    public SpriteRenderer sprite;
+
 	// Use this for initialization
 	void Start () {
+        sprite = this.gameObject.GetComponent<SpriteRenderer>();
+
         rb = player.GetComponent<Rigidbody2D>();
     }
 	
@@ -32,7 +40,20 @@ public class Movement : MonoBehaviour {
         else
             x = 0;
 
-
+        if(GameManager.isInvincible && !currentlyInvincible)
+        {
+            StartCoroutine(mercyFrames());
+        }
         rb.velocity = new Vector2(x, y);
+    }
+
+    public IEnumerator mercyFrames()
+    {
+        currentlyInvincible = true;
+        sprite.sprite = invincible;
+        yield return new WaitForSeconds(1.0f);
+        GameManager.isInvincible = false;
+        sprite.sprite = normal;
+        currentlyInvincible = false;
     }
 }
