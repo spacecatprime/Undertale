@@ -9,13 +9,15 @@ public enum Location
 
 public enum MovementType
 {
-    Straight, FollowPlayer, Random
+    Straight, FollowPlayer, Magnet, Random
 }
 
 
 [CreateAssetMenu(fileName = "New Projectile", menuName = "Projectile")]
 public class Projectile : ScriptableObject {
-   
+
+    public Color SpriteTint = new Color(100f, 100f, 100f);
+
     public AnimationCurve SpawnFrequency;
 
     public Sprite image;

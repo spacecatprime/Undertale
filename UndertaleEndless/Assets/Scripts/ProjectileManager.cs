@@ -25,9 +25,8 @@ public class ProjectileManager : MonoBehaviour {
 
     private void Awake() //Add all Projectile Scriptable Objects to List
     {
-        foreach (Projectile x in Resources.FindObjectsOfTypeAll(typeof(Projectile)) as Projectile[])
+        foreach (Projectile x in projectilePropertiesList)
         {
-            projectilePropertiesList.Add(x);
             spawnList.Add(false);
         }
 

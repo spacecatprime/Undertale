@@ -11,6 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9079cb58a4ae48d4abd03fd6a2d1bbd, type: 3}
   m_Name: TestProjectile
   m_EditorClassIdentifier: 
+  SpriteTint: {r: 1, g: 1, b: 1, a: 1}
   SpawnFrequency:
     serializedVersion: 2
     m_Curve:
