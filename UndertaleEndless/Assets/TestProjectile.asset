@@ -16,7 +16,7 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.5013466
+      value: 0.52991104
       inSlope: -0.042303327
       outSlope: -0.042303327
       tangentMode: 34
@@ -25,7 +25,7 @@ MonoBehaviour:
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 10.145071
-      value: 0.07217631
+      value: 0.10074076
       inSlope: -0.017267017
       outSlope: -0.017267017
       tangentMode: 0
@@ -34,7 +34,7 @@ MonoBehaviour:
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 22.587929
-      value: -0.0005439855
+      value: 0.028020468
       inSlope: -0.00031843004
       outSlope: -0.00031843004
       tangentMode: 0
@@ -43,7 +43,7 @@ MonoBehaviour:
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 45.13762
-      value: -0.031204224
+      value: -0.0026397705
       inSlope: -0.0013596745
       outSlope: -0.0013596745
       tangentMode: 34
@@ -60,5 +60,5 @@ MonoBehaviour:
   flightSound: {fileID: 0}
   speed: 1.5
   rotationSpeed: 0
-  damage: 10
+  damage: 2.5
   destroyOnTouch: 0
