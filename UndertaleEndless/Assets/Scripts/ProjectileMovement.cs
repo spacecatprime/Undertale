@@ -72,16 +72,7 @@ public class ProjectileMovement : MonoBehaviour {
     // Update is called once per frame
     void Update () {
 
-
-
-        if(GameManager.isInvincible)
-        {
-            damage = 0;
-        }
-        else
-        {
-            damage = projectileProperties.damage;
-        }
+        damage = projectileProperties.damage;
 
         //Destroy if out of bounds
         if (this.gameObject.transform.position.x > 10 || this.gameObject.transform.position.x < -10 || this.gameObject.transform.position.y > 10 || this.gameObject.transform.position.x < -10)
@@ -112,32 +103,42 @@ public class ProjectileMovement : MonoBehaviour {
     }
 
 
-    void OnTriggerEnter2D(Collider2D other)
+
+
+
+    void OnTriggerStay2D(Collider2D other)
     {
-        if(other.tag == "Player")
-        {
-            if (damage > 0 && !GameManager.isInvincible)
+        if(other.tag == "Player" && damage > 0 && !GameManager.isInvincible)
             {
                 //Play Damage
                 GameManager.isInvincible = true;
                 GameManager.health -= damage;
                 audioSource.clip = damaged;
                 audioSource.Play();
+
+            if (projectileProperties.destroyOnTouch)
+                Destroy(this.gameObject);
+
             }
-            if (damage < 0)
+
+        if (other.tag == "Player" && damage < 0)
             {
                 //Play Heal
                 GameManager.health -= damage;
                 audioSource.clip = healed;
                 audioSource.Play();
-            }
-                        //Destroy if on touch and you can hit player                         Destroy if healing item anyway if player is invincible
-            if(projectileProperties.destroyOnTouch && !GameManager.isInvincible || projectileProperties.destroyOnTouch && GameManager.isInvincible && damage < 0)
-            {
+
+            if (projectileProperties.destroyOnTouch)
                 Destroy(this.gameObject);
-            }
+
         }
     }
+
+
+
+
+
+
 
     void getMovement()
     {

@@ -20,7 +20,7 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.46281433
+      value: 1.9067001
       inSlope: 0
       outSlope: 0
       tangentMode: 34
@@ -29,7 +29,7 @@ MonoBehaviour:
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
-      value: 0.46281433
+      value: 1.9067001
       inSlope: 0
       outSlope: 0
       tangentMode: 34
@@ -42,7 +42,7 @@ MonoBehaviour:
   image: {fileID: 21300000, guid: a6e43f9c787501040aecd2f833cb4843, type: 3}
   spawnSound: {fileID: 0}
   flightSound: {fileID: 0}
-  speed: 2
+  speed: 1.5
   rotationModifier: -180
   damage: 1
-  destroyOnTouch: 0
+  destroyOnTouch: 1

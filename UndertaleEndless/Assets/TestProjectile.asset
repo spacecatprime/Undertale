@@ -11,13 +11,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9079cb58a4ae48d4abd03fd6a2d1bbd, type: 3}
   m_Name: TestProjectile
   m_EditorClassIdentifier: 
+  projectileType: 0
+  spawnLocation: 4
+  ProjectileMovementType: 0
   SpriteTint: {r: 1, g: 1, b: 1, a: 1}
   SpawnFrequency:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.55371475
+      value: 0.71390915
       inSlope: -0.042303327
       outSlope: -0.042303327
       tangentMode: 34
@@ -26,7 +29,7 @@ MonoBehaviour:
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 10.145071
-      value: 0.12454447
+      value: 0.28473887
       inSlope: -0.017267017
       outSlope: -0.017267017
       tangentMode: 0
@@ -35,7 +38,7 @@ MonoBehaviour:
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 22.587929
-      value: 0.05182418
+      value: 0.21201858
       inSlope: -0.00031843004
       outSlope: -0.00031843004
       tangentMode: 0
@@ -44,9 +47,9 @@ MonoBehaviour:
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 45.13762
-      value: 0.02116394
-      inSlope: -0.0013596745
-      outSlope: -0.0013596745
+      value: 0.18135834
+      inSlope: -0.0013596746
+      outSlope: -0.0013596746
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
@@ -55,11 +58,9 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   image: {fileID: 21300000, guid: 9b32af4797f9a413aacc419c7bcd84d0, type: 3}
-  spawnLocation: 4
-  ProjectileMovementType: 0
   spawnSound: {fileID: 0}
   flightSound: {fileID: 0}
   speed: 1.5
   rotationModifier: 0
-  damage: 2.5
-  destroyOnTouch: 1
+  damage: 4
+  destroyOnTouch: 0
