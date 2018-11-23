@@ -106,6 +106,7 @@ public class Movement : MonoBehaviour {
     public IEnumerator mercyFrames()
     {
         currentlyInvincible = true;
+        yield return new WaitForSeconds(0.2f);
         sprite.sprite = invincible;
         yield return new WaitForSeconds(1.0f);
         GameManager.isInvincible = false;
