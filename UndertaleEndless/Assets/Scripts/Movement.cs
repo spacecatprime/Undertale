@@ -103,7 +103,6 @@ public class Movement : MonoBehaviour {
 
         if (GameManager.isInvincible && !currentlyInvincible)
         {
-            GameManager.isInvincible = false;
             StartCoroutine(mercyFrames());
         }
     }
@@ -112,10 +111,10 @@ public class Movement : MonoBehaviour {
     public IEnumerator mercyFrames()
     {
         currentlyInvincible = true;
-        //yield return new WaitForSeconds(0.2f);
         sprite.sprite = invincible;
         yield return new WaitForSeconds(1.0f);
         sprite.sprite = normal;
         currentlyInvincible = false;
+        GameManager.isInvincible = false;
     }
 }

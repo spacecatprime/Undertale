@@ -38,14 +38,12 @@ public class GameManager : MonoBehaviour {
         health = maxHealth;
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        //DO ALL THE PERSISTENT DATA HERE
-        PersistentData.LastDeathLocation = player.transform.position;
-        PersistentData.Experience = Mathf.RoundToInt(score);
-
-        if (health <= 0)
+        if (health <= 0) //Dead
         {
+            PersistentData.LastDeathLocation = player.transform.position;
+            PersistentData.Experience = Mathf.RoundToInt(score);
             SceneManager.LoadScene("DeathScreen");
         }
 

@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class Heartbreak : MonoBehaviour {
 
+    [Header("Audio")]
     public AudioClip snap;
     public AudioClip shatter;
     public AudioClip gameOverMus;

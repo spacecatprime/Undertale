@@ -11,7 +11,8 @@ public class HeartDebris : MonoBehaviour {
     // Use this for initialization
     void Start () {
         rb = this.gameObject.GetComponent<Rigidbody2D>();
-        Rigidbody2DExtension.AddExplosionForce(rb, 100.0f, PersistentData.LastDeathLocation, 20.0f);
+        Vector2 location = new Vector2(PersistentData.LastDeathLocation.x, PersistentData.LastDeathLocation.y - 0.025f); //Slight bias lets bullets shoot up more
+        Rigidbody2DExtension.AddExplosionForce(rb, 100.0f, location, 20.0f);
     }
 
     // Update is called once per frame

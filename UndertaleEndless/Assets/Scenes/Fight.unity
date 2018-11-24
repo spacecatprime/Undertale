@@ -1726,7 +1726,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  isDead: 0
   Score: {fileID: 178645663}
   Health: {fileID: 2035374753}
   Level: {fileID: 293880879}
@@ -1750,7 +1749,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1644942320}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aa885e05edce4b2489bbe26015824cd6, type: 3}
   m_Name: 

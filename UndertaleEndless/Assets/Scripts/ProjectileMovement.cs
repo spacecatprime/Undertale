@@ -106,22 +106,23 @@ public class ProjectileMovement : MonoBehaviour {
 
 
 
-    void OnTriggerStay2D(Collider2D other)
+    void OnTriggerStay2D(Collider2D other) //Collision
     {
-        if(other.tag == "Player" && damage > 0 && !GameManager.isInvincible)
-            {
-                //Play Damage
-                GameManager.isInvincible = true;
-                GameManager.health -= damage;
-                audioSource.clip = damaged;
-                audioSource.Play();
+        if(other.tag == "Player" && damage > 0 && !GameManager.isInvincible) //Inflicts damage when vulnerable
+        {
+            //Play Damage
+
+            GameManager.health -= damage;
+            GameManager.isInvincible = true;
+            audioSource.clip = damaged;
+            audioSource.Play();
 
             if (projectileProperties.destroyOnTouch)
                 Destroy(this.gameObject);
 
-            }
+        }
 
-        if (other.tag == "Player" && damage < 0)
+        if (other.tag == "Player" && damage < 0) //Heals player regardless
             {
                 //Play Heal
                 GameManager.health -= damage;
