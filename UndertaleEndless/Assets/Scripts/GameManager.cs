@@ -9,7 +9,6 @@ public class GameManager : MonoBehaviour {
 
     public GameObject player;
 
-    public bool isDead;
     private float maxHealth;
 
     public static int healthCondition = 0; //HEAL: -1, NONE: 0, DAMAGE: 1
@@ -37,7 +36,6 @@ public class GameManager : MonoBehaviour {
         healthBar.maxValue = maxHealth;
         score = 0;
         health = maxHealth;
-        isDead = false;
     }
 
     void Update()
@@ -48,13 +46,9 @@ public class GameManager : MonoBehaviour {
 
         if (health <= 0)
         {
-            isDead = true;
-        }
-
-        if (isDead)
-        {
             SceneManager.LoadScene("DeathScreen");
         }
+
 
         score += 1.0f * Time.deltaTime;
 
@@ -63,7 +57,6 @@ public class GameManager : MonoBehaviour {
         Level.text = ("LV " + level.ToString());
         Score.text = ("EXP " + Mathf.RoundToInt(score).ToString());
         Health.text = (Mathf.RoundToInt(health).ToString() + "/" + Mathf.RoundToInt(maxHealth).ToString());
-
 
         if (health > maxHealth)
             health = maxHealth;
