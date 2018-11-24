@@ -72,19 +72,24 @@ public class Movement : MonoBehaviour {
 
         else //Player movement IS mobile
         {
+
             Vector3 inputDir = (Vector3.right * joystick.Horizontal + Vector3.up * joystick.Vertical);
+
             if (inputDir != Vector3.zero)
                 moving = true;
             else
                 moving = false;
+              
 
-            targetDir = SnapTo(inputDir, 45.0f);
+            Debug.Log(inputDir);
 
-            //Vector3 v = inputDir.normalized;
-            //v.x = Mathf.Round(v.x);
-            //v.z = Mathf.Round(v.z);
-            //if (v.sqrMagnitude > 0.1f)
-            //    targetDir = v.normalized;
+            targetDir = new Vector3(inputDir.x, inputDir.y);
+
+            targetDir = SnapTo(targetDir, 45.0f);
+
+            targetDir = new Vector3(Mathf.Ceil(targetDir.x), Mathf.Ceil(targetDir.y));
+
+            //Debug.Log(targetDir);
 
             if (moving)
             {
