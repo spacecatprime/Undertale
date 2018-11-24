@@ -7,6 +7,7 @@ public class Heartbreak : MonoBehaviour {
 
     public AudioClip snap;
     public AudioClip shatter;
+    public AudioClip gameOverMus;
     public AudioSource audioSource;
     public AudioReverbFilter audioReverb;
 
@@ -43,6 +44,7 @@ public class Heartbreak : MonoBehaviour {
 
     public IEnumerator deathSounds() //Death Sounds
     {
+        audioSource.loop = false;
         audioReverb.enabled = false;
         audioSource.clip = snap;
         audioSource.Play();
@@ -52,6 +54,10 @@ public class Heartbreak : MonoBehaviour {
         spawnDebris();
         audioReverb.enabled = true;
         audioSource.clip = shatter;
+        audioSource.Play();
+        yield return new WaitForSeconds(1.5f);
+        audioSource.loop = true;
+        audioSource.clip = gameOverMus;
         audioSource.Play();
     }
 

@@ -27,6 +27,8 @@ public class GameManager : MonoBehaviour {
 
     void Start()
     {
+        isInvincible = false;
+
         level = PersistentData.Level;
 
         player = GameObject.Find("Player");
@@ -40,6 +42,20 @@ public class GameManager : MonoBehaviour {
 
     void Update()
     {
+        //DO ALL THE PERSISTENT DATA HERE
+        PersistentData.LastDeathLocation = player.transform.position;
+        PersistentData.Experience = Mathf.RoundToInt(score);
+
+        if (health <= 0)
+        {
+            isDead = true;
+        }
+
+        if (isDead)
+        {
+            SceneManager.LoadScene("DeathScreen");
+        }
+
         score += 1.0f * Time.deltaTime;
 
         healthBar.value = health;
@@ -48,22 +64,11 @@ public class GameManager : MonoBehaviour {
         Score.text = ("EXP " + Mathf.RoundToInt(score).ToString());
         Health.text = (Mathf.RoundToInt(health).ToString() + "/" + Mathf.RoundToInt(maxHealth).ToString());
 
-        if (health <= 0)
-        {
-            isDead = true;
-        }
 
         if (health > maxHealth)
             health = maxHealth;
 
-        //DO ALL THE PERSISTENT DATA HERE
-        PersistentData.LastDeathLocation = player.transform.position;
-        PersistentData.Experience = Mathf.RoundToInt(score);
 
-        if (isDead)
-        {
-            SceneManager.LoadScene("DeathScreen");
-        }
 
     }
 

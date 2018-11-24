@@ -6,7 +6,10 @@ public class Movement : MonoBehaviour {
 
     public Joystick joystick;
 
-    Vector3 targetDir;
+    public Vector3 targetDir;
+    public Vector3 angleDir;
+    public Vector3 angleDirNormal;
+
 
     public bool moving;
 
@@ -80,20 +83,17 @@ public class Movement : MonoBehaviour {
             else
                 moving = false;
               
-
-            Debug.Log(inputDir);
-
             targetDir = new Vector3(inputDir.x, inputDir.y);
 
-            targetDir = SnapTo(targetDir, 45.0f);
+            angleDir = new Vector3(Mathf.RoundToInt(SnapTo(targetDir, 45.0f).x), Mathf.RoundToInt(SnapTo(targetDir, 45.0f).y));
 
-            targetDir = new Vector3(Mathf.Ceil(targetDir.x), Mathf.Ceil(targetDir.y));
 
-            //Debug.Log(targetDir);
+            //Temp
+            //targetDir = new Vector3(targetDir.x, targetDir.y);
 
             if (moving)
             {
-                rb.velocity = new Vector2(targetDir.x, targetDir.y);
+                rb.velocity = angleDir;
                 rb.velocity = rb.velocity * speed * Time.deltaTime;
             }
             else
@@ -103,6 +103,7 @@ public class Movement : MonoBehaviour {
 
         if (GameManager.isInvincible && !currentlyInvincible)
         {
+            GameManager.isInvincible = false;
             StartCoroutine(mercyFrames());
         }
     }
@@ -111,10 +112,9 @@ public class Movement : MonoBehaviour {
     public IEnumerator mercyFrames()
     {
         currentlyInvincible = true;
-        yield return new WaitForSeconds(0.2f);
+        //yield return new WaitForSeconds(0.2f);
         sprite.sprite = invincible;
         yield return new WaitForSeconds(1.0f);
-        GameManager.isInvincible = false;
         sprite.sprite = normal;
         currentlyInvincible = false;
     }
