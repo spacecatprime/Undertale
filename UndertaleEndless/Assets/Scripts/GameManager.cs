@@ -48,19 +48,17 @@ public class GameManager : MonoBehaviour {
         }
 
 
-        score += 1.0f * Time.deltaTime;
-
-        healthBar.value = health;
-
-        Level.text = ("LV " + level.ToString());
-        Score.text = ("EXP " + Mathf.RoundToInt(score).ToString());
-        Health.text = (Mathf.RoundToInt(health).ToString() + "/" + Mathf.RoundToInt(maxHealth).ToString());
-
+    }
+    private void Update()
+    {
         if (health > maxHealth)
             health = maxHealth;
 
-
-
+        healthBar.value = health;
+        score += 1.0f * Time.deltaTime;
+        Level.text = ("LV " + level.ToString());
+        Score.text = ("EXP " + Mathf.RoundToInt(score).ToString());
+        Health.text = (Mathf.RoundToInt(health).ToString() + "/" + Mathf.RoundToInt(maxHealth).ToString());
     }
 
 }

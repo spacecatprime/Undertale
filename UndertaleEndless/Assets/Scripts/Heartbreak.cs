@@ -51,7 +51,7 @@ public class Heartbreak : MonoBehaviour {
         audioSource.clip = snap;
         audioSource.Play();
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1.5f);
         this.gameObject.GetComponent<SpriteRenderer>().enabled = false;
         spawnDebris();
         audioReverb.enabled = true;
@@ -74,8 +74,25 @@ public class Heartbreak : MonoBehaviour {
         }
     }
 
-    public void fight()
+    public void ContinuePressed()
     {
+        StartCoroutine(Continue());
+    }
+
+    public IEnumerator Continue()
+    {
+        yield return new WaitForSeconds(0.5f);
+        SceneManager.LoadScene("Fight");
+    }
+
+    public void MenuPressed()
+    {
+        StartCoroutine(Menu());
+    }
+
+    public IEnumerator Menu()
+    {
+        yield return new WaitForSeconds(0.5f);
         SceneManager.LoadScene("Fight");
     }
 }

@@ -22,14 +22,17 @@ public class Movement : MonoBehaviour {
     public bool currentlyInvincible;
 
     public float speed;
+    private float originalSpeed;
     public Rigidbody2D rb;
 
     public Sprite normal;
     public Sprite invincible;
     public SpriteRenderer sprite;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start() {
+        originalSpeed = speed;
+
         sprite = this.gameObject.GetComponent<SpriteRenderer>();
 
         rb = player.GetComponent<Rigidbody2D>();
@@ -52,10 +55,11 @@ public class Movement : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void FixedUpdate () {
+    void FixedUpdate() {
 
-        if(!playerMovementTypeIsMobile)
+        if (!playerMovementTypeIsMobile) //Arrow key Movement
         {
+            speed = speed * 40;
             if (Input.GetKey(KeyCode.UpArrow))
                 y = 1.5f;
             else if (Input.GetKey(KeyCode.DownArrow))
@@ -73,28 +77,26 @@ public class Movement : MonoBehaviour {
         }
 
 
-        else //Player movement IS mobile
+        else //Player movement IS mobile (joystick)
         {
-
+            speed = originalSpeed;
             Vector3 inputDir = (Vector3.right * joystick.Horizontal + Vector3.up * joystick.Vertical);
 
             if (inputDir != Vector3.zero)
                 moving = true;
             else
                 moving = false;
-              
+
             targetDir = new Vector3(inputDir.x, inputDir.y);
 
-            angleDir = new Vector3(Mathf.RoundToInt(SnapTo(targetDir, 45.0f).x), Mathf.RoundToInt(SnapTo(targetDir, 45.0f).y));
-
-
-            //Temp
-            //targetDir = new Vector3(targetDir.x, targetDir.y);
+            //angleDir = new Vector3(Mathf.RoundToInt(SnapTo(targetDir, 45.0f).x), Mathf.RoundToInt(SnapTo(targetDir, 45.0f).y));
+            angleDir = new Vector3(SnapTo(targetDir, 45.0f).x, SnapTo(targetDir, 45.0f).y);
 
             if (moving)
             {
                 rb.velocity = angleDir;
-                rb.velocity = rb.velocity * speed * Time.deltaTime;
+                //rb.velocity = rb.velocity * speed * Time.deltaTime;
+                rb.velocity = speed * (rb.velocity.normalized);
             }
             else
                 rb.velocity = Vector3.zero;
@@ -117,4 +119,5 @@ public class Movement : MonoBehaviour {
         currentlyInvincible = false;
         GameManager.isInvincible = false;
     }
+
 }

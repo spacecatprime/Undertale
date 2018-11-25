@@ -7,8 +7,11 @@ public class DeterminationText : MonoBehaviour {
 
     public TMP_Text dialogueText;
 
-    public string sentence1;
-    public string sentence2;
+    private string name;
+    public List<string> allSentece1;
+    public List<string> allSentece2;
+    private string sentence1;
+    private string sentence2;
 
     public Queue<string> sentences;
 
@@ -17,6 +20,10 @@ public class DeterminationText : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
+        sentence1 = allSentece1[Random.Range(0, allSentece1.Count)];
+        sentence2 = allSentece2[Random.Range(0, allSentece2.Count)];
+
+        name = PersistentData.PlayerName;
         sentences = new Queue<string>();
         StartDialogue(sentence1);
     }
@@ -50,24 +57,34 @@ public class DeterminationText : MonoBehaviour {
     {
         if(sentence == sentence1)
             yield return new WaitForSeconds(4f);
-        dialogueText.text = "";
+        if(sentence != sentence2)
+            dialogueText.text = "";
+
+        float time = 1.25f;
         foreach (char letter in sentence.ToCharArray())
         {
+            
             string letterStr = letter.ToString();
-            if (letterStr == "!")    // if ! wait
+            if (letterStr == "!" || letterStr == ",")    // if ! or , wait
             {
                 dialogueText.text += letterStr;
+                time -= 1.0f;
                 yield return new WaitForSeconds(1.0f);
             }
-            if (letterStr != " ")    // if 'space' dont speak
+            else
+            {
                 asgoreVoice.Play();
-
-            if (letterStr != "!")
                 dialogueText.text += letterStr;
-            yield return new WaitForSeconds(0.075f); //Time between letters
+                yield return new WaitForSeconds(0.075f); //Time between letters
+            }
+
         }
-        yield return new WaitForSeconds(1.25f);
         if(sentence == sentence1)
+        {
+            yield return new WaitForSeconds(time);
+            StartDialogue(name);
+        }
+        if (sentence == name)
             StartDialogue(sentence2);
     }
 }

@@ -569,7 +569,7 @@ MonoBehaviour:
   y: 0
   playerMovementTypeIsMobile: 1
   currentlyInvincible: 0
-  speed: 45
+  speed: 1.5
   rb: {fileID: 741421209}
   normal: {fileID: 21300000, guid: a790d6e0ec9cb4885b9b89b9c2df1738, type: 3}
   invincible: {fileID: 21300000, guid: 0cac26fa5bc7649159d5f2cd1a551f16, type: 3}
@@ -1153,6 +1153,7 @@ GameObject:
   - component: {fileID: 1128277966}
   - component: {fileID: 1128277965}
   - component: {fileID: 1128277967}
+  - component: {fileID: 1128277964}
   m_Layer: 0
   m_Name: MainCamera
   m_TagString: MainCamera
@@ -1160,6 +1161,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1128277964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1128277963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56e322c29a39f1c45a4ee805c4011a55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  camTransform: {fileID: 0}
+  shakeDuration: 0.25
+  shakeAmount: 0.025
+  decreaseFactor: 1
 --- !u!20 &1128277965
 Camera:
   m_ObjectHideFlags: 0

@@ -125,7 +125,7 @@ GameObject:
   - component: {fileID: 5758706}
   - component: {fileID: 5758708}
   m_Layer: 5
-  m_Name: ContinueText
+  m_Name: ContinueButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -312,7 +312,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 741421206}
-        m_MethodName: fight
+        m_MethodName: ContinuePressed
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -559,8 +559,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueText: {fileID: 889061545}
-  sentence1: You cannot give up just yet...
-  sentence2: Player! Stay determined...
+  allSentece1:
+  - You cannot give up just yet...
+  - Please don't give up...
+  - You are the future of humans and monsters...
+  - You're going to be alright!
+  - Don't lose hope!
+  - It cannot end now!
+  allSentece2:
+  - '! Stay determined...'
+  - '! You have to stay determined...'
+  - ', gather your strength.'
+  - ', stay determined!'
+  - ', you have to keep going.'
+  - ', our fate rests upon you...'
+  sentence1: 
+  sentence2: 
   asgoreVoice: {fileID: 889061547}
 --- !u!1 &734952470
 GameObject:
@@ -574,7 +588,7 @@ GameObject:
   - component: {fileID: 734952472}
   - component: {fileID: 734952474}
   m_Layer: 5
-  m_Name: MenuText
+  m_Name: MenuButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -759,7 +773,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 430071288}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 741421206}
+        m_MethodName: MenuPressed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!1 &741421205
@@ -942,14 +967,14 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 22
-  m_fontSizeBase: 22
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_textAlignment: 4098
+  m_textAlignment: 2050
   m_isAlignmentEnumConverted: 1
   m_characterSpacing: 1.5
   m_wordSpacing: 0
@@ -1509,7 +1534,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0.25

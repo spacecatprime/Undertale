@@ -116,7 +116,7 @@ public class ProjectileMovement : MonoBehaviour {
             GameManager.isInvincible = true;
             audioSource.clip = damaged;
             audioSource.Play();
-
+            CameraShake.shakeTrue = true;
             if (projectileProperties.destroyOnTouch)
                 Destroy(this.gameObject);
 
