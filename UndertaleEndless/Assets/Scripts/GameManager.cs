@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour {
     public TextMeshProUGUI Score;
     public TextMeshProUGUI Health;
     public TextMeshProUGUI Level;
+    public TextMeshProUGUI Name;
     public Slider healthBar;
 
     public static float score;
@@ -28,7 +29,7 @@ public class GameManager : MonoBehaviour {
     {
         isInvincible = false;
 
-        level = PersistentData.Level;
+        level = PlayerPrefs.GetInt("Level");
 
         player = GameObject.Find("Player");
 
@@ -42,8 +43,8 @@ public class GameManager : MonoBehaviour {
     {
         if (health <= 0) //Dead
         {
-            PersistentData.LastDeathLocation = player.transform.position;
-            PersistentData.Experience = Mathf.RoundToInt(score);
+            SaveObject.lastLocation = player.transform.position;
+            PlayerPrefs.SetInt("Experience", Mathf.RoundToInt(score));
             SceneManager.LoadScene("DeathScreen");
         }
 
@@ -58,6 +59,7 @@ public class GameManager : MonoBehaviour {
         score += 1.0f * Time.deltaTime;
         Level.text = ("LV " + level.ToString());
         Score.text = ("EXP " + Mathf.RoundToInt(score).ToString());
+        Name.text = PlayerPrefs.GetString("Name");
         Health.text = (Mathf.RoundToInt(health).ToString() + "/" + Mathf.RoundToInt(maxHealth).ToString());
     }
 

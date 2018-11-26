@@ -25,7 +25,7 @@ public class Heartbreak : MonoBehaviour {
     void Start ()
     {
         this.gameObject.GetComponent<SpriteRenderer>().enabled = true;
-        this.gameObject.transform.position = PersistentData.LastDeathLocation;
+        this.gameObject.transform.position = SaveObject.lastLocation;
         Camera = GameObject.Find("Main Camera");
         audioSource = Camera.GetComponent<AudioSource>();
         audioReverb = Camera.GetComponent<AudioReverbFilter>();
@@ -93,6 +93,6 @@ public class Heartbreak : MonoBehaviour {
     public IEnumerator Menu()
     {
         yield return new WaitForSeconds(0.5f);
-        SceneManager.LoadScene("Fight");
+        SceneManager.LoadScene("MainMenu");
     }
 }
