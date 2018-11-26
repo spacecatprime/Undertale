@@ -10,10 +10,11 @@ public class MenuManager : MonoBehaviour {
     public TextMeshProUGUI time;
     public TextMeshProUGUI level;
     public TextMeshProUGUI detail;
+    public TextMeshProUGUI contirnueText;
 
     // Use this for initialization
     void Start () {
-
+        
     }
 
     // Update is called once per frame
@@ -25,6 +26,13 @@ public class MenuManager : MonoBehaviour {
         time.text = string.Format("{0:0}:{1:00}", minutes, seconds);
 
         level.text = "LV " + PlayerPrefs.GetInt("Level").ToString();
+
+        if(PlayerPrefs.GetString("HasProfile") == "False")
+        {
+            contirnueText.text = "New Game";
+        }
+        else
+            contirnueText.text = "Continue";
     }
 
     public void Continue()
@@ -35,6 +43,8 @@ public class MenuManager : MonoBehaviour {
     public void Restart()
     {
         PlayerPrefs.DeleteAll();
+        PlayerPrefs.SetString("HasProfile", "False");
+        PlayerPrefs.Save();
         SaveObject.shouldLoad = true;
     }
 }

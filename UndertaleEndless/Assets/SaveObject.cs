@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SaveObject : MonoBehaviour {
 
@@ -24,14 +25,19 @@ public class SaveObject : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        
+
     }
 	
 	// Update is called once per frame
 	void Update () {
-        time += Time.unscaledDeltaTime;
-        if(!shouldLoad)
-            Save();
+        if(SceneManager.GetActiveScene().name != "MainMenu")
+        {
+            time += Time.unscaledDeltaTime;
+            PlayerPrefs.SetFloat("Time", time);
+            PlayerPrefs.Save();
+        }
+
+
         if (shouldLoad)
             Load();
 

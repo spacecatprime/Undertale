@@ -11,19 +11,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
   m_Name: DTM-Mono
   m_EditorClassIdentifier: 
-  hashCode: 0
+  hashCode: -822375021
   material: {fileID: 21697391985752942}
-  materialHashCode: 0
+  materialHashCode: -1341491656
   fontAssetType: 2
   m_fontInfo:
     Name: Determination Mono
     PointSize: 29
-    Scale: 0
+    Scale: 1
     CharacterCount: 98
     LineHeight: 35
     Baseline: 0
     Ascender: 29
-    CapHeight: 0
+    CapHeight: 19
     Descender: -7
     CenterLine: 0
     SuperscriptOffset: 29
@@ -33,7 +33,7 @@ MonoBehaviour:
     UnderlineThickness: 21.750002
     strikethrough: 8
     strikethroughThickness: 21.750002
-    TabWidth: 0
+    TabWidth: 170
     Padding: 5
     AtlasWidth: 256
     AtlasHeight: 256
@@ -42,10 +42,10 @@ MonoBehaviour:
   - id: 32
     x: 5
     y: 251
-    width: 0
-    height: 0
+    width: 17
+    height: 36
     xOffset: 0
-    yOffset: 0
+    yOffset: 29
     xAdvance: 17
     scale: 1
   - id: 33

@@ -7,7 +7,7 @@ using TMPro;
 
 public class GameManager : MonoBehaviour {
 
-    public GameObject player;
+    public static GameObject player;
 
     private float maxHealth;
 
@@ -18,7 +18,6 @@ public class GameManager : MonoBehaviour {
     public TextMeshProUGUI Score;
     public TextMeshProUGUI Health;
     public TextMeshProUGUI Level;
-    public TextMeshProUGUI Name;
     public Slider healthBar;
 
     public static float score;
@@ -37,30 +36,42 @@ public class GameManager : MonoBehaviour {
         healthBar.maxValue = maxHealth;
         score = 0;
         health = maxHealth;
+
+        Level.text = ("LV " + level.ToString());
     }
 
     void FixedUpdate()
     {
-        if (health <= 0) //Dead
-        {
-            SaveObject.lastLocation = player.transform.position;
-            PlayerPrefs.SetInt("Experience", Mathf.RoundToInt(score));
-            SceneManager.LoadScene("DeathScreen");
-        }
-
-
-    }
-    private void Update()
-    {
         if (health > maxHealth)
             health = maxHealth;
 
-        healthBar.value = health;
-        score += 1.0f * Time.deltaTime;
-        Level.text = ("LV " + level.ToString());
-        Score.text = ("EXP " + Mathf.RoundToInt(score).ToString());
-        Name.text = PlayerPrefs.GetString("Name");
+        if (health < 0) //Dead
+        {
+            health = 0;
+        }
+
+        if (health <= 0)
+            Dead();
+
         Health.text = (Mathf.RoundToInt(health).ToString() + "/" + Mathf.RoundToInt(maxHealth).ToString());
+        healthBar.value = health;
+
+    }
+    private void LateUpdate()
+    {
+
+        score += 1.0f * Time.deltaTime;
+
+        Score.text = ("EXP " + Mathf.RoundToInt(score).ToString());
+
+        
+    }
+
+    public static void Dead()
+    {
+        SaveObject.lastLocation = player.transform.position;
+        PlayerPrefs.SetInt("Experience", Mathf.RoundToInt(score));
+        SceneManager.LoadScene("DeathScreen");
     }
 
 }
