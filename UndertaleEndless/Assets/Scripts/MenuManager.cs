@@ -14,12 +14,7 @@ public class MenuManager : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        
-    }
-
-    // Update is called once per frame
-    void Update () {
-        name.text = PlayerPrefs.GetString("Name");
+                name.text = PlayerPrefs.GetString("Name");
 
         int minutes = Mathf.FloorToInt(PlayerPrefs.GetFloat("Time") / 60F);
         int seconds = Mathf.FloorToInt(PlayerPrefs.GetFloat("Time") - minutes * 60);
@@ -35,6 +30,12 @@ public class MenuManager : MonoBehaviour {
             contirnueText.text = "Continue";
     }
 
+
+    // Update is called once per frame
+    void Update()
+    {
+    }
+
     public void Continue()
     {
         SceneManager.LoadScene("Fight");
@@ -43,8 +44,8 @@ public class MenuManager : MonoBehaviour {
     public void Restart()
     {
         PlayerPrefs.DeleteAll();
-        PlayerPrefs.SetString("HasProfile", "False");
+        PlayerPrefs.SetString("Name", "");
         PlayerPrefs.Save();
-        SaveObject.shouldLoad = true;
+        SceneManager.LoadScene("Naming");
     }
 }

@@ -16,7 +16,6 @@ public class TextLimiter : MonoBehaviour {
     public GameObject Continue;
     public AudioSource audio;
     public GameObject overlay;
-    public Animation overlayAnimator;
 
     // Use this for initialization
     void Start () {
@@ -25,8 +24,6 @@ public class TextLimiter : MonoBehaviour {
         Continue.SetActive(true);
         title.text = "Name the fallen human.";
         mainInputField.characterLimit = 6;
-        mainInputField.characterValidation = TMP_InputField.CharacterValidation.Name;
-        mainInputField.ActivateInputField();
         mainInputField.readOnly = false;
     }
 	
@@ -36,12 +33,16 @@ public class TextLimiter : MonoBehaviour {
 
     public void Enter()
     {
-        imageAnimator.Play("NameFocus");
-        yes.SetActive(true);
-        no.SetActive(true);
-        Continue.SetActive(false);
-        mainInputField.readOnly = true;
-        title.text = "Is this name correct?";
+        if(mainInputField.text.Length > 0)
+        {
+            TextShake.shouldShake = true;
+            imageAnimator.Play("NameFocus");
+            yes.SetActive(true);
+            no.SetActive(true);
+            Continue.SetActive(false);
+            mainInputField.readOnly = true;
+            title.text = "Is this name correct?";
+        }
     }
 
     public void Yes()
@@ -60,6 +61,7 @@ public class TextLimiter : MonoBehaviour {
 
     public void No()
     {
+        TextShake.shouldShake = false;
         imageAnimator.Play("NameUnfocus");
         yes.SetActive(false);
         no.SetActive(false);
@@ -69,12 +71,11 @@ public class TextLimiter : MonoBehaviour {
         name = "";
         PlayerPrefs.SetString("Name", name);
         PlayerPrefs.Save();
-        overlayAnimator.Play("OverlayFocus");
     }
 
     IEnumerator LoadMenu()
     {
-        yield return new WaitForSeconds(5.5f);
+        yield return new WaitForSeconds(5.25f);
         SceneManager.LoadScene("MainMenu");
     }
 }
