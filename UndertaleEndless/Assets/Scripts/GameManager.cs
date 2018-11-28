@@ -15,7 +15,8 @@ public class GameManager : MonoBehaviour {
 
     public static bool isInvincible;
 
-    public TextMeshProUGUI Score;
+    public TextMeshProUGUI Name;
+    //public TextMeshProUGUI Score;
     public TextMeshProUGUI Health;
     public TextMeshProUGUI Level;
     public Slider healthBar;
@@ -38,6 +39,9 @@ public class GameManager : MonoBehaviour {
         health = maxHealth;
 
         Level.text = ("LV " + level.ToString());
+
+        Name.text = (PlayerPrefs.GetString("Name").ToUpper());
+
     }
 
     void FixedUpdate()
@@ -53,7 +57,7 @@ public class GameManager : MonoBehaviour {
         if (health <= 0)
             Dead();
 
-        Health.text = (Mathf.RoundToInt(health).ToString() + "/" + Mathf.RoundToInt(maxHealth).ToString());
+        Health.text = (health.ToString() + "/" + Mathf.RoundToInt(maxHealth).ToString());
         healthBar.value = health;
 
     }
@@ -62,7 +66,7 @@ public class GameManager : MonoBehaviour {
 
         score += 1.0f * Time.deltaTime;
 
-        Score.text = ("EXP " + Mathf.RoundToInt(score).ToString());
+        //Score.text = ("EXP " + Mathf.RoundToInt(score).ToString());
 
         
     }

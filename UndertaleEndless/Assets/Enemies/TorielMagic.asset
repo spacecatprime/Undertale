@@ -9,18 +9,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d9079cb58a4ae48d4abd03fd6a2d1bbd, type: 3}
-  m_Name: tester
+  m_Name: TorielMagic
   m_EditorClassIdentifier: 
-  projectileType: 1
-  spawnLocation: 1
-  ProjectileMovementType: 1
-  SpriteTint: {r: 0, g: 1, b: 1, a: 1}
+  projectileType: 0
+  spawnLocation: 0
+  locationSpecific: 1
+  specificSpawnLocation: 0
+  ProjectileMovementType: 0
+  AffectedByGravity: 0
+  SpriteTint: {r: 1, g: 1, b: 1, a: 1}
   SpawnFrequency:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1.9067001
+      value: 0.49965382
       inSlope: 0
       outSlope: 0
       tangentMode: 34
@@ -29,7 +32,7 @@ MonoBehaviour:
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
-      value: 1.9067001
+      value: 0.49965382
       inSlope: 0
       outSlope: 0
       tangentMode: 34
@@ -39,10 +42,11 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  image: {fileID: 21300000, guid: 08b17f8710157fc499e53f2c7ee893c4, type: 3}
+  image: {fileID: 21300000, guid: 4b9b6cdd84bcc4c09b781e2db2402621, type: 3}
   spawnSound: {fileID: 0}
   flightSound: {fileID: 0}
-  speed: 1.5
-  rotationModifier: 90
-  damage: 1
+  speed: 0.5
+  FlipX: 0
+  FlipY: 1
+  damage: 5
   destroyOnTouch: 1

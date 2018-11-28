@@ -36,7 +36,9 @@ public class ProjectileMovement : MonoBehaviour {
         Class = Mathf.RoundToInt(this.transform.localScale.z);
 
         projectileProperties = ProjectileManager.staticProjectileList[Class];
-    
+
+
+
         //Variables
         var instanceSprite = this.gameObject.GetComponent<SpriteRenderer>();
         instanceSprite.sprite = ProjectileManager.staticProjectileList[Class].image;                   //Assign Sprite
@@ -49,6 +51,9 @@ public class ProjectileMovement : MonoBehaviour {
         movementType = projectileProperties.ProjectileMovementType.ToString();
 
         speed = projectileProperties.speed;
+
+        instanceSprite.flipX = ProjectileManager.staticProjectileList[Class].FlipX;
+        instanceSprite.flipY = ProjectileManager.staticProjectileList[Class].FlipY;
 
         getMovement();
     }
@@ -84,7 +89,7 @@ public class ProjectileMovement : MonoBehaviour {
         if(watchPlayer && movementType == "Magnet")
         {
             movementDir = player.transform.position - transform.position;
-            var tempFacing = ProjectileMovement.FaceObject(transform.position, player.transform.position, FacingDirection.UP + Mathf.RoundToInt(projectileProperties.rotationModifier));
+            var tempFacing = ProjectileMovement.FaceObject(transform.position, player.transform.position, FacingDirection.UP);
             transform.rotation = tempFacing;
         }
 
@@ -92,7 +97,7 @@ public class ProjectileMovement : MonoBehaviour {
         else if(watchPlayer && movementType == "DirectPlayer")
         {
             movementDir = player.transform.position - transform.position;
-            var tempFacing = ProjectileMovement.FaceObject(transform.position, player.transform.position, FacingDirection.UP + Mathf.RoundToInt(projectileProperties.rotationModifier));
+            var tempFacing = ProjectileMovement.FaceObject(transform.position, player.transform.position, FacingDirection.UP);
             transform.rotation = tempFacing;
             watchPlayer = false;
 
