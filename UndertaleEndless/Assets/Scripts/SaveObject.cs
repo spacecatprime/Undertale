@@ -7,7 +7,7 @@ public class SaveObject : MonoBehaviour {
 
     public static Vector3 lastLocation;
 
-    public float time;
+    public static float time;
 
     public void Awake()
     {
@@ -17,6 +17,8 @@ public class SaveObject : MonoBehaviour {
         {
             Destroy(gameObject);
         }
+
+        StartCoroutine(loadIntro());
     }
 
     // Use this for initialization
@@ -26,7 +28,7 @@ public class SaveObject : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if(SceneManager.GetActiveScene().name != "MainMenu" || SceneManager.GetActiveScene().name != "Naming" || SceneManager.GetActiveScene().name != "Start")
+        if(SceneManager.GetActiveScene().name != "MainMenu" && SceneManager.GetActiveScene().name != "Naming" && SceneManager.GetActiveScene().name != "Start" && SceneManager.GetActiveScene().name != "Initialization")
         {
             time += Time.unscaledDeltaTime;
             PlayerPrefs.SetFloat("Time", time);
@@ -37,6 +39,12 @@ public class SaveObject : MonoBehaviour {
         {
             PlayerPrefs.SetInt("Level", 1);
         }
+    }
+
+    public IEnumerator loadIntro()
+    {
+        yield return new WaitForSeconds(0.25f);
+        SceneManager.LoadScene("Start");
     }
 
 }

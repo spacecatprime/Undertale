@@ -14,10 +14,12 @@ public class MenuManager : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-                name.text = PlayerPrefs.GetString("Name");
+        float timer = PlayerPrefs.GetFloat("Time");
 
-        int minutes = Mathf.FloorToInt(PlayerPrefs.GetFloat("Time") / 60F);
-        int seconds = Mathf.FloorToInt(PlayerPrefs.GetFloat("Time") - minutes * 60);
+        name.text = PlayerPrefs.GetString("Name");
+
+        int minutes = Mathf.FloorToInt(timer / 60F);
+        int seconds = Mathf.FloorToInt(timer - minutes * 60);
         time.text = string.Format("{0:0}:{1:00}", minutes, seconds);
 
         level.text = "LV " + PlayerPrefs.GetInt("Level").ToString();
@@ -45,6 +47,7 @@ public class MenuManager : MonoBehaviour {
     {
         PlayerPrefs.DeleteAll();
         PlayerPrefs.SetString("Name", "");
+        SaveObject.time = 0;
         PlayerPrefs.Save();
         SceneManager.LoadScene("Naming");
     }

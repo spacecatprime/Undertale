@@ -65,6 +65,7 @@ IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandle
     {
         targetText.color = textColor;
     }
+
     void UpdateStyle()
     {
         if (!inBounds)
