@@ -9,5 +9,6 @@ public class Enemy : ScriptableObject {
     public List<Projectile> ProjectilesUsed;
     public Sprite EnemySprite;
     public Sprite Background;
+    public AudioClip bossMusic;
     
 }

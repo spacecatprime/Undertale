@@ -28,8 +28,12 @@ public class ProjectileMovement : MonoBehaviour {
     public AudioClip healed;
     public AudioSource audioSource;
 
+    private float random;
+
     // Use this for initialization
     void Start () {
+        random = Random.Range(0.5f, 4f);
+
         gameManager = GameObject.Find("GameManager");
         audioSource = gameManager.GetComponent<AudioSource>();
 
@@ -51,6 +55,12 @@ public class ProjectileMovement : MonoBehaviour {
         movementType = projectileProperties.ProjectileMovementType.ToString();
 
         speed = projectileProperties.speed;
+
+        var instanceRB = this.gameObject.GetComponent<Rigidbody2D>();
+        if (ProjectileManager.staticProjectileList[Class].AffectedByGravity)
+            instanceRB.gravityScale = 0.05f;
+        else
+            instanceRB.gravityScale = 0;
 
         instanceSprite.flipX = ProjectileManager.staticProjectileList[Class].FlipX;
         instanceSprite.flipY = ProjectileManager.staticProjectileList[Class].FlipY;
@@ -102,6 +112,7 @@ public class ProjectileMovement : MonoBehaviour {
             watchPlayer = false;
 
         }
+        
 
         Move();
 
@@ -164,6 +175,10 @@ public class ProjectileMovement : MonoBehaviour {
         {
             movementDir = this.gameObject.transform.up;
         }
+        if (movementType == "SineWave")
+        {
+            movementDir = this.gameObject.transform.up;
+        }
     }
 
     void Move()
@@ -179,6 +194,12 @@ public class ProjectileMovement : MonoBehaviour {
         if (movementType == "Magnet")
         {
             transform.position += -movementDir * speed * 1/(movementDir.x + movementDir.y) * Time.deltaTime;
+        }
+        if(movementType == "SineWave")
+        {
+
+            transform.position += movementDir * speed * Time.deltaTime; //Move foward
+            transform.position -= transform.right * Mathf.Sin(Time.time * 2f * random) / 40; //Move side-to-side  1:20 ratio
         }
     }
 }

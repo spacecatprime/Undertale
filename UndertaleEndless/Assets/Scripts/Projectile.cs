@@ -14,7 +14,7 @@ public enum LocationSpecific
 
 public enum MovementType
 {
-    Straight, DirectPlayer, Magnet, Random
+    Straight, DirectPlayer, Magnet, Random, SineWave
 }
 
 public enum ProjectileType

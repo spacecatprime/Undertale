@@ -68,6 +68,7 @@ public class TextLimiter : MonoBehaviour {
         title.text = "";
         name = mainInputField.text;
         PlayerPrefs.SetString("Name", name);
+        PlayerPrefs.SetInt("Level", 1);
         PlayerPrefs.Save();
         audio.Stop();
         overlay.SetActive(true);

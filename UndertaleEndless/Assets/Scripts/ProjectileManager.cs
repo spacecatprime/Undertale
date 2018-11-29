@@ -10,6 +10,9 @@ public class ProjectileManager : MonoBehaviour {
     public GameObject projectileTemplate;
     public GameObject player;
     public Image enemyImage;
+    public Image battleBG;
+
+    public AudioSource music;
 
     public List<Projectile> projectilePropertiesList;
     public static List<Projectile> staticProjectileList;
@@ -30,8 +33,17 @@ public class ProjectileManager : MonoBehaviour {
 
     private void Awake() //Add all Projectile Scriptable Objects to List
     {
+
+
         enemyImage.sprite = enemy.EnemySprite;
-        enemyImage.color = new Color(1.0f, 1.0f, 1.0f);
+
+        battleBG.sprite = enemy.Background;
+
+        if(enemy.EnemySprite != null)
+            enemyImage.color = new Color(1.0f, 1.0f, 1.0f);
+
+        if (enemy.Background != null)
+            battleBG.color = new Color(1.0f, 1.0f, 1.0f);
 
         foreach (Projectile x in enemy.ProjectilesUsed) //Add enemy projectiles to list
         {
@@ -44,6 +56,9 @@ public class ProjectileManager : MonoBehaviour {
         }
 
         staticProjectileList = projectilePropertiesList;
+
+        music.clip = enemy.bossMusic;
+        music.Play();
     }
 
     void Update () {
@@ -86,7 +101,7 @@ public class ProjectileManager : MonoBehaviour {
 
         if (spawnPos == "Top")
         {
-            spawnLocationY = 3.0f;
+            spawnLocationY = 1.0f;
             spawnRot = Quaternion.Euler(new Vector3(0, 0, -180));
 
 
@@ -103,7 +118,7 @@ public class ProjectileManager : MonoBehaviour {
 
         else if (spawnPos == "Bottom")
         {
-            spawnLocationY = -3.0f;
+            spawnLocationY = -1.0f;
             spawnRot = Quaternion.Euler(new Vector3(0, 0, 0));
 
 
@@ -120,7 +135,7 @@ public class ProjectileManager : MonoBehaviour {
 
         else if (spawnPos == "Left")
         {
-            spawnLocationX = -3.0f;
+            spawnLocationX = -1.0f;
             spawnRot = Quaternion.Euler(new Vector3(0, 0, -90));
 
             if (specificSpawnPos == "None")
@@ -137,7 +152,7 @@ public class ProjectileManager : MonoBehaviour {
 
         else if (spawnPos == "Right")
         {
-            spawnLocationX = 3.0f;
+            spawnLocationX = 1.0f;
             spawnRot = Quaternion.Euler(new Vector3(0, 0, 90));
 
             if (specificSpawnPos == "None")

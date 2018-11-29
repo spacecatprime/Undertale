@@ -15,7 +15,7 @@ MonoBehaviour:
   spawnLocation: 0
   locationSpecific: 1
   specificSpawnLocation: 0
-  ProjectileMovementType: 0
+  ProjectileMovementType: 4
   AffectedByGravity: 0
   SpriteTint: {r: 1, g: 1, b: 1, a: 1}
   SpawnFrequency:
@@ -23,7 +23,7 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.49965382
+      value: 0.23728943
       inSlope: 0
       outSlope: 0
       tangentMode: 34
@@ -32,7 +32,7 @@ MonoBehaviour:
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
-      value: 0.49965382
+      value: 0.23728943
       inSlope: 0
       outSlope: 0
       tangentMode: 34
@@ -45,8 +45,8 @@ MonoBehaviour:
   image: {fileID: 21300000, guid: 4b9b6cdd84bcc4c09b781e2db2402621, type: 3}
   spawnSound: {fileID: 0}
   flightSound: {fileID: 0}
-  speed: 0.5
+  speed: 1
   FlipX: 0
   FlipY: 1
-  damage: 5
-  destroyOnTouch: 1
+  damage: 4
+  destroyOnTouch: 0
