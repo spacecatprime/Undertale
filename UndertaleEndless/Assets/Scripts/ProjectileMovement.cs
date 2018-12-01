@@ -12,7 +12,7 @@ public class ProjectileMovement : MonoBehaviour {
     public GameObject player;
 
     public float damage;
-
+    
     public float x;
     public float y;
     public float speed;
@@ -28,12 +28,14 @@ public class ProjectileMovement : MonoBehaviour {
     public AudioClip healed;
     public AudioSource audioSource;
 
-    private float random;
+    private float randomTP;
+    private float randomSpeed;
+    private float initializationTime;
+    private float timeSinceInitialization;
 
     // Use this for initialization
     void Start () {
-        random = Random.Range(0.5f, 4f);
-
+        initializationTime = Time.timeSinceLevelLoad;
         gameManager = GameObject.Find("GameManager");
         audioSource = gameManager.GetComponent<AudioSource>();
 
@@ -65,6 +67,14 @@ public class ProjectileMovement : MonoBehaviour {
         instanceSprite.flipX = ProjectileManager.staticProjectileList[Class].FlipX;
         instanceSprite.flipY = ProjectileManager.staticProjectileList[Class].FlipY;
 
+
+        if (ProjectileManager.staticProjectileList[Class].RandomTimePeriod) //Random Wave Movement
+            randomTP = Random.Range(0.5f, 1.5f);
+        else
+            randomTP = 1;
+
+        randomSpeed = Random.Range(0.9f, 1.1f);
+        
         getMovement();
     }
 
@@ -86,8 +96,8 @@ public class ProjectileMovement : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-
         damage = projectileProperties.damage;
+        timeSinceInitialization = Time.timeSinceLevelLoad - initializationTime;
 
         //Destroy if out of bounds
         if (this.gameObject.transform.position.x > 10 || this.gameObject.transform.position.x < -10 || this.gameObject.transform.position.y > 10 || this.gameObject.transform.position.x < -10)
@@ -179,6 +189,10 @@ public class ProjectileMovement : MonoBehaviour {
         {
             movementDir = this.gameObject.transform.up;
         }
+        if (movementType == "NegSineWave")
+        {
+            movementDir = this.gameObject.transform.up;
+        }
     }
 
     void Move()
@@ -197,9 +211,13 @@ public class ProjectileMovement : MonoBehaviour {
         }
         if(movementType == "SineWave")
         {
-
-            transform.position += movementDir * speed * Time.deltaTime; //Move foward
-            transform.position -= transform.right * Mathf.Sin(Time.time * 2f * random) / 40; //Move side-to-side  1:20 ratio
+            transform.position += movementDir * (speed * randomSpeed) * Time.deltaTime; //Move foward
+            transform.position += transform.right * Mathf.Sin((timeSinceInitialization) * ProjectileManager.staticProjectileList[Class].WaveFrequency * randomTP) / ProjectileManager.staticProjectileList[Class].WaveMagnitude;
+        }
+        if (movementType == "NegSineWave")
+        {
+            transform.position += movementDir * (speed * randomSpeed) * Time.deltaTime; //Move foward
+            transform.position -= transform.right * Mathf.Sin((timeSinceInitialization) * ProjectileManager.staticProjectileList[Class].WaveFrequency * randomTP) / ProjectileManager.staticProjectileList[Class].WaveMagnitude;
         }
     }
 }

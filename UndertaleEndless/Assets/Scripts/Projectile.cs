@@ -14,7 +14,7 @@ public enum LocationSpecific
 
 public enum MovementType
 {
-    Straight, DirectPlayer, Magnet, Random, SineWave
+    Straight, DirectPlayer, Magnet, Random, SineWave, NegSineWave
 }
 
 public enum ProjectileType
@@ -34,11 +34,18 @@ public class Projectile : ScriptableObject {
     public float specificSpawnLocation;
 
     public MovementType ProjectileMovementType;
+    public bool RandomTimePeriod;
+    public float WaveMagnitude;
+    public float WaveFrequency;
+
     public bool AffectedByGravity;
 
     public Color SpriteTint = new Color(1.0f, 1.0f, 1.0f);
 
     public AnimationCurve SpawnFrequency;
+    public bool RandomSpawnTime;
+    public float TimeMin;
+    public float TimeMax;
 
     public Sprite image;
 

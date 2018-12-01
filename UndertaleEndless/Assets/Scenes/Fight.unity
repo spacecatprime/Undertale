@@ -589,7 +589,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.16, y: 0.16}
+  m_Size: {x: 0.1, y: 0.1}
   m_EdgeRadius: 0
 --- !u!82 &741421211
 AudioSource:
@@ -732,7 +732,7 @@ Transform:
   m_GameObject: {fileID: 775719044}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.95, y: 0.95, z: 0.95}
   m_Children:
   - {fileID: 1192087159}
   m_Father: {fileID: 0}
@@ -1493,7 +1493,7 @@ Transform:
   m_GameObject: {fileID: 1192087157}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 9.710375, y: 9.710375, z: 9.710375}
+  m_LocalScale: {x: 9.5, y: 9.5, z: 9.5}
   m_Children: []
   m_Father: {fileID: 775719047}
   m_RootOrder: 0

@@ -9,13 +9,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d9079cb58a4ae48d4abd03fd6a2d1bbd, type: 3}
-  m_Name: TorielMagic
+  m_Name: TorielMagic 1
   m_EditorClassIdentifier: 
   projectileType: 0
   spawnLocation: 0
   locationSpecific: 1
   specificSpawnLocation: 0
-  ProjectileMovementType: 4
+  ProjectileMovementType: 5
   RandomTimePeriod: 0
   WaveMagnitude: 17.5
   WaveFrequency: 7.5
@@ -45,9 +45,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  RandomSpawnTime: 1
-  TimeMin: 0
-  TimeMax: 0
   image: {fileID: 21300000, guid: 4b9b6cdd84bcc4c09b781e2db2402621, type: 3}
   spawnSound: {fileID: 0}
   flightSound: {fileID: 0}

@@ -65,6 +65,9 @@ public class ProjectileManager : MonoBehaviour {
 
         spawnWaitTime = staticProjectileList[loop].SpawnFrequency.Evaluate(GameManager.score) + 0.1f;
 
+        if (staticProjectileList[loop].RandomSpawnTime)
+            spawnWaitTime = spawnWaitTime * Random.Range(staticProjectileList[loop].TimeMin, staticProjectileList[loop].TimeMax);
+
         spawnLoc = new Vector2(spawnLocationX, spawnLocationY);
 
         if (!spawnList[loop]) //Call spawn if not spawning is true
