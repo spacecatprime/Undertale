@@ -26,6 +26,8 @@ public enum ProjectileType
 [CreateAssetMenu(fileName = "New Projectile", menuName = "Projectile")]
 public class Projectile : ScriptableObject {
 
+    public int phase;
+
     public ProjectileType projectileType;
 
     public Location spawnLocation;
@@ -58,6 +60,5 @@ public class Projectile : ScriptableObject {
 
     public float damage;
     public bool destroyOnTouch;
-
 }
 

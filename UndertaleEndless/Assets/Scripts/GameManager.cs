@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour {
     public TextMeshProUGUI Level;
     public Slider healthBar;
 
-    public static float score;
+    public static float phaseTime;
     public static float health;
     public static int level = 1;
 
@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour {
 
         maxHealth = 20 + (level - 1) * 4;
         healthBar.maxValue = maxHealth;
-        score = 0;
+        phaseTime = 0;
         health = maxHealth;
 
         Level.text = ("LV " + level.ToString());
@@ -64,7 +64,7 @@ public class GameManager : MonoBehaviour {
     private void LateUpdate()
     {
 
-        score += 1.0f * Time.deltaTime;
+        phaseTime += 1.0f * Time.deltaTime;
 
         //Score.text = ("EXP " + Mathf.RoundToInt(score).ToString());
 
@@ -74,7 +74,7 @@ public class GameManager : MonoBehaviour {
     public static void Dead()
     {
         SaveObject.lastLocation = player.transform.position;
-        PlayerPrefs.SetInt("Experience", Mathf.RoundToInt(score));
+        //PlayerPrefs.SetInt("Experience", Mathf.RoundToInt(phaseTime));
         SceneManager.LoadScene("DeathScreen");
     }
 

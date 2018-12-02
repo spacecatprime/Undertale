@@ -99,12 +99,6 @@ public class ProjectileMovement : MonoBehaviour {
         damage = projectileProperties.damage;
         timeSinceInitialization = Time.timeSinceLevelLoad - initializationTime;
 
-        //Destroy if out of bounds
-        if (this.gameObject.transform.position.x > 10 || this.gameObject.transform.position.x < -10 || this.gameObject.transform.position.y > 10 || this.gameObject.transform.position.x < -10)
-        {
-            Destroy(this.gameObject);
-        }
-
         //Continually Rotate Towards Player and move
         if(watchPlayer && movementType == "Magnet")
         {
@@ -125,6 +119,14 @@ public class ProjectileMovement : MonoBehaviour {
         
 
         Move();
+
+
+        //Destroy if out of bounds
+        if (this.gameObject.transform.position.x > 5 || this.gameObject.transform.position.x < -5 || this.gameObject.transform.position.y > 5 || this.gameObject.transform.position.y < -5)
+        {
+            Destroy(this.gameObject);
+        }
+
 
     }
 
@@ -212,12 +214,12 @@ public class ProjectileMovement : MonoBehaviour {
         if(movementType == "SineWave")
         {
             transform.position += movementDir * (speed * randomSpeed) * Time.deltaTime; //Move foward
-            transform.position += transform.right * Mathf.Sin((timeSinceInitialization) * ProjectileManager.staticProjectileList[Class].WaveFrequency * randomTP) / ProjectileManager.staticProjectileList[Class].WaveMagnitude;
+            transform.position += transform.right * Mathf.Sin((timeSinceInitialization + 0.5f) * ProjectileManager.staticProjectileList[Class].WaveFrequency * randomTP) / ProjectileManager.staticProjectileList[Class].WaveMagnitude;
         }
         if (movementType == "NegSineWave")
         {
             transform.position += movementDir * (speed * randomSpeed) * Time.deltaTime; //Move foward
-            transform.position -= transform.right * Mathf.Sin((timeSinceInitialization) * ProjectileManager.staticProjectileList[Class].WaveFrequency * randomTP) / ProjectileManager.staticProjectileList[Class].WaveMagnitude;
+            transform.position -= transform.right * Mathf.Sin((timeSinceInitialization + 0.5f) * ProjectileManager.staticProjectileList[Class].WaveFrequency * randomTP) / ProjectileManager.staticProjectileList[Class].WaveMagnitude;
         }
     }
 }

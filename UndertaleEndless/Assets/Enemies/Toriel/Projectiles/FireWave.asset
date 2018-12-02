@@ -9,16 +9,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d9079cb58a4ae48d4abd03fd6a2d1bbd, type: 3}
-  m_Name: TorielMagic 1
+  m_Name: FireWave
   m_EditorClassIdentifier: 
+  phase: 0
   projectileType: 0
   spawnLocation: 0
   locationSpecific: 1
   specificSpawnLocation: 0
-  ProjectileMovementType: 5
+  ProjectileMovementType: 4
   RandomTimePeriod: 0
-  WaveMagnitude: 17.5
-  WaveFrequency: 7.5
+  WaveMagnitude: 65
+  WaveFrequency: 7
   AffectedByGravity: 1
   SpriteTint: {r: 1, g: 1, b: 1, a: 1}
   SpawnFrequency:
@@ -26,18 +27,45 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: -0.05555725
-      inSlope: 0
-      outSlope: 0
+      value: -0.0013427734
+      inSlope: -0.0011226424
+      outSlope: -0.0011226424
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 1
-      value: -0.05555725
-      inSlope: 0
-      outSlope: 0
+      time: 4.5858164
+      value: -0.0064910054
+      inSlope: -0.019108081
+      outSlope: -0.019108081
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 6.1857896
+      value: 0.071887314
+      inSlope: 0.10212544
+      outSlope: 0.10212544
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 7.3988867
+      value: 0.490772
+      inSlope: 0.9807368
+      outSlope: 0.9807368
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 7.4056644
+      value: 4.843222
+      inSlope: 642.1662
+      outSlope: 642.1662
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
@@ -45,11 +73,14 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  RandomSpawnTime: 1
+  TimeMin: 0.5
+  TimeMax: 2
   image: {fileID: 21300000, guid: 4b9b6cdd84bcc4c09b781e2db2402621, type: 3}
   spawnSound: {fileID: 0}
   flightSound: {fileID: 0}
-  speed: 0.75
+  speed: 0.5
   FlipX: 0
   FlipY: 1
-  damage: 4
+  damage: 2
   destroyOnTouch: 0

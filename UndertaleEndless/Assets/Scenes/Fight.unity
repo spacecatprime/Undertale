@@ -2408,15 +2408,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 11400000, guid: cf4f06126c714414b96cde7d25a98751, type: 2}
+  fighting: 1
   projectileTemplate: {fileID: 949232239}
   player: {fileID: 741421205}
   enemyImage: {fileID: 401896624}
   battleBG: {fileID: 1533175534}
   music: {fileID: 741421211}
   projectilePropertiesList: []
+  currentPhase: 0
+  maxPhases: 0
   spawnList: 
-  spawnWaitTime: 0
-  loop: 0
+  projectileType: 0
   spawnPos: 
   specificSpawnPos: 
   spawnLoc: {x: 0, y: 0}
