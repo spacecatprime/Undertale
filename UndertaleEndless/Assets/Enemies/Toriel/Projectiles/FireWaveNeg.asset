@@ -18,7 +18,7 @@ MonoBehaviour:
   specificSpawnLocation: 0
   ProjectileMovementType: 5
   RandomTimePeriod: 0
-  WaveMagnitude: 65
+  WaveMagnitude: 0.5
   WaveFrequency: 7
   AffectedByGravity: 1
   SpriteTint: {r: 1, g: 1, b: 1, a: 1}

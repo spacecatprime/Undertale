@@ -214,12 +214,12 @@ public class ProjectileMovement : MonoBehaviour {
         if(movementType == "SineWave")
         {
             transform.position += movementDir * (speed * randomSpeed) * Time.deltaTime; //Move foward
-            transform.position += transform.right * Mathf.Sin((timeSinceInitialization + 0.5f) * ProjectileManager.staticProjectileList[Class].WaveFrequency * randomTP) / ProjectileManager.staticProjectileList[Class].WaveMagnitude;
+            transform.position += transform.right * Mathf.Sin((timeSinceInitialization + 0.5f) * ProjectileManager.staticProjectileList[Class].WaveFrequency * randomTP) / ProjectileManager.staticProjectileList[Class].WaveMagnitude * Time.deltaTime;
         }
         if (movementType == "NegSineWave")
         {
             transform.position += movementDir * (speed * randomSpeed) * Time.deltaTime; //Move foward
-            transform.position -= transform.right * Mathf.Sin((timeSinceInitialization + 0.5f) * ProjectileManager.staticProjectileList[Class].WaveFrequency * randomTP) / ProjectileManager.staticProjectileList[Class].WaveMagnitude;
+            transform.position -= transform.right * Mathf.Sin((timeSinceInitialization + 0.5f) * ProjectileManager.staticProjectileList[Class].WaveFrequency * randomTP) / ProjectileManager.staticProjectileList[Class].WaveMagnitude * Time.deltaTime;
         }
     }
 }
