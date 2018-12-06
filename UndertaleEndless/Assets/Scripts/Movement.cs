@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour {
 
-    public Joystick joystick;
-
+    public Vector3 inputDir;
     public Vector3 targetDir;
     public Vector3 angleDir;
     public Vector3 angleDirNormal;
@@ -22,7 +21,6 @@ public class Movement : MonoBehaviour {
     public bool currentlyInvincible;
 
     public float speed;
-    private float originalSpeed;
     public Rigidbody2D rb;
 
     public Sprite normal;
@@ -31,7 +29,6 @@ public class Movement : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
-        originalSpeed = speed;
 
         sprite = this.gameObject.GetComponent<SpriteRenderer>();
 
@@ -79,23 +76,23 @@ public class Movement : MonoBehaviour {
 
         else //Player movement IS mobile (joystick)
         {
-            speed = originalSpeed;
-            Vector3 inputDir = (Vector3.right * joystick.Horizontal + Vector3.up * joystick.Vertical);
 
             if (inputDir != Vector3.zero)
                 moving = true;
             else
                 moving = false;
 
+
             targetDir = new Vector3(inputDir.x, inputDir.y);
 
+            angleDir = targetDir;
             //angleDir = new Vector3(Mathf.RoundToInt(SnapTo(targetDir, 45.0f).x), Mathf.RoundToInt(SnapTo(targetDir, 45.0f).y));
-            angleDir = new Vector3(SnapTo(targetDir, 45.0f).x, SnapTo(targetDir, 45.0f).y);
+            //angleDir = new Vector3(SnapTo(targetDir, 45.0f).x, SnapTo(targetDir, 45.0f).y);
 
             if (moving)
             {
                 rb.velocity = angleDir;
-                //rb.velocity = rb.velocity * speed * Time.deltaTime;
+                rb.velocity = rb.velocity * speed * Time.deltaTime;
                 rb.velocity = speed * (rb.velocity.normalized);
             }
             else
@@ -120,4 +117,48 @@ public class Movement : MonoBehaviour {
         GameManager.isInvincible = false;
     }
 
+    public void N()
+    {
+        inputDir = new Vector3(0.0f, 1.0f);
+    }
+
+    public void NE()
+    {
+        inputDir = new Vector3(0.7f, 0.7f);
+    }
+
+    public void E()
+    {
+        inputDir = new Vector3(1.0f, 0f);
+    }
+
+    public void SE()
+    {
+        inputDir = new Vector3(0.7f, -0.7f);
+    }
+
+    public void S()
+    {
+        inputDir = new Vector3(0.0f, -1.0f);
+    }
+
+    public void SW()
+    {
+        inputDir = new Vector3(-1.0f, -0.7f);
+    }
+
+    public void W()
+    {
+        inputDir = new Vector3(-1.0f, 0f);
+    }
+
+    public void NW()
+    {
+        inputDir = new Vector3(-0.7f, 0.7f);
+    }
+
+    public void ZeroMovement()
+    {
+        inputDir = Vector3.zero;
+    }
 }

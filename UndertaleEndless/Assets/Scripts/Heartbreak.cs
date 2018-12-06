@@ -30,7 +30,7 @@ public class Heartbreak : MonoBehaviour {
         audioSource = Camera.GetComponent<AudioSource>();
         audioReverb = Camera.GetComponent<AudioReverbFilter>();
 
-        numberOfDebris = Random.Range(3, 8);
+        numberOfDebris = 6;
 
         StartCoroutine(deathSounds());
 
@@ -68,7 +68,7 @@ public class Heartbreak : MonoBehaviour {
         for (int i = 0; i < numberOfDebris; i++)
         {
             var rotation = new Quaternion(0, 0, 0, 0);
-            var position = new Vector2(this.transform.position.x + Random.Range(-0.1f, 0.1f), this.transform.position.y + Random.Range(-0.1f, 0.1f));
+            var position = new Vector2(this.transform.position.x + Random.Range(-0.15f, 0.15f), this.transform.position.y + Random.Range(-0.15f, 0.15f));
             GameObject instance = (GameObject)Instantiate<GameObject>(debrisTemplate, position, rotation); //Instantiate Debris
             debrisList.Add(instance);
         }

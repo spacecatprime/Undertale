@@ -68,7 +68,7 @@ public class ProjectileMovement : MonoBehaviour {
         instanceSprite.flipY = ProjectileManager.staticProjectileList[Class].FlipY;
 
 
-        if (ProjectileManager.staticProjectileList[Class].RandomTimePeriod) //Random Wave Movement
+        if (ProjectileManager.staticProjectileList[Class].RandomWaveTime) //Random Wave Movement
             randomTP = Random.Range(0.5f, 1.5f);
         else
             randomTP = 1;

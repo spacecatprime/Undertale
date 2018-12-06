@@ -32,12 +32,12 @@ public class ProjectileManager : MonoBehaviour {
 
     private float phaseTimer;
 
-    public int projectileType = 0;
+    private int projectileType = 0;
 
-    public string spawnPos;
-    public string specificSpawnPos;
-    public Vector2 spawnLoc;
-    public Quaternion spawnRot;
+    private string spawnPos;
+    private string specificSpawnPos;
+    private Vector2 spawnLoc;
+    private Quaternion spawnRot;
 
     private void Awake() //Add all Projectile Scriptable Objects to List
     {
@@ -59,7 +59,6 @@ public class ProjectileManager : MonoBehaviour {
             foreach (Projectile y in x.ProjectileCombo)
             {
                 projectilePropertiesList.Add(y);
-                y.phase = maxPhases;
                 spawnList.Add(false); //add spawning regulator bool
             }
             fightPhaseList.Add(x);
@@ -83,10 +82,14 @@ public class ProjectileManager : MonoBehaviour {
         if (projectileType >= staticProjectileList.Count) //Make sure spawning projectile type never goes above max projectiles in list
             projectileType = 0;
 
-
-        while (staticProjectileList[projectileType].phase != currentPhase) //Add 1 until reach desired phase
+        //         !If  CurrentPhase's         Projectiles     has       the Current projectile in it
+        while(!fightPhaseList[currentPhase].ProjectileCombo.Contains(staticProjectileList[projectileType]))
         {
             projectileType += 1;
+            if(projectileType > (staticProjectileList.Count - 1))
+            {
+                projectileType = 0;
+            }
         }
 
         spawnWaitTime = staticProjectileList[projectileType].SpawnFrequency.Evaluate(GameManager.phaseTime) + 0.1f;
@@ -131,6 +134,7 @@ public class ProjectileManager : MonoBehaviour {
             phaseTimer = 0;
             currentPhase += 1;
             GameManager.phaseTime = 0;
+            Debug.Log("Next Phase! Coming up: Phase " + currentPhase);
         }
 
         if(currentPhase > maxPhases)
@@ -159,7 +163,20 @@ public class ProjectileManager : MonoBehaviour {
 
         }
 
-        if (spawnPos == "Top")
+        if(spawnPos == "Specific")
+        {
+            if (specificSpawnPos == "SpecificXY")
+            {
+                spawnLocationX = staticProjectileList[loop].specificSpawnX;
+                spawnLocationY = staticProjectileList[loop].specificSpawnY;
+            }
+            else
+            {
+                Debug.Log("You declared the spawn location as specific, but did not declare it as SpecificXY!" + staticProjectileList[loop]);
+            }
+        }
+
+        else if (spawnPos == "Top")
         {
             spawnLocationY = 1.0f;
             spawnRot = Quaternion.Euler(new Vector3(0, 0, -180));
@@ -171,7 +188,7 @@ public class ProjectileManager : MonoBehaviour {
             }
             else
             {
-                spawnLocationX = staticProjectileList[loop].specificSpawnLocation;
+                spawnLocationX = staticProjectileList[loop].specificSpawnX;
             }
 
         }
@@ -188,7 +205,7 @@ public class ProjectileManager : MonoBehaviour {
             }
             else
             {
-                spawnLocationX = staticProjectileList[loop].specificSpawnLocation;
+                spawnLocationX = staticProjectileList[loop].specificSpawnX;
             }
 
         }
@@ -204,7 +221,7 @@ public class ProjectileManager : MonoBehaviour {
             }
             else
             {
-                spawnLocationY = staticProjectileList[loop].specificSpawnLocation;
+                spawnLocationY = staticProjectileList[loop].specificSpawnY;
             }
 
 
@@ -221,9 +238,8 @@ public class ProjectileManager : MonoBehaviour {
             }
             else
             {
-                spawnLocationY = staticProjectileList[loop].specificSpawnLocation;
+                spawnLocationY = staticProjectileList[loop].specificSpawnY;
             }
-
         }
 
         var coords = new Vector2(spawnLocationX, spawnLocationY);

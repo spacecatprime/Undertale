@@ -13,4 +13,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ProjectileCombo:
   - {fileID: 11400000, guid: d46a2a9b209e3d44e8d384c2585dbe60, type: 2}
+  - {fileID: 11400000, guid: d3165c9cfd0bf4644b62468bb7af607d, type: 2}
+  - {fileID: 11400000, guid: 1808be52b7935497aa8645d34e4c1a17, type: 2}
   AttackLength: 10

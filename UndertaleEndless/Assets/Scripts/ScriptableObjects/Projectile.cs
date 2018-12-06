@@ -4,12 +4,12 @@ using UnityEngine;
 
 public enum Location
 {
-    Top, Bottom, Left, Right, Random
+    Top, Bottom, Left, Right, Random, Specific
 }
 
 public enum LocationSpecific
 {
-    None, SpecificX, SpecificY
+    None, SpecificX, SpecificY, SpecificXY
 }
 
 public enum MovementType
@@ -26,17 +26,25 @@ public enum ProjectileType
 [CreateAssetMenu(fileName = "New Projectile", menuName = "Projectile")]
 public class Projectile : ScriptableObject {
 
-    public int phase;
+    public Sprite image;
+
+    public AudioClip spawnSound;
+    public AudioClip flightSound;
+
+    public float speed;
+    public bool FlipX;
+    public bool FlipY;
 
     public ProjectileType projectileType;
 
     public Location spawnLocation;
 
     public LocationSpecific locationSpecific;
-    public float specificSpawnLocation;
+    public float specificSpawnX;
+    public float specificSpawnY;
 
     public MovementType ProjectileMovementType;
-    public bool RandomTimePeriod;
+    public bool RandomWaveTime;
     public float WaveMagnitude;
     public float WaveFrequency;
 
@@ -48,15 +56,6 @@ public class Projectile : ScriptableObject {
     public bool RandomSpawnTime;
     public float TimeMin;
     public float TimeMax;
-
-    public Sprite image;
-
-    public AudioClip spawnSound;
-    public AudioClip flightSound;
-
-    public float speed;
-    public bool FlipX;
-    public bool FlipY;
 
     public float damage;
     public bool destroyOnTouch;
