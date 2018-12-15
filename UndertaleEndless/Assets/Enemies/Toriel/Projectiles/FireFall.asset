@@ -53,3 +53,4 @@ MonoBehaviour:
   FlipY: 1
   damage: 2
   destroyOnTouch: 0
+  maskInteraction: 1

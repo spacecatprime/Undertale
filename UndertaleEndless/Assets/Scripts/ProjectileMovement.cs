@@ -20,6 +20,7 @@ public class ProjectileMovement : MonoBehaviour {
 
     public bool watchPlayer = false;
 
+    public string maskInteraction;
     public string movementType;
     public string projectileTypeTint;
     public Vector3 movementDir;
@@ -44,7 +45,7 @@ public class ProjectileMovement : MonoBehaviour {
 
         projectileProperties = ProjectileManager.staticProjectileList[Class];
 
-
+        maskInteraction = projectileProperties.maskInteraction.ToString();
 
         //Variables
         var instanceSprite = this.gameObject.GetComponent<SpriteRenderer>();
@@ -73,6 +74,13 @@ public class ProjectileMovement : MonoBehaviour {
             randomTP = Random.Range(0.5f, 1.5f);
         else
             randomTP = 1;
+
+        if(maskInteraction == "None")
+            instanceSprite.maskInteraction = SpriteMaskInteraction.None;
+        else if(maskInteraction == "VisibleInsideMask")
+            instanceSprite.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
+        else
+            instanceSprite.maskInteraction = SpriteMaskInteraction.VisibleOutsideMask;
 
         randomSpeed = Random.Range(0.9f, 1.1f);
 

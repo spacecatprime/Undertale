@@ -24,6 +24,10 @@ public enum ProjectileType
     Regular, BlueNoMove, OrangeYesMove, Heal
 }
 
+public enum MaskInteraction
+{
+    None, VisibleInsideMask, VisibleOutsideMask
+}
 
 [CreateAssetMenu(fileName = "New Projectile", menuName = "Projectile")]
 public class Projectile : ScriptableObject {
@@ -119,7 +123,7 @@ public class Projectile : ScriptableObject {
     public Vector2 timeSpawnRange = new Vector2(2.5f, 7.5f);
 
     [Box(4, 4, 4, 4, order = 1)]
-    [Group("Misc", 6)]
+    [Group("Misc", 7)]
     [Heading(title = "Miscellaneous Settings", order = 1)]
     [StackableField]
     public bool FlipX;
@@ -133,6 +137,9 @@ public class Projectile : ScriptableObject {
     [InGroup("Misc")]
     [StackableField]
     public bool destroyOnTouch;
+    [InGroup("Misc")]
+    [StackableField]
+    public MaskInteraction maskInteraction;
 
     public bool WavesVisible()
     {
