@@ -17,7 +17,7 @@ MonoBehaviour:
   speed: 1
   FlipX: 0
   FlipY: 1
-  projectileType: 0
+  projectileType: 2
   spawnLocation: 0
   locationSpecific: 1
   specificSpawnX: 0.7
@@ -27,7 +27,6 @@ MonoBehaviour:
   WaveMagnitude: 0
   WaveFrequency: 0
   AffectedByGravity: 1
-  SpriteTint: {r: 1, g: 1, b: 1, a: 1}
   SpawnFrequency:
     serializedVersion: 2
     m_Curve: []

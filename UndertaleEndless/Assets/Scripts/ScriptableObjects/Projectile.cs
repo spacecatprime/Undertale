@@ -50,8 +50,6 @@ public class Projectile : ScriptableObject {
 
     public bool AffectedByGravity;
 
-    public Color SpriteTint = new Color(1.0f, 1.0f, 1.0f);
-
     public AnimationCurve SpawnFrequency;
     public bool RandomSpawnTime;
     public float TimeMin;

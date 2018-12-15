@@ -12,7 +12,7 @@ public class ProjectileMovement : MonoBehaviour {
     public GameObject player;
 
     public float damage;
-    
+
     public float x;
     public float y;
     public float speed;
@@ -21,6 +21,7 @@ public class ProjectileMovement : MonoBehaviour {
     public bool watchPlayer = false;
 
     public string movementType;
+    public string projectileTypeTint;
     public Vector3 movementDir;
     public Vector3 vectorToTarget;
 
@@ -34,7 +35,7 @@ public class ProjectileMovement : MonoBehaviour {
     private float timeSinceInitialization;
 
     // Use this for initialization
-    void Start () {
+    void Start() {
         initializationTime = Time.timeSinceLevelLoad;
         gameManager = GameObject.Find("GameManager");
         audioSource = gameManager.GetComponent<AudioSource>();
@@ -52,9 +53,9 @@ public class ProjectileMovement : MonoBehaviour {
         var instanceCollider = this.gameObject.GetComponent<PolygonCollider2D>();                      //Get Collider
         instanceCollider.isTrigger = true;
 
-        instanceSprite.color = projectileProperties.SpriteTint;                                         //Set colour
-
         movementType = projectileProperties.ProjectileMovementType.ToString();
+
+        projectileTypeTint = projectileProperties.projectileType.ToString();
 
         speed = projectileProperties.speed;
 
@@ -74,8 +75,9 @@ public class ProjectileMovement : MonoBehaviour {
             randomTP = 1;
 
         randomSpeed = Random.Range(0.9f, 1.1f);
-        
-        getMovement();
+
+        SetTint();
+        GetMovement();
     }
 
     public enum FacingDirection //Facing2D
@@ -95,12 +97,12 @@ public class ProjectileMovement : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update () {
+    void Update() {
         damage = projectileProperties.damage;
         timeSinceInitialization = Time.timeSinceLevelLoad - initializationTime;
 
         //Continually Rotate Towards Player and move
-        if(watchPlayer && movementType == "Magnet")
+        if (watchPlayer && movementType == "Magnet")
         {
             movementDir = player.transform.position - transform.position;
             var tempFacing = ProjectileMovement.FaceObject(transform.position, player.transform.position, FacingDirection.UP);
@@ -108,7 +110,7 @@ public class ProjectileMovement : MonoBehaviour {
         }
 
         //Set rotation to player and then move
-        else if(watchPlayer && movementType == "DirectPlayer")
+        else if (watchPlayer && movementType == "DirectPlayer")
         {
             movementDir = player.transform.position - transform.position;
             var tempFacing = ProjectileMovement.FaceObject(transform.position, player.transform.position, FacingDirection.UP);
@@ -116,7 +118,7 @@ public class ProjectileMovement : MonoBehaviour {
             watchPlayer = false;
 
         }
-        
+
 
         Move();
 
@@ -136,26 +138,48 @@ public class ProjectileMovement : MonoBehaviour {
 
     void OnTriggerStay2D(Collider2D other) //Collision
     {
-        if(other.tag == "Player" && damage > 0 && !GameManager.isInvincible) //Inflicts damage when vulnerable
+        if (other.tag == "Player" && damage > 0 && !GameManager.isInvincible) //Inflicts damage when vulnerable
         {
             //Play Damage
-
-            GameManager.health -= damage;
-            GameManager.isInvincible = true;
-            audioSource.clip = damaged;
-            audioSource.Play();
-            CameraShake.shakeTrue = true;
-            if (projectileProperties.destroyOnTouch)
-                Destroy(this.gameObject);
+            if (projectileTypeTint == "Regular" || projectileTypeTint == "Heal")
+            {
+                GameManager.health -= damage;
+                GameManager.isInvincible = true;
+                audioSource.clip = damaged;
+                audioSource.Play();
+                CameraShake.shakeTrue = true;
+                if (projectileProperties.destroyOnTouch)
+                    Destroy(this.gameObject);
+            }
+            if (projectileTypeTint == "BlueNoMove" && Movement.moving) //if Blue, then if moving
+            {
+                GameManager.health -= damage;
+                GameManager.isInvincible = true;
+                audioSource.clip = damaged;
+                audioSource.Play();
+                CameraShake.shakeTrue = true;
+                if (projectileProperties.destroyOnTouch)
+                    Destroy(this.gameObject);
+            }
+            if (projectileTypeTint == "OrangeYesMove" && !Movement.moving) //if Orange, then if !moving
+            {
+                GameManager.health -= damage;
+                GameManager.isInvincible = true;
+                audioSource.clip = damaged;
+                audioSource.Play();
+                CameraShake.shakeTrue = true;
+                if (projectileProperties.destroyOnTouch)
+                    Destroy(this.gameObject);
+            }
 
         }
 
         if (other.tag == "Player" && damage < 0) //Heals player regardless
-            {
-                //Play Heal
-                GameManager.health -= damage;
-                audioSource.clip = healed;
-                audioSource.Play();
+        {
+            //Play Heal
+            GameManager.health -= damage;
+            audioSource.clip = healed;
+            audioSource.Play();
 
             if (projectileProperties.destroyOnTouch)
                 Destroy(this.gameObject);
@@ -163,13 +187,31 @@ public class ProjectileMovement : MonoBehaviour {
         }
     }
 
+    void SetTint()
+    {
+        if (projectileTypeTint == "Regular") //White
+        {
+            this.gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f);
+        }
+        if (projectileTypeTint == "BlueNoMove") //Blue
+        {
+            this.gameObject.GetComponent<SpriteRenderer>().color = new Color(0f, 0.8666667f, 1f); 
+        }
+        if (projectileTypeTint == "OrangeYesMove") //Orange
+        {
+            this.gameObject.GetComponent<SpriteRenderer>().color = new Color(0.9882354f, 0.6509804f, 0f); 
+        }
+        if (projectileTypeTint == "Heal") //Green
+        {
+            this.gameObject.GetComponent<SpriteRenderer>().color = new Color(0.01568628f, 0.8352942f, 0f);
+        }
+    }
 
 
 
 
 
-
-    void getMovement()
+    void GetMovement()
     {
         if (movementType == "Straight")
         {

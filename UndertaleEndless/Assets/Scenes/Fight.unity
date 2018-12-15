@@ -704,7 +704,6 @@ MonoBehaviour:
   targetDir: {x: 0, y: 0, z: 0}
   angleDir: {x: 0, y: 0, z: 0}
   angleDirNormal: {x: 0, y: 0, z: 0}
-  moving: 0
   player: {fileID: 741421205}
   x: 0
   y: 0
@@ -1516,6 +1515,7 @@ MonoBehaviour:
   Class: 0
   watchPlayer: 0
   movementType: 
+  projectileTypeTint: 
   movementDir: {x: 0, y: 0, z: 0}
   vectorToTarget: {x: 0, y: 0, z: 0}
   damaged: {fileID: 8300000, guid: 1339c12452a423e4d96cea1b08f9409b, type: 3}

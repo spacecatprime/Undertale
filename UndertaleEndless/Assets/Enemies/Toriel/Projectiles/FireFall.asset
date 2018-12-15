@@ -11,17 +11,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9079cb58a4ae48d4abd03fd6a2d1bbd, type: 3}
   m_Name: FireFall
   m_EditorClassIdentifier: 
-  phase: 1
+  image: {fileID: 21300000, guid: 4b9b6cdd84bcc4c09b781e2db2402621, type: 3}
+  spawnSound: {fileID: 0}
+  flightSound: {fileID: 0}
+  speed: 1
+  FlipX: 0
+  FlipY: 1
   projectileType: 0
   spawnLocation: 0
   locationSpecific: 0
-  specificSpawnLocation: 0
+  specificSpawnX: 0
+  specificSpawnY: 0
   ProjectileMovementType: 0
-  RandomTimePeriod: 0
+  RandomWaveTime: 0
   WaveMagnitude: 0
   WaveFrequency: 0
   AffectedByGravity: 1
-  SpriteTint: {r: 1, g: 1, b: 1, a: 1}
   SpawnFrequency:
     serializedVersion: 2
     m_Curve:
@@ -49,11 +54,5 @@ MonoBehaviour:
   RandomSpawnTime: 0
   TimeMin: 0
   TimeMax: 0
-  image: {fileID: 21300000, guid: 4b9b6cdd84bcc4c09b781e2db2402621, type: 3}
-  spawnSound: {fileID: 0}
-  flightSound: {fileID: 0}
-  speed: 1
-  FlipX: 0
-  FlipY: 1
   damage: 2
   destroyOnTouch: 0

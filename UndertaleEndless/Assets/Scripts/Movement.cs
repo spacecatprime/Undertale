@@ -10,7 +10,7 @@ public class Movement : MonoBehaviour {
     public Vector3 angleDirNormal;
 
 
-    public bool moving;
+    public static bool moving;
 
     public GameObject player;
     public float x = 0;
