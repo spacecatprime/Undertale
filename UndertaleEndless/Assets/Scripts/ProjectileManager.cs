@@ -92,10 +92,10 @@ public class ProjectileManager : MonoBehaviour {
             }
         }
 
-        spawnWaitTime = staticProjectileList[projectileType].SpawnFrequency.Evaluate(GameManager.phaseTime) + 0.1f;
-
-        if (staticProjectileList[projectileType].RandomSpawnTime == true)
-            spawnWaitTime = spawnWaitTime * UnityEngine.Random.Range(staticProjectileList[projectileType].TimeMin, staticProjectileList[projectileType].TimeMax);
+        if (staticProjectileList[projectileType].RandomSpawnFrequency == true) //Wait time for spawning
+            spawnWaitTime = UnityEngine.Random.Range(staticProjectileList[projectileType].timeSpawnRange.x, staticProjectileList[projectileType].timeSpawnRange.y);
+        else
+            spawnWaitTime = staticProjectileList[projectileType].SpawnFrequency.Evaluate(GameManager.phaseTime);
 
         spawnLoc = new Vector2(spawnLocationX, spawnLocationY);
 
@@ -113,7 +113,7 @@ public class ProjectileManager : MonoBehaviour {
     {
         spawnList[Class] = true;
 
-        yield return new WaitForSeconds(spawnWaitTime * 2.0f);
+        yield return new WaitForSeconds(spawnWaitTime);
 
         GameObject instance = (GameObject)Instantiate<GameObject>(projectileTemplate, SpawnLocation(Class), spawnRot); //Instantiate Projectile
         var instanceSprite = instance.GetComponent<SpriteRenderer>();
@@ -172,7 +172,17 @@ public class ProjectileManager : MonoBehaviour {
             }
             else
             {
-                Debug.Log("You declared the spawn location as specific, but did not declare it as SpecificXY!" + staticProjectileList[loop]);
+                if (specificSpawnPos == "SpecificX")
+                {
+                    spawnLocationX = staticProjectileList[loop].specificSpawnX;
+                    spawnLocationY = UnityEngine.Random.Range(-0.75f, 0.75f);
+                }
+                if (specificSpawnPos == "SpecificY")
+                {
+                    spawnLocationY = staticProjectileList[loop].specificSpawnY;
+                    spawnLocationX = UnityEngine.Random.Range(-0.75f, 0.75f);
+                }
+
             }
         }
 

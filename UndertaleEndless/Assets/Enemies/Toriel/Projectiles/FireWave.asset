@@ -12,27 +12,23 @@ MonoBehaviour:
   m_Name: FireWave
   m_EditorClassIdentifier: 
   image: {fileID: 21300000, guid: 4b9b6cdd84bcc4c09b781e2db2402621, type: 3}
-  spawnSound: {fileID: 0}
-  flightSound: {fileID: 0}
-  speed: 0.5
-  FlipX: 0
-  FlipY: 1
   projectileType: 0
-  spawnLocation: 0
-  locationSpecific: 1
-  specificSpawnX: 0
-  specificSpawnY: 0
   ProjectileMovementType: 4
-  RandomWaveTime: 0
+  speed: 0.5
+  AffectedByGravity: 1
   WaveMagnitude: 0.5
   WaveFrequency: 7
-  AffectedByGravity: 1
+  RandomWaveTime: 0
+  spawnLocation: 0
+  locationSpecific: 0
+  specificSpawnX: 0
+  specificSpawnY: 0
   SpawnFrequency:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: -0.0013427734
+      value: 0.104003906
       inSlope: -0.0011226424
       outSlope: -0.0011226424
       tangentMode: 34
@@ -41,7 +37,7 @@ MonoBehaviour:
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 4.5858164
-      value: -0.0064910054
+      value: 0.098855674
       inSlope: -0.019108081
       outSlope: -0.019108081
       tangentMode: 0
@@ -50,7 +46,7 @@ MonoBehaviour:
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 6.1857896
-      value: 0.071887314
+      value: 0.177234
       inSlope: 0.10212544
       outSlope: 0.10212544
       tangentMode: 0
@@ -59,7 +55,7 @@ MonoBehaviour:
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 7.3988867
-      value: 0.490772
+      value: 0.5961187
       inSlope: 0.9807368
       outSlope: 0.9807368
       tangentMode: 0
@@ -68,7 +64,7 @@ MonoBehaviour:
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 7.4056644
-      value: 4.843222
+      value: 4.948569
       inSlope: 642.1662
       outSlope: 642.1662
       tangentMode: 34
@@ -78,8 +74,9 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  RandomSpawnTime: 1
-  TimeMin: 0.5
-  TimeMax: 2
+  RandomSpawnFrequency: 0
+  timeSpawnRange: {x: 25, y: 50}
+  FlipX: 0
+  FlipY: 1
   damage: 2
   destroyOnTouch: 0
