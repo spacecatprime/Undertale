@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEditorInternal;
+//using UnityEditorInternal;
 using System.Linq;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -44,27 +44,27 @@ namespace StackableDecorator
             if (m_Exclude == null)
                 m_Exclude = exclude.Split(',');
 
-            var layers = InternalEditorUtility.layers.Except(m_Exclude).ToArray();
+            //var layers = InternalEditorUtility.layers.Except(m_Exclude).ToArray();
             string layer = string.Empty;
             if (property.propertyType == SerializedPropertyType.String)
                 layer = property.stringValue;
             if (property.propertyType == SerializedPropertyType.Integer)
                 layer = LayerMask.LayerToName(property.intValue);
 
-            int selected = ArrayUtility.IndexOf(layers, layer);
+            //int selected = ArrayUtility.IndexOf(layers, layer);
             label = EditorGUI.BeginProperty(position, label, property);
-            var value = EditorGUI.Popup(position, label.text, selected, layers);
-            if (value < 0 || value >= layers.Length)
+            //var value = EditorGUI.Popup(position, label.text, selected, layers);
+            //if (value < 0 || value >= layers.Length)
             {
                 if (!property.hasMultipleDifferentValues)
                     EditorGUI.LabelField(position, " ", placeHolder, s_Style);
             }
-            else if (value != selected)
+            //else if (value != selected)
             {
-                if (property.propertyType == SerializedPropertyType.Integer)
-                    property.intValue = LayerMask.NameToLayer(layers[value]);
-                else
-                    property.stringValue = layers[value];
+                //if (property.propertyType == SerializedPropertyType.Integer)
+                    //property.intValue = LayerMask.NameToLayer(layers[value]);
+                //else
+                    //property.stringValue = layers[value];
             }
             EditorGUI.EndProperty();
         }
