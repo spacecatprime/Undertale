@@ -1486,7 +1486,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 949232239}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -2.35, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 0}
   m_Children: []
@@ -1506,16 +1506,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectilePropertiesList: []
   projectileProperties: {fileID: 0}
+  childToSpawn: {fileID: 0}
   gameManager: {fileID: 0}
+  projectileTemplate: {fileID: 949232239}
   player: {fileID: 741421205}
+  spawnWaitTime: 0
   damage: 0
+  canSpawn: 1
   x: 0
   y: 0
   speed: 0
   Class: 0
-  watchPlayer: 0
+  maskInteraction: 
   movementType: 
   projectileTypeTint: 
+  movementDirection: 
   movementDir: {x: 0, y: 0, z: 0}
   vectorToTarget: {x: 0, y: 0, z: 0}
   damaged: {fileID: 8300000, guid: 1339c12452a423e4d96cea1b08f9409b, type: 3}
@@ -2009,8 +2014,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1192087157}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 9.5, y: 9.5, z: 9.5}
+  m_LocalPosition: {x: 0.000001, y: -0.000004, z: 0}
+  m_LocalScale: {x: 9.609, y: 9.609, z: 9.5}
   m_Children: []
   m_Father: {fileID: 775719047}
   m_RootOrder: 0

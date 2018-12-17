@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d9079cb58a4ae48d4abd03fd6a2d1bbd, type: 3}
-  m_Name: FireFall
+  m_Name: FireBarrierRight
   m_EditorClassIdentifier: 
   image: {fileID: 21300000, guid: 4b9b6cdd84bcc4c09b781e2db2402621, type: 3}
   relationships: 0
@@ -18,42 +18,24 @@ MonoBehaviour:
   ProjectileMovementType: 0
   movementDirection: 5
   speed: 1
-  AffectedByGravity: 1
+  AffectedByGravity: 0
   WaveMagnitude: 0
   WaveFrequency: 0
   RandomWaveTime: 0
   spawnLocation: 5
-  locationSpecific: 1
-  specificSpawnX: 0
+  locationSpecific: 2
+  specificSpawnX: 0.7
   specificSpawnY: 0.75
   SpawnFrequency:
     serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0.19948578
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0.19948578
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0
+    m_Curve: []
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  RandomSpawnFrequency: 0
-  timeSpawnRange: {x: 0.8346257, y: 1.8529997}
+  RandomSpawnFrequency: 1
+  timeSpawnRange: {x: 0, y: 0.5060426}
   FlipX: 0
   FlipY: 1
-  damage: 2
+  damage: 1
   destroyOnTouch: 0
   maskInteraction: 1

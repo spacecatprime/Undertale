@@ -12,8 +12,11 @@ MonoBehaviour:
   m_Name: FireWave
   m_EditorClassIdentifier: 
   image: {fileID: 21300000, guid: 4b9b6cdd84bcc4c09b781e2db2402621, type: 3}
+  relationships: 0
   projectileType: 0
+  parent: {fileID: 0}
   ProjectileMovementType: 4
+  movementDirection: 5
   speed: 0.5
   AffectedByGravity: 1
   WaveMagnitude: 0.5

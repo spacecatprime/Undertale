@@ -12,10 +12,13 @@ MonoBehaviour:
   m_Name: FireBarrierLeft
   m_EditorClassIdentifier: 
   image: {fileID: 21300000, guid: 4b9b6cdd84bcc4c09b781e2db2402621, type: 3}
+  relationships: 0
   projectileType: 0
+  parent: {fileID: 0}
   ProjectileMovementType: 0
+  movementDirection: 5
   speed: 1
-  AffectedByGravity: 1
+  AffectedByGravity: 0
   WaveMagnitude: 0
   WaveFrequency: 0
   RandomWaveTime: 0
@@ -30,7 +33,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   RandomSpawnFrequency: 1
-  timeSpawnRange: {x: 0.14832883, y: 0.74606997}
+  timeSpawnRange: {x: 0, y: 0.51268303}
   FlipX: 0
   FlipY: 1
   damage: 1

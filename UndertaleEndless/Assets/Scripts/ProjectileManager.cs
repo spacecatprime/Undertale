@@ -32,7 +32,7 @@ public class ProjectileManager : MonoBehaviour {
 
     private float phaseTimer;
 
-    private int projectileType = 0;
+    public int projectileType = 0;
 
     private string spawnPos;
     private string specificSpawnPos;
@@ -82,11 +82,12 @@ public class ProjectileManager : MonoBehaviour {
         if (projectileType >= staticProjectileList.Count) //Make sure spawning projectile type never goes above max projectiles in list
             projectileType = 0;
 
-        //         !If  CurrentPhase's         Projectiles     has       the Current projectile in it
+
+        //Make sure only spawn in projectile in the specified phase
         while(!fightPhaseList[currentPhase].ProjectileCombo.Contains(staticProjectileList[projectileType]))
         {
             projectileType += 1;
-            if(projectileType > (staticProjectileList.Count - 1))
+            if (projectileType == (staticProjectileList.Count-1))
             {
                 projectileType = 0;
             }
@@ -100,7 +101,7 @@ public class ProjectileManager : MonoBehaviour {
         spawnLoc = new Vector2(spawnLocationX, spawnLocationY);
 
 
-        if (!spawnList[projectileType] && fighting) //Call spawn if [not spawning is true] and [should fight]
+        if (!spawnList[projectileType] && fighting) //Call spawn if [not already spawning] and "[should fight]"
         {
             StartCoroutine(SpawnProjectile(projectileType));
         }
@@ -112,8 +113,16 @@ public class ProjectileManager : MonoBehaviour {
     IEnumerator SpawnProjectile(int Class) //Spawning Sequence
     {
         spawnList[Class] = true;
-
         yield return new WaitForSeconds(spawnWaitTime);
+
+        if (staticProjectileList[Class].spawnDeadTime != 0)
+        {
+            StartCoroutine(DeadTimer(Class, staticProjectileList[Class].spawnDeadTime));
+        }
+        else
+        {
+            spawnList[Class] = false;
+        }
 
         GameObject instance = (GameObject)Instantiate<GameObject>(projectileTemplate, SpawnLocation(Class), spawnRot); //Instantiate Projectile
         var instanceSprite = instance.GetComponent<SpriteRenderer>();
@@ -121,7 +130,11 @@ public class ProjectileManager : MonoBehaviour {
         instance.SetActive(true);
 
         instance.transform.localScale = new Vector3(instance.transform.localScale.x, instance.transform.localScale.y, Class);
+    }
 
+    IEnumerator DeadTimer(int Class, float deadTime)
+    {
+        yield return new WaitForSeconds(deadTime);
         spawnList[Class] = false;
     }
 

@@ -19,6 +19,11 @@ public enum MovementType
     Straight, DirectPlayer, Magnet, Random, SineWave, NegSineWave
 }
 
+public enum MovementDirection
+{
+    NoMod, N, NE, E, SE, S, SW, W, NW
+}
+
 public enum ProjectileType
 {
     Regular, BlueNoMove, OrangeYesMove, Heal
@@ -29,13 +34,18 @@ public enum MaskInteraction
     None, VisibleInsideMask, VisibleOutsideMask
 }
 
+public enum Relationships
+{
+    None, Child, Parent
+}
+
 [CreateAssetMenu(fileName = "New Projectile", menuName = "Projectile")]
 public class Projectile : ScriptableObject {
 
 //Main Settings
 
     [Box(4, 4, 4, 4, order = 1)]
-    [Group("Main", 1)]
+    [Group("Main", 2)]
     [Heading(title = "Main Settings", order = 1)]
 
     [StackableField]
@@ -45,16 +55,34 @@ public class Projectile : ScriptableObject {
 
     [InGroup("Main")]
     [EnumButton]
+    public Relationships relationships;
+
+    [InGroup("Main")]
+    [EnumButton]
     public ProjectileType projectileType;
+
+//Relatiionship Settings
+
+    [EnableIf("#RelationsVisible")]
+    [Box(4, 4, 4, 4, order = 1)]
+    [Group("Relation", 0)]
+    [Heading(title = "Relationship Settings", order = 1)]
+
+    [StackableField]
+    public Projectile child;
 
 //Movement Settings
 
     [Box(4, 4, 4, 4, order = 1)]
-    [Group("Movement", 2)]
+    [Group("Movement", 3)]
     [Heading(title = "Movement Settings", order = 1)]
 
     [EnumButton]
     public MovementType ProjectileMovementType;
+
+    [InGroup("Movement")]
+    [EnumButton]
+    public MovementDirection movementDirection;
 
     [InGroup("Movement")]
     [StackableField]
@@ -64,7 +92,7 @@ public class Projectile : ScriptableObject {
     [StackableField]
     public bool AffectedByGravity;
 
-    //Wave Settings
+//Wave Settings
 
     [EnableIf("#WavesVisible")]
     [Box(4, 4, 4, 4, order = 1)]
@@ -85,7 +113,7 @@ public class Projectile : ScriptableObject {
 //Spawn Settings
 
     [Box(4, 4, 4, 4, order = 1)]
-    [Group("Spawn", 6)]
+    [Group("Spawn", 7)]
     [Heading(title = "Spawn Settings", order = 1)]
     [EnumButton]
     public Location spawnLocation;
@@ -121,9 +149,12 @@ public class Projectile : ScriptableObject {
     [EnableIf("$RandomSpawnFrequency", enable = true)]
     [RangeSlider(0f, 10f, showInLabel = true)]
     public Vector2 timeSpawnRange = new Vector2(2.5f, 7.5f);
+    [InGroup("Spawn")]
+    [StackableField]
+    public float spawnDeadTime;
 
     [Box(4, 4, 4, 4, order = 1)]
-    [Group("Misc", 7)]
+    [Group("Misc", 9)]
     [Heading(title = "Miscellaneous Settings", order = 1)]
     [StackableField]
     public bool FlipX;
@@ -140,10 +171,27 @@ public class Projectile : ScriptableObject {
     [InGroup("Misc")]
     [StackableField]
     public MaskInteraction maskInteraction;
+    [InGroup("Misc")]
+    [StackableField]
+    public float deathTimer = 60f;
+    [InGroup("Misc")]
+    [StackableField]
+    public float waitTimer = 0f;
 
     public bool WavesVisible()
     {
         if(ProjectileMovementType.ToString() == "SineWave" || ProjectileMovementType.ToString() == "NegSineWave")
+        {
+            return true;
+        }
+        else
+            return false;
+    }
+
+    public bool RelationsVisible()
+    {
+
+        if (relationships.ToString() == "Parent")
         {
             return true;
         }
