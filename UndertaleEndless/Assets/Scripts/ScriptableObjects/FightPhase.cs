@@ -8,10 +8,13 @@ using UnityEditor;
 public class FightPhase : ScriptableObject {
 
     [Box(4, 4, 4, 4, order = 1)]
-    [Group("Enemy", 0)]
+    [Group("Enemy", 1)]
     [Heading(title = "Phase Settings", order = 1)]
     [StackableField]
     public float AttackLength;
+    [InGroup("Enemy")]
+    [StackableField]
+    public bool PhaseEndsOnDamage;
 
     [StackableField]
     public List<Projectile> ProjectileCombo;

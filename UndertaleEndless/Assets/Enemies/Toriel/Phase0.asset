@@ -11,8 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16c1044ccdcdc434fb3feb48747d1dd8, type: 3}
   m_Name: Phase0
   m_EditorClassIdentifier: 
-  Phase: 0
+  AttackLength: 7
+  PhaseEndsOnDamage: 1
   ProjectileCombo:
   - {fileID: 11400000, guid: 58057f8dc044bf04b8d38cfd602f25bd, type: 2}
   - {fileID: 11400000, guid: ffb9e5d93af25994eb3dccfb7f212c93, type: 2}
-  AttackLength: 7

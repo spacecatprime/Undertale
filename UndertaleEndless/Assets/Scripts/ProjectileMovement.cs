@@ -11,6 +11,7 @@ public class ProjectileMovement : MonoBehaviour {
     public GameObject gameManager;
     public GameObject projectileTemplate;
     public GameObject player;
+    public GameObject box;
 
     public float waitForMove;
     public float spawnWaitTime;
@@ -163,7 +164,12 @@ public class ProjectileMovement : MonoBehaviour {
             StartCoroutine(SpawnProjectile(childToSpawn));
         }
 
-        if (timeSinceInitialization >= ProjectileManager.staticProjectileList[Class].deathTimer)
+        if (timeSinceInitialization >= ProjectileManager.staticProjectileList[Class].deathTimer) //Destroy Timer
+        {
+            Destroy(this.gameObject);
+        }
+
+        if (!ProjectileManager.fighting && ProjectileManager.staticProjectileList[Class].destroyOnPhaseEnd) //Destroy at end of phase
         {
             Destroy(this.gameObject);
         }
@@ -230,6 +236,11 @@ public class ProjectileMovement : MonoBehaviour {
                 CameraShake.shakeTrue = true;
                 if (projectileProperties.destroyOnTouch)
                     Destroy(this.gameObject);
+            }
+
+            if(ProjectileManager.endOnDamage) //Check if ends on damage
+            {
+                ProjectileManager.phaseTimer = -10;
             }
 
         }

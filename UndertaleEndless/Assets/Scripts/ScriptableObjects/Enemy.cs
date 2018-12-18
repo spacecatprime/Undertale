@@ -8,7 +8,7 @@ using UnityEditor;
 public class Enemy : ScriptableObject {
 
     [Box(4, 4, 4, 4, order = 1)]
-    [Group("Enemy", 2)]
+    [Group("Enemy", 3)]
     [Heading(title = "Enemy Settings", order = 1)]
     [StackableField]
     [Preview]
@@ -22,6 +22,9 @@ public class Enemy : ScriptableObject {
     [InGroup("Enemy")]
     [StackableField]
     public AudioClip bossMusic;
+    [InGroup("Enemy")]
+    [StackableField]
+    public float HP;
 
     //public string EnemyName;
 

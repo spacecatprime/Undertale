@@ -18,8 +18,9 @@ public class ProjectileManager : MonoBehaviour {
     public int currentPhase = 0;
     public List<bool> spawnList;
     public GameObject box;
+    public static bool endOnDamage;
+    public static float phaseTimer;
 
-    public float phaseTimer;
     private int maxPhases = 0;
     private float spawnWaitTime;
     private float spawnLocationY;
@@ -98,7 +99,9 @@ public class ProjectileManager : MonoBehaviour {
         }
 
         projectileType += 1;
-        
+
+        endOnDamage = fightPhaseList[currentPhase].PhaseEndsOnDamage;
+
     }
 
     IEnumerator SpawnProjectile(int Class) //Spawning Sequence
@@ -134,7 +137,7 @@ public class ProjectileManager : MonoBehaviour {
         if(fighting)
             phaseTimer += Time.deltaTime;
 
-        if (phaseTimer >= fightPhaseList[currentPhase].AttackLength)
+        if (phaseTimer >= fightPhaseList[currentPhase].AttackLength || phaseTimer < 0)
         {
             PhaseManager.StaticPause(box.GetComponent<PhaseManager>());
 

@@ -41,4 +41,5 @@ MonoBehaviour:
   destroyOnTouch: 1
   maskInteraction: 0
   deathTimer: 60
+  destroyOnPhaseEnd: 0
   waitTimer: 1

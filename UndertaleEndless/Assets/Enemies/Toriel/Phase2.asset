@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: Phase2
   m_EditorClassIdentifier: 
   AttackLength: 5
+  PhaseEndsOnDamage: 1
   ProjectileCombo:
   - {fileID: 11400000, guid: 3064811dbd4991b4bb5de495873d2124, type: 2}
   - {fileID: 11400000, guid: 9761bb20b95e7d84585e69bb084a2419, type: 2}
