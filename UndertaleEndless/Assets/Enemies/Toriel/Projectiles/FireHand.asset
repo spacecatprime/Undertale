@@ -61,7 +61,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   RandomSpawnFrequency: 1
   timeSpawnRange: {x: 0.4957719, y: 0.4957719}
-  spawnDeadTime: 4.5
+  spawnDeadTime: 5.5
   FlipX: 0
   FlipY: 0
   damage: 1

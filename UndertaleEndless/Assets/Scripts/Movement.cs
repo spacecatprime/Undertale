@@ -4,35 +4,35 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour {
 
-    public Vector3 inputDir;
-    public Vector3 targetDir;
-    public Vector3 angleDir;
-    public Vector3 angleDirNormal;
+    public float moveSpeed;     //Movement speed for the player.
+    public float horizontalDir, verticalDir, lastX, lastY;     //horizontalDir & verticalDir determine the direction of the player inputs.
+                                                               //lastX & lastY stores the last input in the appropriate axis for later use.
+    private bool isMoving;      //Boolean isMoving determines whether the player is currently moving.
+    private Rigidbody2D playerRB;   //Variable playerRB declared as RigidBody2D
 
+    public Vector2 inputDir;
 
     public static bool moving;
-
-    public GameObject player;
-    public float x = 0;
-    public float y = 0;
-
-    public bool playerMovementTypeIsMobile;
-
+    
     public bool currentlyInvincible;
-
-    public float speed;
-    public Rigidbody2D rb;
 
     public Sprite normal;
     public Sprite invincible;
     public SpriteRenderer sprite;
+
+    private void OnEnable()
+    {
+        sprite.sprite = normal;
+        currentlyInvincible = false;
+        GameManager.isInvincible = false;
+    }
 
     // Use this for initialization
     void Start() {
 
         sprite = this.gameObject.GetComponent<SpriteRenderer>();
 
-        rb = player.GetComponent<Rigidbody2D>();
+        playerRB = GetComponent<Rigidbody2D>(); //Gets Player's RigidBody2D component.
     }
 
     Vector3 SnapTo(Vector3 v3, float snapAngle)
@@ -54,49 +54,39 @@ public class Movement : MonoBehaviour {
     // Update is called once per frame
     void FixedUpdate() {
 
-        if (!playerMovementTypeIsMobile) //Arrow key Movement
-        {
-            speed = speed * 40;
-            if (Input.GetKey(KeyCode.UpArrow))
-                y = 1.5f;
-            else if (Input.GetKey(KeyCode.DownArrow))
-                y = -1.5f;
-            else
-                y = 0;
+        horizontalDir = inputDir.x; //Gets horizontal input from inputDirX.
+        verticalDir = inputDir.y;     //Gets vertical input from inputDirY.
+        isMoving = false;                               //Sets isMoving to false automatically.
 
-            if (Input.GetKey(KeyCode.RightArrow))
-                x = 1.5f;
-            else if (Input.GetKey(KeyCode.LeftArrow))
-                x = -1.5f;
-            else
-                x = 0;
-            rb.velocity = new Vector2(x, y);
+        //These two if statements check whether the player has inputted movement, if so it adds a force to the RigidBody2D to move the Player.
+        if (horizontalDir > 0.5f || horizontalDir < -0.5f)
+        {
+            //transform.Translate(new Vector3(horizontalDir * moveSpeed * Time.deltaTime, 0f, 0f));   //Moves player using a vector3 object.
+            //Vector3 takes in x, y, and z directions, so we manipulate the axis through the corresponding input. 
+
+            playerRB.velocity = new Vector2(horizontalDir * moveSpeed, playerRB.velocity.y);    //Moves the player through manipulating the RigidBody.
+            isMoving = true;        //Sets isMoving to true.
+            lastX = horizontalDir;  //Stores the last direction into lastX for the anim object.
+            lastY = 0f;             //Resets lastY to 0 for the anim object.
+        }
+        if (verticalDir > 0.5f || verticalDir < -0.5f)  //Similar to the first if statement, only for the vertical axis.
+        {
+            //transform.Translate(new Vector3(0f, verticalDir * moveSpeed * Time.deltaTime, 0f));
+
+            playerRB.velocity = new Vector2(playerRB.velocity.x, verticalDir * moveSpeed);
+            isMoving = true;
+            lastX = 0f;
+            lastY = verticalDir;
         }
 
-
-        else //Player movement IS mobile (joystick)
+        //These if statements check whether there is no longer force input, if there is none then set RB axis force to 0.
+        if (horizontalDir == 0)
         {
-
-            if (inputDir != Vector3.zero)
-                moving = true;
-            else
-                moving = false;
-
-
-            targetDir = new Vector3(inputDir.x, inputDir.y);
-
-            angleDir = targetDir;
-            //angleDir = new Vector3(Mathf.RoundToInt(SnapTo(targetDir, 45.0f).x), Mathf.RoundToInt(SnapTo(targetDir, 45.0f).y));
-            //angleDir = new Vector3(SnapTo(targetDir, 45.0f).x, SnapTo(targetDir, 45.0f).y);
-
-            if (moving)
-            {
-                rb.velocity = angleDir;
-                rb.velocity = rb.velocity * speed * Time.deltaTime;
-                rb.velocity = speed * (rb.velocity.normalized);
-            }
-            else
-                rb.velocity = Vector3.zero;
+            playerRB.velocity = new Vector2(0f, playerRB.velocity.y);
+        }
+        if (verticalDir == 0)
+        {
+            playerRB.velocity = new Vector2(playerRB.velocity.x, 0f);
         }
 
 
