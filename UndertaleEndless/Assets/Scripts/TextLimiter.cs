@@ -73,7 +73,7 @@ public class TextLimiter : MonoBehaviour {
         audio.Stop();
         overlay.SetActive(true);
         //PLAY AMIMATION
-        StartCoroutine(LoadMenu());
+        StartCoroutine(LoadFlowerbed());
     }
 
     public void No()
@@ -92,9 +92,9 @@ public class TextLimiter : MonoBehaviour {
         PlayerPrefs.Save();
     }
 
-    IEnumerator LoadMenu()
+    IEnumerator LoadFlowerbed()
     {
         yield return new WaitForSeconds(5.25f);
-        SceneManager.LoadScene("MainMenu");
+        SceneManager.LoadScene("OverworldRuins1");
     }
 }

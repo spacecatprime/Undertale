@@ -6,34 +6,25 @@ using UnityEngine.UI;
 public class ProjectileManager : MonoBehaviour {
 
     public Enemy enemy;
-
-    public bool fighting;
-
+    public static bool fighting;
     public GameObject projectileTemplate;
     public GameObject player;
     public Image enemyImage;
     public Image battleBG;
-
     public AudioSource music;
-
     public List<FightPhase> fightPhaseList;
     public List<Projectile> projectilePropertiesList;
     public static List<Projectile> staticProjectileList;
-
     public int currentPhase = 0;
-    public int maxPhases = 0;
-
     public List<bool> spawnList;
+    public GameObject box;
 
+    public float phaseTimer;
+    private int maxPhases = 0;
     private float spawnWaitTime;
-
     private float spawnLocationY;
     private float spawnLocationX;
-
-    private float phaseTimer;
-
-    public int projectileType = 0;
-
+    private int projectileType = 0;
     private string spawnPos;
     private string specificSpawnPos;
     private Vector2 spawnLoc;
@@ -84,7 +75,7 @@ public class ProjectileManager : MonoBehaviour {
 
 
         //Make sure only spawn in projectile in the specified phase
-        while(!fightPhaseList[currentPhase].ProjectileCombo.Contains(staticProjectileList[projectileType]))
+        while(!fightPhaseList[currentPhase].ProjectileCombo.Contains(staticProjectileList[projectileType]) && fighting)
         {
             projectileType += 1;
             if (projectileType == (staticProjectileList.Count-1))
@@ -107,7 +98,7 @@ public class ProjectileManager : MonoBehaviour {
         }
 
         projectileType += 1;
-
+        
     }
 
     IEnumerator SpawnProjectile(int Class) //Spawning Sequence
@@ -140,10 +131,13 @@ public class ProjectileManager : MonoBehaviour {
 
     private void LateUpdate()
     {
-        phaseTimer += Time.deltaTime;
+        if(fighting)
+            phaseTimer += Time.deltaTime;
 
         if (phaseTimer >= fightPhaseList[currentPhase].AttackLength)
         {
+            PhaseManager.StaticPause(box.GetComponent<PhaseManager>());
+
             phaseTimer = 0;
             currentPhase += 1;
             GameManager.phaseTime = 0;
