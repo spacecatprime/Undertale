@@ -55,7 +55,7 @@ public class ProjectileMovement : MonoBehaviour {
 
         //Variables
         var instanceSprite = this.gameObject.GetComponent<SpriteRenderer>();
-        instanceSprite.sprite = ProjectileManager.staticProjectileList[Class].image;                   //Assign Sprite
+        instanceSprite.sprite = projectileProperties.image;                   //Assign Sprite
         Destroy(this.gameObject.GetComponent<PolygonCollider2D>());
         this.gameObject.AddComponent<PolygonCollider2D>();                                             //Add Collider with sprite collision
         var instanceCollider = this.gameObject.GetComponent<PolygonCollider2D>();                      //Get Collider
@@ -68,16 +68,16 @@ public class ProjectileMovement : MonoBehaviour {
         speed = projectileProperties.speed;
 
         var instanceRB = this.gameObject.GetComponent<Rigidbody2D>();
-        if (ProjectileManager.staticProjectileList[Class].AffectedByGravity)
+        if (projectileProperties.AffectedByGravity)
             instanceRB.gravityScale = 0.05f;
         else
             instanceRB.gravityScale = 0;
 
-        instanceSprite.flipX = ProjectileManager.staticProjectileList[Class].FlipX;
-        instanceSprite.flipY = ProjectileManager.staticProjectileList[Class].FlipY;
+        instanceSprite.flipX = projectileProperties.FlipX;
+        instanceSprite.flipY = projectileProperties.FlipY;
 
 
-        if (ProjectileManager.staticProjectileList[Class].RandomWaveTime) //Random Wave Movement
+        if (projectileProperties.RandomWaveTime) //Random Wave Movement
             randomTP = Random.Range(0.5f, 1.5f);
         else
             randomTP = 1;
@@ -90,24 +90,21 @@ public class ProjectileMovement : MonoBehaviour {
             instanceSprite.maskInteraction = SpriteMaskInteraction.VisibleOutsideMask;
 
         randomSpeed = Random.Range(0.9f, 1.1f);
-        waitForMove = ProjectileManager.staticProjectileList[Class].waitTimer;
+        waitForMove = projectileProperties.waitTimer;
 
-        //Set rotation to player and then move
-        if (movementType == "DirectPlayer")
-        {
-            movementDir = player.transform.position - transform.position;
-            var tempFacing = ProjectileMovement.FaceObject(transform.position, player.transform.position, FacingDirection.UP);
-            transform.rotation = tempFacing;
-        }
 
-        if(ProjectileManager.staticProjectileList[Class].relationships.ToString() == "Parent")
+        if(projectileProperties.relationships.ToString() == "Parent")
         {
-            childToSpawn = ProjectileManager.staticProjectileList[Class].child;
+            childToSpawn = projectileProperties.child;
         }
 
         SetTint();
         GetMovement();
         canMove = false;
+
+        if (projectileProperties.ProjectileMovementType.ToString() == "DirectPlayer")
+            FacePlayer();
+
         StartCoroutine(startMove());
     }
 
@@ -127,6 +124,13 @@ public class ProjectileMovement : MonoBehaviour {
         return Quaternion.AngleAxis(angle, Vector3.forward);
     }
 
+    void FacePlayer()
+    {
+        movementDir = player.transform.position - transform.position;
+        var tempFacing = ProjectileMovement.FaceObject(transform.position, player.transform.position, FacingDirection.UP);
+        transform.rotation = tempFacing;
+    }
+
     // Update is called once per frame
     void Update() {
         var instanceCollider = this.gameObject.GetComponent<PolygonCollider2D>();                      //Get Collider
@@ -137,16 +141,14 @@ public class ProjectileMovement : MonoBehaviour {
         //Continually Rotate Towards Player and move
         if (movementType == "Magnet")
         {
-            movementDir = player.transform.position - transform.position;
-            var tempFacing = ProjectileMovement.FaceObject(transform.position, player.transform.position, FacingDirection.UP);
-            transform.rotation = tempFacing;
+            FacePlayer();
         }
 
 
         if (canMove)
             Move();
 
-        if (ProjectileManager.staticProjectileList[Class].relationships.ToString() == "Parent") //Wait time for spawning
+        if (projectileProperties.relationships.ToString() == "Parent") //Wait time for spawning
             if(childToSpawn.RandomSpawnFrequency == true)
                 spawnWaitTime = UnityEngine.Random.Range(childToSpawn.timeSpawnRange.x, childToSpawn.timeSpawnRange.y);
             else
@@ -159,17 +161,17 @@ public class ProjectileMovement : MonoBehaviour {
             Destroy(this.gameObject);
         }
 
-        if (ProjectileManager.staticProjectileList[Class].relationships.ToString() == "Parent" && canSpawn)
+        if (projectileProperties.relationships.ToString() == "Parent" && canSpawn)
         {
             StartCoroutine(SpawnProjectile(childToSpawn));
         }
 
-        if (timeSinceInitialization >= ProjectileManager.staticProjectileList[Class].deathTimer) //Destroy Timer
+        if (timeSinceInitialization >= projectileProperties.deathTimer) //Destroy Timer
         {
             Destroy(this.gameObject);
         }
 
-        if (!ProjectileManager.fighting && ProjectileManager.staticProjectileList[Class].destroyOnPhaseEnd) //Destroy at end of phase
+        if (!ProjectileManager.fighting && projectileProperties.destroyOnPhaseEnd) //Destroy at end of phase
         {
             Destroy(this.gameObject);
         }
@@ -181,9 +183,7 @@ public class ProjectileMovement : MonoBehaviour {
         canMove = true;
         if (movementType == "DirectPlayer")
         {
-            movementDir = player.transform.position - transform.position;
-            var tempFacing = ProjectileMovement.FaceObject(transform.position, player.transform.position, FacingDirection.UP);
-            transform.rotation = tempFacing;
+            FacePlayer();
         }
     }
 
@@ -319,12 +319,12 @@ public class ProjectileMovement : MonoBehaviour {
         if(movementType == "SineWave")
         {
             transform.position += movementDir * (speed * randomSpeed) * Time.deltaTime; //Move foward
-            transform.position += transform.right * Mathf.Sin((timeSinceInitialization + 0.5f) * ProjectileManager.staticProjectileList[Class].WaveFrequency * randomTP) / ProjectileManager.staticProjectileList[Class].WaveMagnitude * Time.deltaTime;
+            transform.position += transform.right * Mathf.Sin((timeSinceInitialization + 0.5f) * projectileProperties.WaveFrequency * randomTP) / projectileProperties.WaveMagnitude * Time.deltaTime;
         }
         if (movementType == "NegSineWave")
         {
             transform.position += movementDir * (speed * randomSpeed) * Time.deltaTime; //Move foward
-            transform.position -= transform.right * Mathf.Sin((timeSinceInitialization + 0.5f) * ProjectileManager.staticProjectileList[Class].WaveFrequency * randomTP) / ProjectileManager.staticProjectileList[Class].WaveMagnitude * Time.deltaTime;
+            transform.position -= transform.right * Mathf.Sin((timeSinceInitialization + 0.5f) * projectileProperties.WaveFrequency * randomTP) / projectileProperties.WaveMagnitude * Time.deltaTime;
         }
     }
 }

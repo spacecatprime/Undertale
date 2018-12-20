@@ -7,8 +7,6 @@ using TMPro;
 
 public class GameManager : MonoBehaviour {
 
-    public static GameObject player;
-
     private float maxHealth;
 
     public static int healthCondition = 0; //HEAL: -1, NONE: 0, DAMAGE: 1
@@ -31,8 +29,6 @@ public class GameManager : MonoBehaviour {
 
         level = PlayerPrefs.GetInt("Level");
 
-        player = GameObject.Find("Player");
-
         maxHealth = 20 + (level - 1) * 4;
         healthBar.maxValue = maxHealth;
         phaseTime = 0;
@@ -44,7 +40,7 @@ public class GameManager : MonoBehaviour {
 
     }
 
-    void FixedUpdate()
+    void Update()
     {
         if (health > maxHealth)
             health = maxHealth;
@@ -73,7 +69,7 @@ public class GameManager : MonoBehaviour {
 
     public static void Dead()
     {
-        SaveObject.lastLocation = player.transform.position;
+        SaveObject.lastLocation = GameObject.FindGameObjectWithTag("Player").transform.position;
         //PlayerPrefs.SetInt("Experience", Mathf.RoundToInt(phaseTime));
         SceneManager.LoadScene("DeathScreen");
     }

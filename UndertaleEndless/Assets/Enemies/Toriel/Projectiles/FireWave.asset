@@ -14,7 +14,7 @@ MonoBehaviour:
   image: {fileID: 21300000, guid: 4b9b6cdd84bcc4c09b781e2db2402621, type: 3}
   relationships: 0
   projectileType: 0
-  parent: {fileID: 0}
+  child: {fileID: 0}
   ProjectileMovementType: 4
   movementDirection: 5
   speed: 0.5
@@ -31,45 +31,18 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.104003906
-      inSlope: -0.0011226424
-      outSlope: -0.0011226424
+      value: 0.15098572
+      inSlope: 0
+      outSlope: 0
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 4.5858164
-      value: 0.098855674
-      inSlope: -0.019108081
-      outSlope: -0.019108081
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 6.1857896
-      value: 0.177234
-      inSlope: 0.10212544
-      outSlope: 0.10212544
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 7.3988867
-      value: 0.5961187
-      inSlope: 0.9807368
-      outSlope: 0.9807368
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 7.4056644
-      value: 4.948569
-      inSlope: 642.1662
-      outSlope: 642.1662
+      time: 1
+      value: 0.15098572
+      inSlope: 0
+      outSlope: 0
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
@@ -79,8 +52,12 @@ MonoBehaviour:
     m_RotationOrder: 4
   RandomSpawnFrequency: 0
   timeSpawnRange: {x: 25, y: 50}
+  spawnDeadTime: 0
   FlipX: 0
   FlipY: 1
   damage: 2
   destroyOnTouch: 0
   maskInteraction: 1
+  deathTimer: 60
+  destroyOnPhaseEnd: 1
+  waitTimer: 0

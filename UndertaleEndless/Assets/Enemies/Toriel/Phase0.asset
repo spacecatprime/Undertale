@@ -14,5 +14,4 @@ MonoBehaviour:
   AttackLength: 7
   PhaseEndsOnDamage: 1
   ProjectileCombo:
-  - {fileID: 11400000, guid: 58057f8dc044bf04b8d38cfd602f25bd, type: 2}
-  - {fileID: 11400000, guid: ffb9e5d93af25994eb3dccfb7f212c93, type: 2}
+  - {fileID: 0}

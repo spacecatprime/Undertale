@@ -1,0 +1,99 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9079cb58a4ae48d4abd03fd6a2d1bbd, type: 3}
+  m_Name: SpawnerWaveChild
+  m_EditorClassIdentifier: 
+  image: {fileID: 21300000, guid: 4b9b6cdd84bcc4c09b781e2db2402621, type: 3}
+  relationships: 1
+  projectileType: 0
+  child: {fileID: 0}
+  ProjectileMovementType: 4
+  movementDirection: 5
+  speed: 1
+  AffectedByGravity: 1
+  WaveMagnitude: 1
+  WaveFrequency: 7
+  RandomWaveTime: 0
+  spawnLocation: 5
+  locationSpecific: 2
+  specificSpawnX: -100
+  specificSpawnY: -100
+  SpawnFrequency:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.034600083
+      inSlope: 1.2586215
+      outSlope: 1.2586215
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.23709197
+    - serializedVersion: 3
+      time: 0.7892114
+      value: 0.04811822
+      inSlope: 0.44726622
+      outSlope: 0.44726622
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1.7399715
+      value: 0.18560237
+      inSlope: 0.8131558
+      outSlope: 0.8131558
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 2.0875978
+      value: 0.85984445
+      inSlope: -0.042000003
+      outSlope: -0.042000003
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 2.2068768
+      value: 0.06278089
+      inSlope: -0.0020947747
+      outSlope: -0.0020947747
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 2.5155945
+      value: 0.0315941
+      inSlope: -0.10102039
+      outSlope: -0.10102039
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 1
+    m_RotationOrder: 4
+  RandomSpawnFrequency: 0
+  timeSpawnRange: {x: 2.5, y: 7.5}
+  spawnDeadTime: 0
+  FlipX: 0
+  FlipY: 0
+  damage: 2
+  destroyOnTouch: 0
+  maskInteraction: 1
+  deathTimer: 60
+  destroyOnPhaseEnd: 1
+  waitTimer: 0

@@ -20,6 +20,7 @@ public class ProjectileManager : MonoBehaviour {
     public GameObject box;
     public static bool endOnDamage;
     public static float phaseTimer;
+    public static float monsterHealthInit;
 
     private int maxPhases = 0;
     private float spawnWaitTime;
@@ -65,6 +66,8 @@ public class ProjectileManager : MonoBehaviour {
 
         staticProjectileList = projectilePropertiesList;
 
+        monsterHealthInit = enemy.HP;
+
         music.clip = enemy.bossMusic;
         music.Play();
     }
@@ -74,9 +77,12 @@ public class ProjectileManager : MonoBehaviour {
         if (projectileType >= staticProjectileList.Count) //Make sure spawning projectile type never goes above max projectiles in list
             projectileType = 0;
 
+        if (currentPhase >= fightPhaseList.Count) //Make sure spawning projectile type never goes above max projectiles in list
+            currentPhase = 0;
+
 
         //Make sure only spawn in projectile in the specified phase
-        while(!fightPhaseList[currentPhase].ProjectileCombo.Contains(staticProjectileList[projectileType]) && fighting)
+        while (!fightPhaseList[currentPhase].ProjectileCombo.Contains(staticProjectileList[projectileType]) && fighting)
         {
             projectileType += 1;
             if (projectileType == (staticProjectileList.Count-1))
@@ -109,7 +115,7 @@ public class ProjectileManager : MonoBehaviour {
         spawnList[Class] = true;
         yield return new WaitForSeconds(spawnWaitTime);
 
-        if (staticProjectileList[Class].spawnDeadTime != 0)
+        if (staticProjectileList[Class].spawnDeadTime > 0)
         {
             StartCoroutine(DeadTimer(Class, staticProjectileList[Class].spawnDeadTime));
         }
@@ -175,6 +181,8 @@ public class ProjectileManager : MonoBehaviour {
 
         if(spawnPos == "Specific")
         {
+            spawnRot = Quaternion.Euler(new Vector3(0, 0, 0));
+
             if (specificSpawnPos == "SpecificXY")
             {
                 spawnLocationX = staticProjectileList[loop].specificSpawnX;
