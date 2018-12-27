@@ -38,7 +38,13 @@ public class PhaseManager : MonoBehaviour {
         buttons = menuOptions.GetComponentsInChildren<Button>();
         hitButton.SetActive(false);
         ProjectileManager.fighting = false;
-        Pause();
+
+        foreach (Button x in buttons)
+        {
+            x.interactable = true;
+        }
+
+        player.SetActive(false);
     }
 	
 	// Update is called once per frame
@@ -76,8 +82,7 @@ public class PhaseManager : MonoBehaviour {
             x.interactable = true;
         }
 
-        anim.SetBool("Dialogue", true);
-        anim.SetBool("Default", false);
+        anim.SetTrigger("DialogueActivate");
         player.SetActive(false);
         ProjectileManager.fighting = false;
     }
@@ -89,8 +94,7 @@ public class PhaseManager : MonoBehaviour {
         {
             x.interactable = false;
         }
-        anim.SetBool("Dialogue", false);
-        anim.SetBool("Default", true);
+        anim.SetTrigger("DefaultActivate");
         player.transform.position = new Vector2(0, 0);
         yield return new WaitForSeconds(0.75f);
         player.SetActive(true);
@@ -143,7 +147,6 @@ public class PhaseManager : MonoBehaviour {
         damageDealt = Mathf.RoundToInt(damageDealt);
         strikeBar.GetComponent<Animator>().SetBool("HasAttacked", true);
         slash.GetComponent<Animator>().SetBool("Attack", true);
-        Debug.Log("Hit");
 
         yield return new WaitForSeconds(0.75f);
 

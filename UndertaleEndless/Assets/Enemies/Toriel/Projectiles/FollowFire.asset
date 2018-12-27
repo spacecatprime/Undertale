@@ -39,7 +39,7 @@ MonoBehaviour:
   FlipY: 0
   damage: 10
   destroyOnTouch: 1
-  maskInteraction: 0
+  maskInteraction: 1
   deathTimer: 60
   destroyOnPhaseEnd: 0
   waitTimer: 1

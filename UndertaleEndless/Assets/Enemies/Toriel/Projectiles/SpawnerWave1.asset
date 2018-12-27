@@ -25,7 +25,7 @@ MonoBehaviour:
   spawnLocation: 5
   locationSpecific: 2
   specificSpawnX: 0.35
-  specificSpawnY: 1
+  specificSpawnY: 1.25
   SpawnFrequency:
     serializedVersion: 2
     m_Curve: []
