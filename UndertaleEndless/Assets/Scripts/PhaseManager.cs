@@ -13,6 +13,7 @@ public class PhaseManager : MonoBehaviour {
     public GameObject hitButton;
     public GameObject slash;
     public GameObject damage;
+    public GameObject monster;
     public TextMeshProUGUI damageIndicator;
     public GameObject monsterHealth;
     public Slider monsterHealthSlider;
@@ -26,6 +27,9 @@ public class PhaseManager : MonoBehaviour {
     public float monsterMaxHP;
     public float lerpSpeed;
     public float realValue;
+    public GameObject enemy;
+    public Vector2 enemyOriginalPos;
+    public float shakeAmount;
 
 
     // Use this for initialization
@@ -38,6 +42,7 @@ public class PhaseManager : MonoBehaviour {
         buttons = menuOptions.GetComponentsInChildren<Button>();
         hitButton.SetActive(false);
         ProjectileManager.fighting = false;
+        enemyOriginalPos = enemy.transform.position;
 
         foreach (Button x in buttons)
         {
@@ -159,7 +164,8 @@ public class PhaseManager : MonoBehaviour {
         damageIndicator.text = damageDealt.ToString(); 
         damage.SetActive(true);
         monsterHealth.SetActive(true);
-
+        shakeAmount = 100;
+        StartCoroutine(Shake());
         yield return new WaitForSeconds(0.5f);
 
         dumbTarget.GetComponent<Animator>().SetTrigger("Fade");
@@ -202,6 +208,20 @@ public class PhaseManager : MonoBehaviour {
 
         dumbTarget.SetActive(false);
         miss.SetActive(false);
+    }
+
+    IEnumerator Shake()
+    {
+        while (shakeAmount > 0)
+        {
+            if (shakeAmount < 5f)
+                shakeAmount = 0;
+            shakeAmount = Mathf.Lerp(shakeAmount, 0, 0.5f);
+            yield return new WaitForSeconds(0.1f);
+            enemy.transform.position = new Vector2(enemyOriginalPos.x + Mathf.Abs(shakeAmount), enemyOriginalPos.y);
+            yield return new WaitForSeconds(0.1f);
+            enemy.transform.position = new Vector2(enemyOriginalPos.x - Mathf.Abs(shakeAmount), enemyOriginalPos.y);
+        }
     }
 
     public void Fight()

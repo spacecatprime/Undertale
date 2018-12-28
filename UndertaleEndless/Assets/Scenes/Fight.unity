@@ -6208,6 +6208,7 @@ MonoBehaviour:
   hitButton: {fileID: 239655429}
   slash: {fileID: 1808664853}
   damage: {fileID: 499948941}
+  monster: {fileID: 401896622}
   damageIndicator: {fileID: 499948943}
   monsterHealth: {fileID: 2108008268}
   monsterHealthSlider: {fileID: 2108008270}
@@ -6219,6 +6220,9 @@ MonoBehaviour:
   monsterMaxHP: 0
   lerpSpeed: 4
   realValue: 0
+  enemy: {fileID: 401896622}
+  enemyOriginalPos: {x: 0, y: 0}
+  shakeAmount: 100
 --- !u!4 &1854852359
 Transform:
   m_ObjectHideFlags: 0
