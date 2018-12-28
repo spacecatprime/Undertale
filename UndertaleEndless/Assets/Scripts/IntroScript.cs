@@ -94,7 +94,12 @@ public class IntroScript : MonoBehaviour
         {
 
             string letterStr = letter.ToString();
-            if (letterStr == "!" || letterStr == "," || letterStr == ".")    // if ! or , wait
+
+            if(letterStr == "%")
+            {
+                dialogueText.text += "\n";
+            }
+            else if (letterStr == "!" || letterStr == "," || letterStr == ".")    // if ! or , wait
             {
                 dialogueText.text += letterStr;
                 time -= 1.0f;
@@ -120,10 +125,10 @@ public class IntroScript : MonoBehaviour
             yield return new WaitForSeconds(5f - currentSeconds); //Humans Win
 
         else if (sentence == allSenteces[3])
-            yield return new WaitForSeconds(5f - currentSeconds); //Spell
+            yield return new WaitForSeconds(4.9f - currentSeconds); //Spell
 
         else if (sentence == allSenteces[4])
-            yield return new WaitForSeconds(1f - currentSeconds); //...
+            yield return new WaitForSeconds(1.1f - currentSeconds); //...
 
         else if (sentence == allSenteces[5])
             yield return new WaitForSeconds(5f - currentSeconds); //MT EBOTT

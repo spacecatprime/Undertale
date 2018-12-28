@@ -204,60 +204,57 @@ public class ProjectileMovement : MonoBehaviour {
 
     void OnTriggerStay2D(Collider2D other) //Collision
     {
-        if(other.isTrigger) //Player has 2 colliders, 1 for box, 1 for projectiles
+        if (other.tag == "Player" && damage > 0 && !GameManager.isInvincible) //Inflicts damage when vulnerable
         {
-            if (other.tag == "Player" && damage > 0 && !GameManager.isInvincible) //Inflicts damage when vulnerable
+            //Play Damage
+            if (projectileTypeTint == "Regular" || projectileTypeTint == "Heal")
             {
-                //Play Damage
-                if (projectileTypeTint == "Regular" || projectileTypeTint == "Heal")
-                {
-                    GameManager.health -= damage;
-                    GameManager.isInvincible = true;
-                    audioSource.clip = damaged;
-                    audioSource.Play();
-                    CameraShake.shakeTrue = true;
-                    if (projectileProperties.destroyOnTouch)
-                        Destroy(this.gameObject);
-                }
-                if (projectileTypeTint == "BlueNoMove" && Movement.moving) //if Blue, then if moving
-                {
-                    GameManager.health -= damage;
-                    GameManager.isInvincible = true;
-                    audioSource.clip = damaged;
-                    audioSource.Play();
-                    CameraShake.shakeTrue = true;
-                    if (projectileProperties.destroyOnTouch)
-                        Destroy(this.gameObject);
-                }
-                if (projectileTypeTint == "OrangeYesMove" && !Movement.moving) //if Orange, then if !moving
-                {
-                    GameManager.health -= damage;
-                    GameManager.isInvincible = true;
-                    audioSource.clip = damaged;
-                    audioSource.Play();
-                    CameraShake.shakeTrue = true;
-                    if (projectileProperties.destroyOnTouch)
-                        Destroy(this.gameObject);
-                }
-
-                if (ProjectileManager.endOnDamage) //Check if ends on damage
-                {
-                    ProjectileManager.phaseTimer = -10;
-                }
-
-            }
-
-            if (other.tag == "Player" && damage < 0) //Heals player regardless
-            {
-                //Play Heal
                 GameManager.health -= damage;
-                audioSource.clip = healed;
+                GameManager.isInvincible = true;
+                audioSource.clip = damaged;
                 audioSource.Play();
-
+                CameraShake.shakeTrue = true;
                 if (projectileProperties.destroyOnTouch)
                     Destroy(this.gameObject);
-
             }
+            if (projectileTypeTint == "BlueNoMove" && Movement.moving) //if Blue, then if moving
+            {
+                GameManager.health -= damage;
+                GameManager.isInvincible = true;
+                audioSource.clip = damaged;
+                audioSource.Play();
+                CameraShake.shakeTrue = true;
+                if (projectileProperties.destroyOnTouch)
+                    Destroy(this.gameObject);
+            }
+            if (projectileTypeTint == "OrangeYesMove" && !Movement.moving) //if Orange, then if !moving
+            {
+                GameManager.health -= damage;
+                GameManager.isInvincible = true;
+                audioSource.clip = damaged;
+                audioSource.Play();
+                CameraShake.shakeTrue = true;
+                if (projectileProperties.destroyOnTouch)
+                    Destroy(this.gameObject);
+            }
+
+            if (ProjectileManager.endOnDamage) //Check if ends on damage
+            {
+                ProjectileManager.phaseTimer = -10;
+            }
+
+        }
+
+        if (other.tag == "Player" && damage < 0) //Heals player regardless
+        {
+            //Play Heal
+            GameManager.health -= damage;
+            audioSource.clip = healed;
+            audioSource.Play();
+
+            if (projectileProperties.destroyOnTouch)
+                Destroy(this.gameObject);
+
         }
 
     }

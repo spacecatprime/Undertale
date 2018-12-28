@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class ProjectileManager : MonoBehaviour {
 
     public Enemy enemy;
+    public GameObject phaseManager;
+    public static Enemy staticEnemy;
     public static bool fighting;
     public GameObject projectileTemplate;
     public GameObject player;
@@ -62,7 +64,7 @@ public class ProjectileManager : MonoBehaviour {
 
 
 
-
+        staticEnemy = enemy;
 
         staticProjectileList = projectilePropertiesList;
 
@@ -145,7 +147,7 @@ public class ProjectileManager : MonoBehaviour {
 
         if (phaseTimer >= fightPhaseList[currentPhase].AttackLength || phaseTimer < 0)
         {
-            PhaseManager.StaticPause(box.GetComponent<PhaseManager>());
+            PhaseManager.StaticPause(phaseManager.GetComponent<PhaseManager>());
 
             phaseTimer = 0;
             currentPhase += 1;

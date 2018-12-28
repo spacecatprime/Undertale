@@ -16,13 +16,10 @@ public class Movement : MonoBehaviour {
     
     public bool currentlyInvincible;
 
-    public Sprite normal;
-    public Sprite invincible;
     public SpriteRenderer sprite;
 
     private void OnEnable()
     {
-        sprite.sprite = normal;
         currentlyInvincible = false;
         GameManager.isInvincible = false;
     }
@@ -100,9 +97,9 @@ public class Movement : MonoBehaviour {
     public IEnumerator mercyFrames()
     {
         currentlyInvincible = true;
-        sprite.sprite = invincible;
+        this.gameObject.GetComponent<Animator>().SetBool("Invincible", true);
         yield return new WaitForSeconds(1.0f);
-        sprite.sprite = normal;
+        this.gameObject.GetComponent<Animator>().SetBool("Invincible", false);
         currentlyInvincible = false;
         GameManager.isInvincible = false;
     }

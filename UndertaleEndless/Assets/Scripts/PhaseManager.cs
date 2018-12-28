@@ -74,6 +74,15 @@ public class PhaseManager : MonoBehaviour {
         c.Pause();
     }
 
+    public static void StaticResume(PhaseManager c)
+    {
+        c.Resume();
+    }
+
+    public void Resume()
+    {
+        StartCoroutine(ResumeCoroutine());
+    }
 
     public void Pause()
     {
@@ -83,11 +92,12 @@ public class PhaseManager : MonoBehaviour {
         }
 
         anim.SetTrigger("DialogueActivate");
-        player.SetActive(false);
+        StartCoroutine(LatePlayerSetActive());
         ProjectileManager.fighting = false;
+        FlavourTextManager.shouldShowFT = true;
     }
 
-    public IEnumerator Resume()
+    public IEnumerator ResumeCoroutine()
     {
         strikeBar.transform.position = new Vector2(-315, strikeBar.transform.position.y);
         foreach (Button x in buttons)
@@ -96,12 +106,21 @@ public class PhaseManager : MonoBehaviour {
         }
         anim.SetTrigger("DefaultActivate");
         player.transform.position = new Vector2(0, 0);
+        player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
         yield return new WaitForSeconds(0.75f);
         player.SetActive(true);
         ProjectileManager.fighting = true;
     }
 
-    public void Fight()
+    public IEnumerator LatePlayerSetActive()
+    {
+        player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePosition;
+        yield return new WaitForSeconds(0.75f);
+        player.SetActive(false);
+    }
+
+
+    public void StartAttack()
     {
         foreach (Button x in buttons)
         {
@@ -112,21 +131,6 @@ public class PhaseManager : MonoBehaviour {
         strikeBar.SetActive(true);
         strikeBar.GetComponent<RectTransform>().transform.position = new Vector2(-200, 666.5f);
         strikeMove = true;
-    }
-
-    public void Item()
-    {
-
-    }
-
-    public void Act()
-    {
-
-    }
-
-    public void Mercy()
-    {
-
     }
 
     public void AttackPressed()
@@ -160,7 +164,7 @@ public class PhaseManager : MonoBehaviour {
 
         dumbTarget.GetComponent<Animator>().SetTrigger("Fade");
         strikeBar.SetActive(false);
-        StartCoroutine(Resume());
+        StartCoroutine(ResumeCoroutine());
 
         yield return new WaitForSeconds(0.3f);
 
@@ -172,6 +176,7 @@ public class PhaseManager : MonoBehaviour {
         monsterHealth.SetActive(false);
         damage.SetActive(false);
     }
+
     public IEnumerator Miss()
     {
         strikeBar.GetComponent<Animator>().SetBool("HasAttacked", true);
@@ -186,7 +191,7 @@ public class PhaseManager : MonoBehaviour {
 
         dumbTarget.GetComponent<Animator>().SetTrigger("Fade");
         strikeBar.SetActive(false);
-        StartCoroutine(Resume());
+        StartCoroutine(ResumeCoroutine());
 
         yield return new WaitForSeconds(0.3f);
 
@@ -197,5 +202,26 @@ public class PhaseManager : MonoBehaviour {
 
         dumbTarget.SetActive(false);
         miss.SetActive(false);
+    }
+
+    public void Fight()
+    {
+        FlavourTextManager.fight = true;
+        StartAttack();
+    }
+
+    public void Item()
+    {
+        FlavourTextManager.item = true;
+    }
+
+    public void Act()
+    {
+        FlavourTextManager.act = true;
+    }
+
+    public void Mercy()
+    {
+        FlavourTextManager.mercy = true;
     }
 }

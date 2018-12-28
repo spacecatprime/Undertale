@@ -11,6 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0784b0fbe346e415481eca496b13f844, type: 3}
   m_Name: Toriel
   m_EditorClassIdentifier: 
+  bossName: 
   EnemySprite: {fileID: 21300000, guid: 25f41d7a4c42b40f7b91589d5aecdcae, type: 3}
   Background: {fileID: 21300000, guid: 68935b5fc26914a96aa9459fb729f878, type: 3}
   bossMusic: {fileID: 8300000, guid: ad8c63ed3efcd4060824e046ffab5ba4, type: 3}
@@ -18,3 +19,17 @@ MonoBehaviour:
   Phases:
   - {fileID: 11400000, guid: c45d7e0f25665fc42b3abf28103e8e90, type: 2}
   - {fileID: 11400000, guid: 33560521d0e3a0741aed19750aad7307, type: 2}
+  Encounter: Toriel blocks the way!
+  Check: Knows best for you.
+  Neutral:
+  - Toriel looks through you.
+  - Toriel prepares a magical%  attack.
+  - Toriel takes a deep breath.
+  - Toriel is acting aloof.
+  Talk:
+  - You couldn't think of any%  conversation topics.
+  - You tried to think of%  something to say again, but...
+  - Ironically, talking does%  not seem to be the solution%  to this situation.
+  - You thought about telling%  Toriel that you saw her die.% But... That's creepy.
+  Genocide:
+  - Not worth talking to.

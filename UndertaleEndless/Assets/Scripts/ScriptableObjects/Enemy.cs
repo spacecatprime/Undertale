@@ -8,8 +8,11 @@ using UnityEditor;
 public class Enemy : ScriptableObject {
 
     [Box(4, 4, 4, 4, order = 1)]
-    [Group("Enemy", 3)]
+    [Group("Enemy", 4)]
     [Heading(title = "Enemy Settings", order = 1)]
+    [StackableField]
+    public string bossName;
+    [InGroup("Enemy")]
     [StackableField]
     [Preview]
     [Expandable]
@@ -30,4 +33,19 @@ public class Enemy : ScriptableObject {
 
     [StackableField]
     public List<FightPhase> Phases;
+
+    [StackableField]
+    public string Encounter;
+
+    [StackableField]
+    public string Check;
+
+    [StackableField]
+    public List<string> Neutral;
+
+    [StackableField]
+    public List<string> Talk;
+
+    [StackableField]
+    public List<string> Genocide;
 }

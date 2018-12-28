@@ -7,7 +7,6 @@ using TMPro;
 
 public class GameManager : MonoBehaviour {
 
-    private float maxHealth;
 
     public static int healthCondition = 0; //HEAL: -1, NONE: 0, DAMAGE: 1
 
@@ -21,6 +20,8 @@ public class GameManager : MonoBehaviour {
 
     public static float phaseTime;
     public static float health;
+    public static float maxHealth;
+
     public static int level = 1;
 
     void Start()
