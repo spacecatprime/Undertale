@@ -30,7 +30,9 @@ public class FlavourTextManager : MonoBehaviour
     public static bool act;
     public static bool item;
     public static bool mercy;
-    
+
+    public List<string> entireTag;
+
     // Use this for initialization
     void Start()
     {
@@ -157,12 +159,46 @@ public class FlavourTextManager : MonoBehaviour
         yield return new WaitForSeconds(0.25f);
         flavourText.text = "* ";
         yield return new WaitForSeconds(0.05f);
-        foreach (char letter in sentence.ToCharArray())
+
+        int i = 0;
+
+
+        foreach (char letter in sentence)
         {
-
             string letterStr = letter.ToString();
+            
+            if (letterStr == "<") //Checking for tags
+            {
 
-            if (letterStr == "%")
+                while(i < 100)
+                {
+                    string tagStr = sentence[i].ToString();
+
+                    entireTag.Add(tagStr);
+
+                    if (tagStr == ">")
+                    {
+                        i += 1;
+                        break; //Closing tag
+                    }
+
+                    i += 1;
+                } //After entire tag is entered
+
+                flavourText.text += string.Join("", entireTag.ToArray());
+
+            }
+
+            if (entireTag.Count > 0)
+            {
+                entireTag.Remove(entireTag[0]);
+                continue;
+            }
+
+
+
+
+            if (letterStr == "%") //New Line
             {
                 flavourText.text += "\n";
             }
@@ -179,8 +215,12 @@ public class FlavourTextManager : MonoBehaviour
                 yield return new WaitForSeconds(0.05f); //Time between letters
             }
 
+            i += 1;
+
         }
     }
+
+
 
     public void Item1() //temp healing items
     {
