@@ -157,15 +157,18 @@ public class PhaseManager : MonoBehaviour {
         strikeBar.GetComponent<Animator>().SetBool("HasAttacked", true);
         slash.GetComponent<Animator>().SetBool("Attack", true);
 
-        yield return new WaitForSeconds(0.75f);
+        yield return new WaitForSeconds(0.6f);
+        shakeAmount = 100;
+        StartCoroutine(Shake());
+
+        yield return new WaitForSeconds(0.15f);
 
         realValue -= damageDealt;
         strikeBar.GetComponent<AudioSource>().Play();
         damageIndicator.text = damageDealt.ToString(); 
         damage.SetActive(true);
         monsterHealth.SetActive(true);
-        shakeAmount = 100;
-        StartCoroutine(Shake());
+
         yield return new WaitForSeconds(0.5f);
 
         dumbTarget.GetComponent<Animator>().SetTrigger("Fade");

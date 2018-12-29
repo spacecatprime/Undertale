@@ -80,7 +80,7 @@ public class FlavourTextManager : MonoBehaviour
     public IEnumerator ShowFlavourText()
     {
         shouldShowFT = false;
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.5f);
         flavourText.gameObject.SetActive(true);
         StartCoroutine(TypeSentence(enemy.Neutral[Random.Range(0, enemy.Neutral.Count)]));
     }
@@ -121,21 +121,26 @@ public class FlavourTextManager : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Fight()
+    void ClearDialogueBox()
     {
         leftText.gameObject.SetActive(false);
         rightText.gameObject.SetActive(false);
+    }
+
+    // Update is called once per frame
+    void Fight()
+    {
+        ClearDialogueBox();
     }
 
     void Act()
     {
-        leftText.gameObject.SetActive(false);
-        rightText.gameObject.SetActive(false);
+        ClearDialogueBox();
     }
 
     void Item()
     {
+        ClearDialogueBox();
         RecalcItems();
         leftText.gameObject.SetActive(true);
         rightText.gameObject.SetActive(true);
@@ -143,8 +148,7 @@ public class FlavourTextManager : MonoBehaviour
 
     void Mercy()
     {
-        leftText.gameObject.SetActive(false);
-        rightText.gameObject.SetActive(false);
+        ClearDialogueBox();
     }
 
     IEnumerator TypeSentence(string sentence)
@@ -152,6 +156,7 @@ public class FlavourTextManager : MonoBehaviour
         flavourText.text = "";
         yield return new WaitForSeconds(0.25f);
         flavourText.text = "* ";
+        yield return new WaitForSeconds(0.05f);
         foreach (char letter in sentence.ToCharArray())
         {
 

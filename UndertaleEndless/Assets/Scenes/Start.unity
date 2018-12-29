@@ -167,13 +167,13 @@ MonoBehaviour:
   Image: {fileID: 441362180}
   m_Sprite: {fileID: 0}
   allSenteces:
-  - 'Long ago, two races ruled over Earth:              HUMANS and MONSTERS.'
-  - 'One day, war broke out between the two races. '
-  - After a long battle, the humans were victorious.
-  - They sealed the monsters underground with a magic spell.
+  - 'Long ago, two races %ruled over Earth:         %HUMANS and MONSTERS.'
+  - 'One day, war broke %out between the two %races. '
+  - After a long battle, %the humans were %victorious.
+  - They sealed the monsters %underground with a magic %spell.
   - Many years later...
   - '        MT Ebott%          201X'
-  - Legends say that those who climb the mountain never return.
+  - Legends say that those %who climb the mountain %never return.
   - ' '
   - '  '
   - '   '
@@ -539,8 +539,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 3.9, y: -336.7}
-  m_SizeDelta: {x: 627.4, y: 410.8}
+  m_AnchoredPosition: {x: 0.000019073, y: -336.7}
+  m_SizeDelta: {x: 750, y: 410.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &956116692
 MonoBehaviour:
@@ -589,8 +589,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 42
-  m_fontSizeBase: 42
+  m_fontSize: 48
+  m_fontSizeBase: 48
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -600,7 +600,7 @@ MonoBehaviour:
   m_isAlignmentEnumConverted: 1
   m_characterSpacing: 0
   m_wordSpacing: 0
-  m_lineSpacing: 0
+  m_lineSpacing: 8
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
@@ -627,7 +627,7 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 50.30475, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 956116692}
     characterCount: 0
