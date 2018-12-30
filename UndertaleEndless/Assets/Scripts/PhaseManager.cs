@@ -15,6 +15,7 @@ public class PhaseManager : MonoBehaviour {
     public GameObject slash;
     public GameObject damage;
     public GameObject monster;
+    public GameObject enemyUI;
     public TextMeshProUGUI damageIndicator;
     public GameObject monsterHealth;
     public Slider monsterHealthSlider;
@@ -30,6 +31,8 @@ public class PhaseManager : MonoBehaviour {
     public float realValue;
     public Vector2 enemyOriginalPos;
     public float shakeAmount;
+    public static bool shouldPlayDeathSound;
+    public bool hasPlayedDeathSound;
 
 
     // Use this for initialization
@@ -66,6 +69,13 @@ public class PhaseManager : MonoBehaviour {
         }
 
         Lerp();
+
+        if(shouldPlayDeathSound && !hasPlayedDeathSound)
+        {
+            enemyUI.GetComponent<AudioSource>().Play();
+            hasPlayedDeathSound = true;
+        }
+
 
     }
 
@@ -111,9 +121,9 @@ public class PhaseManager : MonoBehaviour {
         }
         anim.SetTrigger("DefaultActivate");
         player.transform.position = new Vector2(0, 0);
-        player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
         yield return new WaitForSeconds(0.75f);
         player.SetActive(true);
+        player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
         ProjectileManager.fighting = true;
     }
 
@@ -122,6 +132,7 @@ public class PhaseManager : MonoBehaviour {
         player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePosition;
         yield return new WaitForSeconds(0.75f);
         player.SetActive(false);
+        player.transform.position = new Vector2(0, 0);
     }
 
 
@@ -152,8 +163,26 @@ public class PhaseManager : MonoBehaviour {
 
     public IEnumerator Hit(float pos)
     {
-        damageDealt = attackDamage / ((100 + (Mathf.Abs(100 - (pos / 400 * 100)))) / 100)*2.5f;
-        damageDealt = Mathf.RoundToInt(damageDealt);
+        //TempStats
+
+        float weapon = 1;
+        float rating = 0;
+
+        if (pos > 375)
+            rating = (((-pos) + 750) / 25) - 2;
+        else
+            rating = (pos / 25) - 2;
+            
+        if (rating >= 12)
+        {
+            damageDealt = Mathf.RoundToInt((attackDamage + weapon - ProjectileManager.staticEnemy.Def + Random.Range(0, 2)) * 2.2f);
+        }
+        if(rating < 12)
+        {
+            damageDealt = Mathf.RoundToInt((attackDamage + weapon - ProjectileManager.staticEnemy.Def + Random.Range(0, 2)) * ((rating/10)+1));
+        }
+
+
         strikeBar.GetComponent<Animator>().SetBool("HasAttacked", true);
         slash.GetComponent<Animator>().SetBool("Attack", true);
 
@@ -168,7 +197,8 @@ public class PhaseManager : MonoBehaviour {
 
         if(realValue <= 0)
         {
-            monster.GetComponent<SpriteRenderer>().sprite = ProjectileManager.staticEnemy.DeathSprite;
+            monster.GetComponent<AudioSource>().Stop();
+            monster.GetComponent<SpriteRenderer>().sprite = ProjectileManager.staticEnemy.ReallyHurt;
             ProjectileManager.enemyKilled = true;
         }
 
@@ -178,9 +208,7 @@ public class PhaseManager : MonoBehaviour {
         strikeBar.SetActive(false);
         if(!ProjectileManager.enemyKilled)
         {
-            yield return new WaitForSeconds(0.3f);
-            player.SetActive(true);
-            yield return new WaitForSeconds(0.4f);
+            yield return new WaitForSeconds(0.7f);
             dumbTarget.SetActive(false);
             monsterHealth.SetActive(false);
             damage.SetActive(false);
@@ -214,13 +242,7 @@ public class PhaseManager : MonoBehaviour {
         strikeBar.SetActive(false);
         StartCoroutine(ResumeCoroutine());
 
-        yield return new WaitForSeconds(0.3f);
-
-        player.SetActive(true);
-
-
-        yield return new WaitForSeconds(0.4f);
-
+        yield return new WaitForSeconds(0.7f);
         dumbTarget.SetActive(false);
         miss.SetActive(false);
     }
@@ -246,6 +268,11 @@ public class PhaseManager : MonoBehaviour {
             monster.transform.position = new Vector2(enemyOriginalPos.x + Mathf.Abs(shakeAmount), enemyOriginalPos.y);
             yield return new WaitForSeconds(0.1f);
             monster.transform.position = new Vector2(enemyOriginalPos.x - Mathf.Abs(shakeAmount), enemyOriginalPos.y);
+        }
+
+        if(ProjectileManager.enemyKilled)
+        {
+            monster.GetComponent<SpriteRenderer>().sprite = ProjectileManager.staticEnemy.DeathSprite;
         }
     }
 
