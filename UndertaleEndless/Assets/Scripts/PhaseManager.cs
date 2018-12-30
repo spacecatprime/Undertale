@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using SpriteShatter;
 
 public class PhaseManager : MonoBehaviour {
 
@@ -27,7 +28,6 @@ public class PhaseManager : MonoBehaviour {
     public float monsterMaxHP;
     public float lerpSpeed;
     public float realValue;
-    public GameObject enemy;
     public Vector2 enemyOriginalPos;
     public float shakeAmount;
 
@@ -42,7 +42,7 @@ public class PhaseManager : MonoBehaviour {
         buttons = menuOptions.GetComponentsInChildren<Button>();
         hitButton.SetActive(false);
         ProjectileManager.fighting = false;
-        enemyOriginalPos = enemy.transform.position;
+        enemyOriginalPos = monster.transform.position;
 
         foreach (Button x in buttons)
         {
@@ -157,33 +157,45 @@ public class PhaseManager : MonoBehaviour {
         strikeBar.GetComponent<Animator>().SetBool("HasAttacked", true);
         slash.GetComponent<Animator>().SetBool("Attack", true);
 
-        yield return new WaitForSeconds(0.6f);
-        shakeAmount = 100;
+        yield return new WaitForSeconds(0.75f);
+
         StartCoroutine(Shake());
-
-        yield return new WaitForSeconds(0.15f);
-
         realValue -= damageDealt;
         strikeBar.GetComponent<AudioSource>().Play();
         damageIndicator.text = damageDealt.ToString(); 
         damage.SetActive(true);
         monsterHealth.SetActive(true);
 
+        if(realValue <= 0)
+        {
+            monster.GetComponent<SpriteRenderer>().sprite = ProjectileManager.staticEnemy.DeathSprite;
+            ProjectileManager.enemyKilled = true;
+        }
+
         yield return new WaitForSeconds(0.5f);
 
         dumbTarget.GetComponent<Animator>().SetTrigger("Fade");
         strikeBar.SetActive(false);
-        StartCoroutine(ResumeCoroutine());
+        if(!ProjectileManager.enemyKilled)
+        {
+            yield return new WaitForSeconds(0.3f);
+            player.SetActive(true);
+            yield return new WaitForSeconds(0.4f);
+            dumbTarget.SetActive(false);
+            monsterHealth.SetActive(false);
+            damage.SetActive(false);
+            StartCoroutine(ResumeCoroutine());
+        }
+        else
+        {
+            yield return new WaitForSeconds(0.7f);
+            dumbTarget.SetActive(false);
+            monsterHealth.SetActive(false);
+            damage.SetActive(false);
+            yield return new WaitForSeconds(2f);
+            monster.GetComponent<Shatter>().shatter();
+        }
 
-        yield return new WaitForSeconds(0.3f);
-
-        player.SetActive(true);
-
-        yield return new WaitForSeconds(0.4f);
-
-        dumbTarget.SetActive(false);
-        monsterHealth.SetActive(false);
-        damage.SetActive(false);
     }
 
     public IEnumerator Miss()
@@ -215,15 +227,25 @@ public class PhaseManager : MonoBehaviour {
 
     IEnumerator Shake()
     {
+        shakeAmount = 0.75f;
+        float shakeRecovery = 0.5f;
+
+        if ((monsterHealthSlider.value - damageDealt) <= 0)
+        {
+            shakeAmount = 1.0f;
+            shakeRecovery = 0.25f;
+        }
+
+
         while (shakeAmount > 0)
         {
-            if (shakeAmount < 5f)
+            if (shakeAmount < 0.025f)
                 shakeAmount = 0;
-            shakeAmount = Mathf.Lerp(shakeAmount, 0, 0.5f);
+            shakeAmount = Mathf.Lerp(shakeAmount, 0, shakeRecovery);
             yield return new WaitForSeconds(0.1f);
-            enemy.transform.position = new Vector2(enemyOriginalPos.x + Mathf.Abs(shakeAmount), enemyOriginalPos.y);
+            monster.transform.position = new Vector2(enemyOriginalPos.x + Mathf.Abs(shakeAmount), enemyOriginalPos.y);
             yield return new WaitForSeconds(0.1f);
-            enemy.transform.position = new Vector2(enemyOriginalPos.x - Mathf.Abs(shakeAmount), enemyOriginalPos.y);
+            monster.transform.position = new Vector2(enemyOriginalPos.x - Mathf.Abs(shakeAmount), enemyOriginalPos.y);
         }
     }
 

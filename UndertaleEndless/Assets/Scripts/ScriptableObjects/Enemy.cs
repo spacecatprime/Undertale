@@ -8,7 +8,7 @@ using UnityEditor;
 public class Enemy : ScriptableObject {
 
     [Box(4, 4, 4, 4, order = 1)]
-    [Group("Enemy", 4)]
+    [Group("Enemy", 5)]
     [Heading(title = "Enemy Settings", order = 1)]
     [StackableField]
     public string bossName;
@@ -17,6 +17,11 @@ public class Enemy : ScriptableObject {
     [Preview]
     [Expandable]
     public Sprite EnemySprite;
+    [InGroup("Enemy")]
+    [StackableField]
+    [Preview]
+    [Expandable]
+    public Sprite DeathSprite;
     [InGroup("Enemy")]
     [StackableField]
     [Preview]

@@ -8,11 +8,12 @@ public class ProjectileManager : MonoBehaviour {
     public Enemy enemy;
     public GameObject phaseManager;
     public static Enemy staticEnemy;
+    public static bool enemyKilled;
     public static bool fighting;
     public GameObject projectileTemplate;
     public GameObject player;
-    public Image enemyImage;
-    public Image battleBG;
+    public SpriteRenderer enemyImage;
+    public SpriteRenderer battleBG;
     public AudioSource music;
     public List<FightPhase> fightPhaseList;
     public List<Projectile> projectilePropertiesList;

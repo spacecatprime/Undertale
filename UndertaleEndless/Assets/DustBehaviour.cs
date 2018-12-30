@@ -14,6 +14,7 @@ public class DustBehaviour : MonoBehaviour {
     void Start () {
         distanceFromTop = new Vector2(this.transform.localPosition.y, this.transform.position.y).magnitude;
         distanceFromTop = Mathf.Abs(3 - distanceFromTop)/1.2f;
+        distanceFromTop = Random.Range(distanceFromTop - 0.25f, distanceFromTop + 0.25f);
 
         GetComponent<Rigidbody2D>().gravityScale = 0;
         sprite = this.GetComponent<SpriteRenderer>();
