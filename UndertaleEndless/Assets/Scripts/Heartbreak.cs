@@ -71,6 +71,7 @@ public class Heartbreak : MonoBehaviour {
             var position = new Vector2(this.transform.position.x + Random.Range(-0.15f, 0.15f), this.transform.position.y + Random.Range(-0.15f, 0.15f));
             GameObject instance = (GameObject)Instantiate<GameObject>(debrisTemplate, position, rotation); //Instantiate Debris
             debrisList.Add(instance);
+            instance.transform.parent = gameObject.transform;
         }
     }
 

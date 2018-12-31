@@ -15,7 +15,7 @@ public class PhaseManager : MonoBehaviour {
     public GameObject slash;
     public GameObject damage;
     public GameObject monster;
-    public GameObject enemyUI;
+    public GameObject dustSound;
     public TextMeshProUGUI damageIndicator;
     public GameObject monsterHealth;
     public Slider monsterHealthSlider;
@@ -33,7 +33,8 @@ public class PhaseManager : MonoBehaviour {
     public float shakeAmount;
     public static bool shouldPlayDeathSound;
     public bool hasPlayedDeathSound;
-
+    public GameObject canvas;
+    public GameObject bulletBoard;
 
     // Use this for initialization
     void Start () {
@@ -72,7 +73,7 @@ public class PhaseManager : MonoBehaviour {
 
         if(shouldPlayDeathSound && !hasPlayedDeathSound)
         {
-            enemyUI.GetComponent<AudioSource>().Play();
+            dustSound.GetComponent<AudioSource>().Play();
             hasPlayedDeathSound = true;
         }
 
@@ -96,7 +97,7 @@ public class PhaseManager : MonoBehaviour {
 
     public void Resume()
     {
-        StartCoroutine(ResumeCoroutine());
+        StartCoroutine(ResumeCoroutine(false));
     }
 
     public void Pause()
@@ -112,7 +113,7 @@ public class PhaseManager : MonoBehaviour {
         FlavourTextManager.shouldShowFT = true;
     }
 
-    public IEnumerator ResumeCoroutine()
+    public IEnumerator ResumeCoroutine(bool death)
     {
         strikeBar.transform.position = new Vector2(-315, strikeBar.transform.position.y);
         foreach (Button x in buttons)
@@ -123,8 +124,11 @@ public class PhaseManager : MonoBehaviour {
         player.transform.position = new Vector2(0, 0);
         yield return new WaitForSeconds(0.75f);
         player.SetActive(true);
-        player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
-        ProjectileManager.fighting = true;
+        if(!death)
+        {
+            player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+            ProjectileManager.fighting = true;
+        }
     }
 
     public IEnumerator LatePlayerSetActive()
@@ -212,16 +216,22 @@ public class PhaseManager : MonoBehaviour {
             dumbTarget.SetActive(false);
             monsterHealth.SetActive(false);
             damage.SetActive(false);
-            StartCoroutine(ResumeCoroutine());
+            StartCoroutine(ResumeCoroutine(false));
         }
-        else
+        else //enemyKilledHit
         {
             yield return new WaitForSeconds(0.7f);
+            StartCoroutine(ResumeCoroutine(true));
             dumbTarget.SetActive(false);
             monsterHealth.SetActive(false);
             damage.SetActive(false);
             yield return new WaitForSeconds(2f);
+            monster.GetComponent<SpriteRenderer>().sprite = ProjectileManager.staticEnemy.DeathSprite;
+            yield return new WaitForSeconds(2f);
+            canvas.SetActive(false);
+            bulletBoard.SetActive(false);
             monster.GetComponent<Shatter>().shatter();
+            MonsterHeartbreak.isEnemyKilled = true;
         }
 
     }
@@ -240,7 +250,7 @@ public class PhaseManager : MonoBehaviour {
 
         dumbTarget.GetComponent<Animator>().SetTrigger("Fade");
         strikeBar.SetActive(false);
-        StartCoroutine(ResumeCoroutine());
+        StartCoroutine(ResumeCoroutine(false));
 
         yield return new WaitForSeconds(0.7f);
         dumbTarget.SetActive(false);

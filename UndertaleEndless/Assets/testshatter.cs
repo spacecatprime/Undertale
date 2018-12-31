@@ -13,6 +13,7 @@ public class testshatter : MonoBehaviour {
         {
             Debug.Log("Shattering!");
             GetComponent<Shatter>().shatter();
+            MonsterHeartbreak.isEnemyKilled = true;
         }
 
         //If the user clicks the right mouse button, reset the monster!

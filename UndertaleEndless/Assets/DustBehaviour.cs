@@ -42,7 +42,7 @@ public class DustBehaviour : MonoBehaviour {
         {
             PhaseManager.shouldPlayDeathSound = true;
             shouldFadeOut = true;
-            var x = UnityEngine.Random.Range(-0.5f, 0.5f);
+            var x = UnityEngine.Random.Range(-0.25f, 0.25f);
             var y = 1f;
             var direction = new Vector2(x, y);
             //if you need the vector to have a specific length:
