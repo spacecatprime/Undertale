@@ -135,7 +135,6 @@ public class ProjectileMovement : MonoBehaviour {
     void Update() {
         var instanceCollider = this.gameObject.GetComponent<PolygonCollider2D>();                      //Get Collider
         instanceCollider.isTrigger = true;
-        damage = projectileProperties.damage;
         timeSinceInitialization = Time.timeSinceLevelLoad - initializationTime;
 
         //Continually Rotate Towards Player and move
@@ -201,11 +200,27 @@ public class ProjectileMovement : MonoBehaviour {
     }
 
 
-
     void OnTriggerStay2D(Collider2D other) //Collision
     {
-        if (other.tag == "Player" && damage > 0 && !GameManager.isInvincible) //Inflicts damage when vulnerable
+
+        if (other.tag == "Player" && projectileProperties.healAmount < 0) //Heals player if healamount is negative
         {
+            //Play Heal
+            GameManager.health -= damage;
+            audioSource.clip = healed;
+            audioSource.Play();
+
+            if (projectileProperties.destroyOnTouch)
+                Destroy(this.gameObject);
+
+        }
+        else if (other.tag == "Player" && !GameManager.isInvincible) //Inflicts damage when vulnerable
+        {
+            int HPMod = Mathf.RoundToInt(Mathf.Min((GameManager.health / 10 - 2), 8));
+            float Atk = ProjectileManager.staticEnemy.Atk;
+            float def = 10 + ((PlayerPrefs.GetInt("Level") - 1) / 2);
+            damage = Mathf.RoundToInt(Atk + HPMod - (def / 5));
+
             //Play Damage
             if (projectileTypeTint == "Regular" || projectileTypeTint == "Heal")
             {
@@ -245,17 +260,6 @@ public class ProjectileMovement : MonoBehaviour {
 
         }
 
-        if (other.tag == "Player" && damage < 0) //Heals player regardless
-        {
-            //Play Heal
-            GameManager.health -= damage;
-            audioSource.clip = healed;
-            audioSource.Play();
-
-            if (projectileProperties.destroyOnTouch)
-                Destroy(this.gameObject);
-
-        }
 
     }
 

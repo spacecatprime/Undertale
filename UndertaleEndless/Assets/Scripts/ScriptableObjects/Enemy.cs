@@ -3,15 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using StackableDecorator;
 using UnityEditor;
+using Mono;
+using UnityScript;
 
 [CreateAssetMenu(fileName = "New Enemy", menuName = "Enemy")]
 public class Enemy : ScriptableObject {
 
     [Box(4, 4, 4, 4, order = 1)]
-    [Group("Enemy", 10)]
+    [Group("Enemy", 12)]
     [Heading(title = "Enemy Settings", order = 1)]
     [StackableField]
-    public string bossName;
+    public string enemyName;
+    [InGroup("Enemy")]
+    [StackableField]
+    public Object enemyPhaseDialogueManager;
+    [InGroup("Enemy")]
+    [StackableField]
+    public Dialogue enemyDialogue;
     [InGroup("Enemy")]
     [StackableField]
     [Preview]
@@ -56,18 +64,4 @@ public class Enemy : ScriptableObject {
     [StackableField]
     public List<FightPhase> Phases;
 
-    [StackableField]
-    public string Encounter;
-
-    [StackableField]
-    public string Check;
-
-    [StackableField]
-    public List<string> Neutral;
-
-    [StackableField]
-    public List<string> Talk;
-
-    [StackableField]
-    public List<string> Genocide;
 }

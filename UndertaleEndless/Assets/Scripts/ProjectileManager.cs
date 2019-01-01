@@ -18,7 +18,7 @@ public class ProjectileManager : MonoBehaviour {
     public List<FightPhase> fightPhaseList;
     public List<Projectile> projectilePropertiesList;
     public static List<Projectile> staticProjectileList;
-    public int currentPhase = 0;
+    public static int currentPhase;
     public List<bool> spawnList;
     public GameObject box;
     public static bool endOnDamage;
@@ -80,7 +80,7 @@ public class ProjectileManager : MonoBehaviour {
         if (projectileType >= staticProjectileList.Count) //Make sure spawning projectile type never goes above max projectiles in list
             projectileType = 0;
 
-        if (currentPhase >= fightPhaseList.Count) //Make sure spawning projectile type never goes above max projectiles in list
+        if (currentPhase >= fightPhaseList.Count) //Make sure phase never goes above phaseMax
             currentPhase = 0;
 
 
@@ -148,20 +148,15 @@ public class ProjectileManager : MonoBehaviour {
 
         if (phaseTimer >= fightPhaseList[currentPhase].AttackLength || phaseTimer < 0)
         {
-            PhaseManager.StaticPause(phaseManager.GetComponent<PhaseManager>());
+            PhaseManager.StaticPause(phaseManager.GetComponent<PhaseManager>()); //Stop fight
 
             phaseTimer = 0;
-            currentPhase += 1;
             GameManager.phaseTime = 0;
-            Debug.Log("Next Phase! Coming up: Phase " + currentPhase);
-        }
-
-        if(currentPhase > maxPhases)
-        {
-            currentPhase = 0;
+            GameManager.totalPhases += 1;
         }
 
     }
+
 
     public Vector2 SpawnLocation(int loop) //Get Spawn Location
     {

@@ -11,31 +11,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0784b0fbe346e415481eca496b13f844, type: 3}
   m_Name: Toriel
   m_EditorClassIdentifier: 
-  bossName: Toriel
+  enemyName: Toriel
+  enemyPhaseDialogueManager: {fileID: 11500000, guid: 840301fb8483e4893845c7d0e800ff7b,
+    type: 3}
+  enemyDialogue: {fileID: 11400000, guid: 8cdc13bcb4644471985ad8e344cfaebb, type: 2}
   EnemySprite: {fileID: 21300000, guid: 25f41d7a4c42b40f7b91589d5aecdcae, type: 3}
   ReallyHurt: {fileID: 21300000, guid: e7a83eea8f0d845c8931ac734be773e0, type: 3}
   DeathSprite: {fileID: 21300000, guid: 8386e0d2ae47e4e56a34044d473175a1, type: 3}
   Background: {fileID: 21300000, guid: 68935b5fc26914a96aa9459fb729f878, type: 3}
   bossMusic: {fileID: 8300000, guid: ad8c63ed3efcd4060824e046ffab5ba4, type: 3}
-  HP: 100
-  Atk: 80
+  HP: 440
+  Atk: 6
   Def: 1
   Exp: 150
   Gold: 0
   Phases:
   - {fileID: 11400000, guid: c45d7e0f25665fc42b3abf28103e8e90, type: 2}
   - {fileID: 11400000, guid: 33560521d0e3a0741aed19750aad7307, type: 2}
-  Encounter: Toriel blocks the way!
-  Check: Knows best for you.
-  Neutral:
-  - Toriel looks through you.
-  - Toriel prepares a magical%  attack.
-  - Toriel takes a deep breath.
-  - Toriel is acting aloof.
-  Talk:
-  - You couldn't think of any%  conversation topics.
-  - You tried to think of%  something to say again, but...
-  - Ironically, talking does%  not seem to be the solution%  to this situation.
-  - You thought about telling%  Toriel that you saw her die.% But... That's creepy.
-  Genocide:
-  - Not worth talking to.
+  - {fileID: 11400000, guid: 6b6366072ea8f43e780317e926b5c1ba, type: 2}
+  - {fileID: 11400000, guid: 9ca5df95f6b7d4b1f9c7051cb471a31f, type: 2}

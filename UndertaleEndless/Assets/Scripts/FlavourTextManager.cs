@@ -16,6 +16,8 @@ public class FlavourTextManager : MonoBehaviour
     public List<Button> itemButtons;
     public GameObject continueButton;
     public GameObject phaseManager;
+    public List<GameObject> speechBubbles;
+    public static List<GameObject> staticSpeechBubbles;
 
     public string currentSentence;
     public string encounter;
@@ -31,21 +33,22 @@ public class FlavourTextManager : MonoBehaviour
     public static bool item;
     public static bool mercy;
 
-    public List<string> entireTag;
+    public string entireTag;
+    //public static List<string> enemyEntireTag;
 
     // Use this for initialization
     void Start()
     {
         enemy = ProjectileManager.staticEnemy;
 
-        encounter = enemy.Encounter;
-        check = enemy.Check;
-        neutral = enemy.Neutral;
-        talk = enemy.Talk;
-        genocide = enemy.Genocide;
+        encounter = enemy.enemyDialogue.Encounter;
+        check = enemy.enemyDialogue.Check;
+        neutral = enemy.enemyDialogue.NeutralFlavourText;
+        talk = enemy.enemyDialogue.Talk;
 
         StartCoroutine(TypeSentence(encounter));
 
+        staticSpeechBubbles = speechBubbles;
 
         RecalcItems();
     }
@@ -84,7 +87,8 @@ public class FlavourTextManager : MonoBehaviour
         shouldShowFT = false;
         yield return new WaitForSeconds(0.5f);
         flavourText.gameObject.SetActive(true);
-        StartCoroutine(TypeSentence(enemy.Neutral[Random.Range(0, enemy.Neutral.Count)]));
+        string sentence = enemy.enemyDialogue.NeutralFlavourText[Random.Range(0, enemy.enemyDialogue.NeutralFlavourText.Count)];
+        StartCoroutine(TypeSentence(sentence));
     }
 
     private void Update()
@@ -174,24 +178,24 @@ public class FlavourTextManager : MonoBehaviour
                 {
                     string tagStr = sentence[i].ToString();
 
-                    entireTag.Add(tagStr);
+                    entireTag += tagStr;
+                    i += 1;
 
                     if (tagStr == ">")
                     {
-                        i += 1;
                         break; //Closing tag
                     }
 
-                    i += 1;
                 } //After entire tag is entered
 
-                flavourText.text += string.Join("", entireTag.ToArray());
+                Debug.Log(entireTag);
+                flavourText.text += entireTag;
 
             }
 
-            if (entireTag.Count > 0)
+            if (entireTag.Length > 0)
             {
-                entireTag.Remove(entireTag[0]);
+                entireTag = entireTag.Substring(0, entireTag.Length - 1);
                 continue;
             }
 
@@ -205,7 +209,7 @@ public class FlavourTextManager : MonoBehaviour
             else if (letterStr == "!" || letterStr == "," || letterStr == ".")    // if ! or , wait
             {
                 flavourText.text += letterStr;
-                yield return new WaitForSeconds(1.0f);
+                yield return new WaitForSeconds(0.25f);
             }
             else
             {
@@ -219,7 +223,6 @@ public class FlavourTextManager : MonoBehaviour
 
         }
     }
-
 
 
     public void Item1() //temp healing items

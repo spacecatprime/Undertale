@@ -3,6 +3,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using SpriteShatter;
+using System.Collections.Generic;
+using UnityEditor;
+using System.Reflection;
+using System;
 
 public class PhaseManager : MonoBehaviour {
 
@@ -16,6 +20,8 @@ public class PhaseManager : MonoBehaviour {
     public GameObject damage;
     public GameObject monster;
     public GameObject dustSound;
+    public GameObject monsterContinueButton;
+    public static GameObject staticMonsterContinueButton;
     public TextMeshProUGUI damageIndicator;
     public GameObject monsterHealth;
     public Slider monsterHealthSlider;
@@ -35,9 +41,20 @@ public class PhaseManager : MonoBehaviour {
     public bool hasPlayedDeathSound;
     public GameObject canvas;
     public GameObject bulletBoard;
+    public static bool monsterTalking;
+    public static bool nextDeathSentence;
+    public static bool dustNow;
+    public static float defence;
+    public static float health;
+    public static bool canBeBetrayed;
+    public static bool nextBetrayalSentence;
 
     // Use this for initialization
     void Start () {
+        staticMonsterContinueButton = monsterContinueButton;
+
+        monster.AddComponentExt(ProjectileManager.staticEnemy.enemyPhaseDialogueManager.name);
+
         monsterMaxHP = ProjectileManager.monsterHealthInit;
         monsterHealthSlider.maxValue = monsterMaxHP;
         monsterHealthSlider.value = monsterMaxHP;
@@ -53,11 +70,15 @@ public class PhaseManager : MonoBehaviour {
             x.interactable = true;
         }
 
+        defence = ProjectileManager.staticEnemy.Def;
+
         player.SetActive(false);
     }
 	
 	// Update is called once per frame
 	void Update () {
+
+        health = realValue;
 
         if (strikeMove)
         {
@@ -77,6 +98,17 @@ public class PhaseManager : MonoBehaviour {
             hasPlayedDeathSound = true;
         }
 
+        if(!monsterTalking)
+            foreach (GameObject bubble in FlavourTextManager.staticSpeechBubbles)
+            {
+                bubble.SetActive(false);
+            }
+
+        if(dustNow)
+        {
+            dustNow = false;
+            StartCoroutine(Shatter());
+        }
 
     }
 
@@ -102,39 +134,58 @@ public class PhaseManager : MonoBehaviour {
 
     public void Pause()
     {
-        foreach (Button x in buttons)
-        {
-            x.interactable = true;
-        }
-
         anim.SetTrigger("DialogueActivate");
         StartCoroutine(LatePlayerSetActive());
         ProjectileManager.fighting = false;
         FlavourTextManager.shouldShowFT = true;
     }
 
-    public IEnumerator ResumeCoroutine(bool death)
+    public IEnumerator ResumeCoroutine(bool isDead)
     {
-        strikeBar.transform.position = new Vector2(-315, strikeBar.transform.position.y);
         foreach (Button x in buttons)
         {
             x.interactable = false;
         }
-        anim.SetTrigger("DefaultActivate");
-        player.transform.position = new Vector2(0, 0);
-        yield return new WaitForSeconds(0.75f);
-        player.SetActive(true);
-        if(!death)
+
+        if (!ProjectileManager.fighting)
         {
-            player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
-            ProjectileManager.fighting = true;
+            GameManager.nextPhaseCalculation = true; //Request for next phase
+            anim.SetTrigger("DefaultActivate");
         }
+        strikeBar.transform.position = new Vector2(-315, strikeBar.transform.position.y);
+        player.transform.position = new Vector2(0, 0);
+
+        yield return new WaitForSeconds(0.75f);
+
+        player.SetActive(true);
+        if(!monsterTalking)
+        {
+            if (!isDead)
+            {
+                ProjectileManager.currentPhase = GameManager.currentPhase;
+                Debug.Log("Starting Phase " + GameManager.currentPhase);
+                player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+                ProjectileManager.fighting = true;
+            }
+            else
+            {
+                ProjectileManager.fighting = false;
+            }
+        }
+
+        yield return new WaitForSeconds(0.01f);
+        anim.ResetTrigger("DefaultActivate");
+
     }
 
     public IEnumerator LatePlayerSetActive()
     {
         player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePosition;
         yield return new WaitForSeconds(0.75f);
+        foreach (Button x in buttons)
+        {
+            x.interactable = true;
+        }
         player.SetActive(false);
         player.transform.position = new Vector2(0, 0);
     }
@@ -179,11 +230,11 @@ public class PhaseManager : MonoBehaviour {
             
         if (rating >= 12)
         {
-            damageDealt = Mathf.RoundToInt((attackDamage + weapon - ProjectileManager.staticEnemy.Def + Random.Range(0, 2)) * 2.2f);
+            damageDealt = Mathf.RoundToInt((attackDamage + weapon - defence + UnityEngine.Random.Range(0, 2)) * 2.2f);
         }
         if(rating < 12)
         {
-            damageDealt = Mathf.RoundToInt((attackDamage + weapon - ProjectileManager.staticEnemy.Def + Random.Range(0, 2)) * ((rating/10)+1));
+            damageDealt = Mathf.RoundToInt((attackDamage + weapon - defence + UnityEngine.Random.Range(0, 2)) * ((rating/10)+1));
         }
 
 
@@ -218,7 +269,7 @@ public class PhaseManager : MonoBehaviour {
             damage.SetActive(false);
             StartCoroutine(ResumeCoroutine(false));
         }
-        else //enemyKilledHit
+        else
         {
             yield return new WaitForSeconds(0.7f);
             StartCoroutine(ResumeCoroutine(true));
@@ -227,17 +278,21 @@ public class PhaseManager : MonoBehaviour {
             damage.SetActive(false);
             yield return new WaitForSeconds(2f);
             monster.GetComponent<SpriteRenderer>().sprite = ProjectileManager.staticEnemy.DeathSprite;
-            yield return new WaitForSeconds(2f);
-            canvas.SetActive(false);
-            bulletBoard.SetActive(false);
-            monster.GetComponent<Shatter>().shatter();
-            MonsterHeartbreak.isEnemyKilled = true;
         }
+    }
 
+    public IEnumerator Shatter()
+    {
+        yield return new WaitForSeconds(0f);
+        monster.GetComponent<Shatter>().shatter();
+        canvas.SetActive(false);
+        bulletBoard.SetActive(false);
+        MonsterHeartbreak.isEnemyKilled = true;
     }
 
     public IEnumerator Miss()
     {
+        GameManager.spareCounter += 1;
         strikeBar.GetComponent<Animator>().SetBool("HasAttacked", true);
         slash.GetComponent<Animator>().SetBool("Attack", true);
         Debug.Log("Miss");
@@ -305,5 +360,182 @@ public class PhaseManager : MonoBehaviour {
     public void Mercy()
     {
         FlavourTextManager.mercy = true;
+        GameManager.spareCounter += 1;
+        StartCoroutine(ResumeCoroutine(false));
+    }
+
+    public void MonsterTalkContinue()
+    {
+        monsterContinueButton.SetActive(false);
+        if (ProjectileManager.enemyKilled && !canBeBetrayed)
+        {
+            nextDeathSentence = true;
+        }
+        else if(ProjectileManager.enemyKilled && canBeBetrayed) //betrayal kill
+        {
+            nextBetrayalSentence = true;
+        }
+        else
+        {
+            player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+            monsterTalking = false;
+            ResumeCoroutine(realValue <= 0);
+            monsterContinueButton.SetActive(false);
+            GameManager.currentPhase -= 1;
+            StartCoroutine(ResumeCoroutine(ProjectileManager.enemyKilled));
+        }
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+public static class ExtensionMethod
+{
+    public static Component AddComponentExt(this GameObject obj, string scriptName)
+    {
+        Component cmpnt = null;
+
+
+        for (int i = 0; i < 10; i++)
+        {
+            //If call is null, make another call
+            cmpnt = _AddComponentExt(obj, scriptName, i);
+
+            //Exit if we are successful
+            if (cmpnt != null)
+            {
+                break;
+            }
+        }
+
+
+        //If still null then let user know an exception
+        if (cmpnt == null)
+        {
+            Debug.LogError("Failed to Add Component");
+            return null;
+        }
+        return cmpnt;
+    }
+
+    private static Component _AddComponentExt(GameObject obj, string className, int trials)
+    {
+        //Any script created by user(you)
+        const string userMadeScript = "Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null";
+        //Any script/component that comes with Unity such as "Rigidbody"
+        const string builtInScript = "UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null";
+
+        //Any script/component that comes with Unity such as "Image"
+        const string builtInScriptUI = "UnityEngine.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
+
+        //Any script/component that comes with Unity such as "Networking"
+        const string builtInScriptNetwork = "UnityEngine.Networking, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
+
+        //Any script/component that comes with Unity such as "AnalyticsTracker"
+        const string builtInScriptAnalytics = "UnityEngine.Analytics, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null";
+
+        //Any script/component that comes with Unity such as "AnalyticsTracker"
+        const string builtInScriptHoloLens = "UnityEngine.HoloLens, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null";
+
+        Assembly asm = null;
+
+        try
+        {
+            //Decide if to get user script or built-in component
+            switch (trials)
+            {
+                case 0:
+
+                    asm = Assembly.Load(userMadeScript);
+                    break;
+
+                case 1:
+                    //Get UnityEngine.Component Typical component format
+                    className = "UnityEngine." + className;
+                    asm = Assembly.Load(builtInScript);
+                    break;
+                case 2:
+                    //Get UnityEngine.Component UI format
+                    className = "UnityEngine.UI." + className;
+                    asm = Assembly.Load(builtInScriptUI);
+                    break;
+
+                case 3:
+                    //Get UnityEngine.Component Video format
+                    className = "UnityEngine.Video." + className;
+                    asm = Assembly.Load(builtInScript);
+                    break;
+
+                case 4:
+                    //Get UnityEngine.Component Networking format
+                    className = "UnityEngine.Networking." + className;
+                    asm = Assembly.Load(builtInScriptNetwork);
+                    break;
+                case 5:
+                    //Get UnityEngine.Component Analytics format
+                    className = "UnityEngine.Analytics." + className;
+                    asm = Assembly.Load(builtInScriptAnalytics);
+                    break;
+
+                case 6:
+                    //Get UnityEngine.Component EventSystems format
+                    className = "UnityEngine.EventSystems." + className;
+                    asm = Assembly.Load(builtInScriptUI);
+                    break;
+
+                case 7:
+                    //Get UnityEngine.Component Audio format
+                    className = "UnityEngine.Audio." + className;
+                    asm = Assembly.Load(builtInScriptHoloLens);
+                    break;
+
+                case 8:
+                    //Get UnityEngine.Component SpatialMapping format
+                    className = "UnityEngine.VR.WSA." + className;
+                    asm = Assembly.Load(builtInScriptHoloLens);
+                    break;
+
+                case 9:
+                    //Get UnityEngine.Component AI format
+                    className = "UnityEngine.AI." + className;
+                    asm = Assembly.Load(builtInScript);
+                    break;
+            }
+        }
+        catch (Exception e)
+        {
+            //Debug.Log("Failed to Load Assembly" + e.Message);
+        }
+
+        //Return if Assembly is null
+        if (asm == null)
+        {
+            return null;
+        }
+
+        //Get type then return if it is null
+        Type type = asm.GetType(className);
+        if (type == null)
+            return null;
+
+        //Finally Add component since nothing is null
+        Component cmpnt = obj.AddComponent(type);
+        return cmpnt;
     }
 }

@@ -13,7 +13,6 @@ public class GameManager : MonoBehaviour {
     public static bool isInvincible;
 
     public TextMeshProUGUI Name;
-    //public TextMeshProUGUI Score;
     public TextMeshProUGUI Health;
     public TextMeshProUGUI Level;
     public Slider healthBar;
@@ -22,7 +21,14 @@ public class GameManager : MonoBehaviour {
     public static float health;
     public static float maxHealth;
 
-    public static int level = 1;
+    public static int level;
+
+    public static bool nextPhaseCalculation;
+
+    public static int totalPhases;
+    public static int currentPhase;
+    public static int spareCounter = -1;
+
 
     void Start()
     {
@@ -57,7 +63,10 @@ public class GameManager : MonoBehaviour {
         Health.text = (health.ToString() + "/" + Mathf.RoundToInt(maxHealth).ToString());
         healthBar.value = health;
 
+
     }
+
+
     private void LateUpdate()
     {
 

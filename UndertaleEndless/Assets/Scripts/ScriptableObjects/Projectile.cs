@@ -162,9 +162,9 @@ public class Projectile : ScriptableObject {
     [StackableField]
     public bool FlipY;
     [InGroup("Misc")]
-    [ValidateValue("Damage has to be NEGATIVE if Projectile type is: Heal", "#CheckDamage")]
+    [ValidateValue("Heal has to be NEGATIVE if Projectile type is: Heal", "#CheckDamage")]
     [StackableField]
-    public float damage;
+    public float healAmount;
     [InGroup("Misc")]
     [StackableField]
     public bool destroyOnTouch;

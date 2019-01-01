@@ -1,0 +1,87 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d68afd48f827f0c4489c89067d4710f4, type: 3}
+  m_Name: TorielDialogue
+  m_EditorClassIdentifier: 
+  defaultTalk: {fileID: 8300000, guid: be003728913ec483ea56540500671b67, type: 3}
+  injuredTalk: {fileID: 8300000, guid: 3fe7d14b9072d4b01a364dc7e2cfdd76, type: 3}
+  disbeliefTalk: {fileID: 8300000, guid: 36ee4a5e67f484c799ce4d726a89a1ad, type: 3}
+  Encounter: Toriel blocks the way!
+  Check: Knows best for you.
+  NeutralFlavourText:
+  - 'Toriel looks through you. '
+  - 'Toriel prepares a magical attack. '
+  - 'Toriel takes a deep breath. '
+  - Toriel is acting aloof.
+  Talk:
+  - You couldn't think of any conversation topics.
+  - 'You tried to think of something to say again, but... '
+  - Ironically, talking does not seem to be the solution to this situation.
+  - 'You thought about telling Toriel that you saw her die.% But... That''s creepy. '
+  - Not worth talking to.
+  spareDialogue:
+  - '.....'
+  - '.....%.....'
+  - '.....%.....%.....'
+  - '...?'
+  - What are %you %doing?
+  - Attack or %run away!
+  - What are %you %proving %this way?
+  - Fight me %or leave!
+  - Stop it.
+  - Stop %looking %at me %that way.
+  - Go away!
+  - '...'
+  - '... %...'
+  - I know you want to %go home,[ but...
+  - But please...] %Go upstairs now.
+  - I promise I will %take good care of %you here.
+  - I know we do not %have much,] but...
+  - We can have a good %life here.
+  - Why are you making %this so difficult?
+  - Please, go %upstairs.
+  - '.....'
+  - Ha[ ha...
+  - Pathetic, is it %not?] I cannot save %even a single %child.
+  - '...'
+  - No, I understand. %You would just be %unhappy trapped %down there.
+  - The RUINS are very %small once you get %used to them.
+  - It would not be %right for you to %grow up in a place %like this.
+  - My expectations... ]My loneliness... ] My fear... ]
+  - For you,] my child...
+  - I will put them %aside...
+  defeatNeutral:
+  - Urgh...
+  - "You are stronger %than I thought\u2026"
+  - Listen to me,]% small one...
+  - If you go beyond %this door,
+  - Keep walking as %far as you can.
+  - Eventually, you %will reach an %exit.
+  - '...%....'
+  - <color="red">ASGORE</color>...]] %Do not let<color="red"> ASGORE </color> %take
+    your soul.
+  - His plan cannot be %allowed to %succeed.
+  - '.......'
+  - Be good,%]won't you?
+  - M]<space=1em>y]<space=1em> <space=1em>c]<space=1em>h]<space=1em>i]<space=1em>l]<space=1em>d]  .
+  defeatBetrayal:
+  - Y]o]u].].].]
+  - '... at my most %vulnerable moment...'
+  - To think I was %worried you %wouldn't fit out %in there...
+  - '[E[h[e[h[e[h[e[h[![![!'
+  - You really are no %different than %them!
+  - H]a].].].] ]H]a].].].]
+  defeatGenocide:
+  - Y... you... really hate me that much?
+  - 'Now I see who I was protecting by keeping you there. '
+  - Not you...
+  - But them!
+  - Ha... ha...
