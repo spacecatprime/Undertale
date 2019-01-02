@@ -11,7 +11,17 @@ public class HeartDebris : MonoBehaviour {
     // Use this for initialization
     void Start () {
         rb = this.gameObject.GetComponent<Rigidbody2D>();
-        Vector3 pos = SaveObject.lastLocation;
+        Vector3 pos = new Vector3(0, 0, 0);
+
+        if (ProjectileManager.enemyKilled)
+        {
+            pos = SaveObject.monsterLocation;
+        }
+        else
+        {
+            pos = SaveObject.playerLocation;
+        }
+
         Rigidbody2DExtension.AddExplosionForce(rb, 8.0f, pos, 20.0f);
     }
 

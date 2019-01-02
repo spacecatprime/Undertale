@@ -75,34 +75,22 @@ public class ProjectileManager : MonoBehaviour {
         music.Play();
     }
 
-    void Update () {
+    void Update ()
+    {
 
-        if (projectileType >= staticProjectileList.Count) //Make sure spawning projectile type never goes above max projectiles in list
-            projectileType = 0;
-
-        if (currentPhase >= fightPhaseList.Count) //Make sure phase never goes above phaseMax
-            currentPhase = 0;
+        StopPhaseProjectileOverflow();
 
 
         //Make sure only spawn in projectile in the specified phase
-        while (!fightPhaseList[currentPhase].ProjectileCombo.Contains(staticProjectileList[projectileType]) && fighting)
-        {
-            projectileType += 1;
-            if (projectileType == (staticProjectileList.Count-1))
-            {
-                projectileType = 0;
-            }
-        }
+        CheckForCorrectProjectile();
 
-        if (staticProjectileList[projectileType].RandomSpawnFrequency == true) //Wait time for spawning
-            spawnWaitTime = UnityEngine.Random.Range(staticProjectileList[projectileType].timeSpawnRange.x, staticProjectileList[projectileType].timeSpawnRange.y);
-        else
-            spawnWaitTime = staticProjectileList[projectileType].SpawnFrequency.Evaluate(GameManager.phaseTime);
+        //Wait time for spawning
+        WaitTimeForSpawning();
 
         spawnLoc = new Vector2(spawnLocationX, spawnLocationY);
 
-
-        if (!spawnList[projectileType] && fighting) //Call spawn if [not already spawning] and "[should fight]"
+        //Call spawn if [not already spawning] and "[should fight]"
+        if (!spawnList[projectileType] && fighting)
         {
             StartCoroutine(SpawnProjectile(projectileType));
         }
@@ -111,6 +99,35 @@ public class ProjectileManager : MonoBehaviour {
 
         endOnDamage = fightPhaseList[currentPhase].PhaseEndsOnDamage;
 
+    }
+
+    private void WaitTimeForSpawning()
+    {
+        if (staticProjectileList[projectileType].RandomSpawnFrequency == true)
+            spawnWaitTime = UnityEngine.Random.Range(staticProjectileList[projectileType].timeSpawnRange.x, staticProjectileList[projectileType].timeSpawnRange.y);
+        else
+            spawnWaitTime = staticProjectileList[projectileType].SpawnFrequency.Evaluate(GameManager.phaseTime);
+    }
+
+    private void CheckForCorrectProjectile()
+    {
+        while (!fightPhaseList[currentPhase].ProjectileCombo.Contains(staticProjectileList[projectileType]) && fighting)
+        {
+            projectileType += 1;
+            if (projectileType == (staticProjectileList.Count - 1))
+            {
+                projectileType = 0;
+            }
+        }
+    }
+
+    private void StopPhaseProjectileOverflow()
+    {
+        if (projectileType >= staticProjectileList.Count) //Make sure spawning projectile type never goes above max projectiles in list
+            projectileType = 0;
+
+        if (currentPhase >= fightPhaseList.Count) //Make sure phase never goes above phaseMax
+            currentPhase = 0;
     }
 
     IEnumerator SpawnProjectile(int Class) //Spawning Sequence

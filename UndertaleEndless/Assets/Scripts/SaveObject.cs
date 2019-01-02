@@ -5,7 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class SaveObject : MonoBehaviour {
 
-    public static Vector3 lastLocation;
+    public static Vector3 playerLocation;
+    public static Vector3 monsterLocation;
 
     public static float time;
 

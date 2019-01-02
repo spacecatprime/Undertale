@@ -40,13 +40,19 @@ public class MonsterHeartbreak : MonoBehaviour {
             alreadyAtMonster = true;
             this.gameObject.transform.position = monster.transform.position;
             originPosition = this.gameObject.transform.position;
+            SaveObject.monsterLocation = originPosition;
         }
+
 
         if (shake_intensity > 0 && isEnemyKilled)
         {
-            this.gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, this.gameObject.GetComponent<SpriteRenderer>().color.a + 0.25f* Time.deltaTime);
-            transform.position = originPosition + Random.insideUnitSphere * shake_intensity;
+            this.gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, this.gameObject.GetComponent<SpriteRenderer>().color.a + 0.25f * Time.deltaTime);
+            if (Time.frameCount % 3 == 0) //Shake every 3 frames
+            {
+                transform.position = originPosition + Random.insideUnitSphere * shake_intensity;
+            }
         }
+
 
         if(this.gameObject.GetComponent<SpriteRenderer>().color.a >= 1 && !shattered)
         {
@@ -63,7 +69,6 @@ public class MonsterHeartbreak : MonoBehaviour {
 
     public IEnumerator DeathSounds() //Death Sounds
     {
-        SaveObject.lastLocation = this.gameObject.transform.position;
         yield return new WaitForSeconds(1f);
         this.gameObject.GetComponent<SpriteRenderer>().sprite = snapped;
         audioSource.loop = false;

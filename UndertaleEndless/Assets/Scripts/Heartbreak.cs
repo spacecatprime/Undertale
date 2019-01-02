@@ -25,7 +25,6 @@ public class Heartbreak : MonoBehaviour {
     void Start ()
     {
         this.gameObject.GetComponent<SpriteRenderer>().enabled = true;
-        this.gameObject.transform.position = SaveObject.lastLocation;
         Camera = GameObject.Find("Main Camera");
         audioSource = Camera.GetComponent<AudioSource>();
         audioReverb = Camera.GetComponent<AudioReverbFilter>();
@@ -33,11 +32,20 @@ public class Heartbreak : MonoBehaviour {
         numberOfDebris = 6;
 
         StartCoroutine(deathSounds());
-
+        
+        if (ProjectileManager.enemyKilled)
+        {
+            this.gameObject.transform.position = SaveObject.monsterLocation;
+        }
+        else
+        {
+            this.gameObject.transform.position = SaveObject.playerLocation;
+        }
     }
 
     public void Update()
     {
+
         foreach(GameObject debris in debrisList)
         {
             debris.SetActive(true);

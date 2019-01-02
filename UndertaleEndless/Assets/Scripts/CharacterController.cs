@@ -25,6 +25,7 @@ public class CharacterController : MonoBehaviour
 
     void Update()
     {
+
         horizontalDir = inputDir.x; //Gets horizontal input from inputDirX.
         verticalDir = inputDir.y;     //Gets vertical input from inputDirY.
         isMoving = false;                               //Sets isMoving to false automatically.

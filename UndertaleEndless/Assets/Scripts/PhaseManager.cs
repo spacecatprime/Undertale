@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using System.Reflection;
 using System;
+using MoreMountains.NiceVibrations;
 
 public class PhaseManager : MonoBehaviour {
 
@@ -76,40 +77,62 @@ public class PhaseManager : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
 
         health = realValue;
+        AttackStrikeBarMove();
 
+        Lerp();
+        MonsterSounds();
+        MonsterTalkCheck();
+        DustMonsterIfDeadCheck();
+
+        if (realValue < 0)
+        {
+            realValue = 0;
+        }
+
+    }
+
+    private void DustMonsterIfDeadCheck()
+    {
+        if (dustNow)
+        {
+            dustNow = false;
+            StartCoroutine(Shatter());
+        }
+    }
+
+    private static void MonsterTalkCheck()
+    {
+        if (!monsterTalking)
+            foreach (GameObject bubble in FlavourTextManager.staticSpeechBubbles)
+            {
+                bubble.SetActive(false);
+            }
+    }
+
+    private void MonsterSounds()
+    {
+        if (shouldPlayDeathSound && !hasPlayedDeathSound)
+        {
+            dustSound.GetComponent<AudioSource>().Play();
+            hasPlayedDeathSound = true;
+        }
+    }
+
+    private void AttackStrikeBarMove()
+    {
         if (strikeMove)
         {
-            strikeBar.transform.position = new Vector2(strikeBar.transform.position.x + 500*Time.deltaTime, strikeBar.transform.position.y);
+            strikeBar.transform.position = new Vector2(strikeBar.transform.position.x + 500 * Time.deltaTime, strikeBar.transform.position.y);
         }
 
         if (strikeBar.GetComponent<RectTransform>().transform.position.x > 750 && strikeMove)
         {
             AttackPressed();
         }
-
-        Lerp();
-
-        if(shouldPlayDeathSound && !hasPlayedDeathSound)
-        {
-            dustSound.GetComponent<AudioSource>().Play();
-            hasPlayedDeathSound = true;
-        }
-
-        if(!monsterTalking)
-            foreach (GameObject bubble in FlavourTextManager.staticSpeechBubbles)
-            {
-                bubble.SetActive(false);
-            }
-
-        if(dustNow)
-        {
-            dustNow = false;
-            StartCoroutine(Shatter());
-        }
-
     }
 
     void Lerp()
@@ -243,6 +266,7 @@ public class PhaseManager : MonoBehaviour {
 
         yield return new WaitForSeconds(0.75f);
 
+
         StartCoroutine(Shake());
         realValue -= damageDealt;
         strikeBar.GetComponent<AudioSource>().Play();
@@ -252,9 +276,14 @@ public class PhaseManager : MonoBehaviour {
 
         if(realValue <= 0)
         {
+            MMVibrationManager.Haptic(HapticTypes.HeavyImpact);
             monster.GetComponent<AudioSource>().Stop();
             monster.GetComponent<SpriteRenderer>().sprite = ProjectileManager.staticEnemy.ReallyHurt;
             ProjectileManager.enemyKilled = true;
+        }
+        else
+        {
+            MMVibrationManager.Haptic(HapticTypes.LightImpact);
         }
 
         yield return new WaitForSeconds(0.5f);

@@ -44,11 +44,20 @@ public class GameManager : MonoBehaviour {
         Level.text = ("LV " + level.ToString());
 
         Name.text = (PlayerPrefs.GetString("Name").ToUpper());
-
+        
     }
 
     void Update()
     {
+        try
+        {
+            SaveObject.playerLocation = GameObject.Find("Player").transform.position;
+        }
+        catch
+        {
+
+        }
+
         if (health > maxHealth)
             health = maxHealth;
 
@@ -58,11 +67,12 @@ public class GameManager : MonoBehaviour {
         }
 
         if (health <= 0)
+        {
             Dead();
+        }
 
         Health.text = (health.ToString() + "/" + Mathf.RoundToInt(maxHealth).ToString());
         healthBar.value = health;
-
 
     }
 
@@ -79,7 +89,6 @@ public class GameManager : MonoBehaviour {
 
     public static void Dead()
     {
-        SaveObject.lastLocation = GameObject.FindGameObjectWithTag("Player").transform.position;
         //PlayerPrefs.SetInt("Experience", Mathf.RoundToInt(phaseTime));
         SceneManager.LoadScene("DeathScreen");
     }
