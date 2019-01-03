@@ -322,9 +322,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 12162477}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: baf9f687a6172476fb153fdcc173ccf5, type: 3}
+  m_Script: {fileID: 11500000, guid: 0d65a72a2095d4de089ae3bd6d0b57ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AngleMultiplier: 0
+  SpeedMultiplier: 0
+  CurveScale: 0.15
 --- !u!1 &129815817
 GameObject:
   m_ObjectHideFlags: 0
@@ -2609,9 +2612,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 649639599}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: baf9f687a6172476fb153fdcc173ccf5, type: 3}
+  m_Script: {fileID: 11500000, guid: 0d65a72a2095d4de089ae3bd6d0b57ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AngleMultiplier: 0
+  SpeedMultiplier: 0
+  CurveScale: 0.15
 --- !u!1 &659559852
 GameObject:
   m_ObjectHideFlags: 0
@@ -6675,9 +6681,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1683231576}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: baf9f687a6172476fb153fdcc173ccf5, type: 3}
+  m_Script: {fileID: 11500000, guid: 0d65a72a2095d4de089ae3bd6d0b57ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AngleMultiplier: 0
+  SpeedMultiplier: 0
+  CurveScale: 0.15
 --- !u!1 &1683715288
 GameObject:
   m_ObjectHideFlags: 0
@@ -8059,9 +8068,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1880547755}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: baf9f687a6172476fb153fdcc173ccf5, type: 3}
+  m_Script: {fileID: 11500000, guid: 0d65a72a2095d4de089ae3bd6d0b57ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AngleMultiplier: 0
+  SpeedMultiplier: 0
+  CurveScale: 0.15
 --- !u!1 &1904458847
 GameObject:
   m_ObjectHideFlags: 0

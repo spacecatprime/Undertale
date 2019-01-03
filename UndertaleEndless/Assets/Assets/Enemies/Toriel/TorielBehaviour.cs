@@ -17,6 +17,7 @@ public class TorielBehaviour : MonoBehaviour {
     public int deathSentence;
     public int betrayalSentence;
     public string entireTag = "";
+    private bool betrayal;
 
     private void Start()
     {
@@ -85,6 +86,7 @@ public class TorielBehaviour : MonoBehaviour {
         }
         else if (PhaseManager.nextBetrayalSentence)
         {
+            betrayal = true;
             betrayalSentence += 1;
             BetrayalDeathBubble(1);
 
@@ -248,14 +250,18 @@ public class TorielBehaviour : MonoBehaviour {
 
     public void ShakyTextSetter()
     {
-        if(deathSentence > 0)
+        if(deathSentence == 11)
         {
-            //shake
+            TextJitter.CurveScale = 0f; //My child.
+        }
+        else if(!betrayal && ProjectileManager.enemyKilled)
+        {
+            TextJitter.CurveScale = 0.15f;
         }
 
-        if (betrayalSentence > 0)
+        if (betrayal && ProjectileManager.enemyKilled)
         {
-            //shake
+            TextJitter.CurveScale = 0.2f;
         }
     }
 

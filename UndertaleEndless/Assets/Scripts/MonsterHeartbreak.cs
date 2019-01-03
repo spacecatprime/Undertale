@@ -47,7 +47,7 @@ public class MonsterHeartbreak : MonoBehaviour {
         if (shake_intensity > 0 && isEnemyKilled)
         {
             this.gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, this.gameObject.GetComponent<SpriteRenderer>().color.a + 0.25f * Time.deltaTime);
-            if (Time.frameCount % 3 == 0) //Shake every 3 frames
+            if (Time.frameCount % 2 == 0) //Shake every 2 frames
             {
                 transform.position = originPosition + Random.insideUnitSphere * shake_intensity;
             }
