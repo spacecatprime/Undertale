@@ -9,6 +9,7 @@ public class TorielBehaviour : MonoBehaviour {
 
     public int startingPhase = 0;
     public int latestSpare = -1;
+    public Vector2 unskippableTextRange = new Vector2(24, 28); //inclusive, doesn't give player an option to act during this dialogue range
     public Vector2 normalLoopRange = new Vector2(0, 1); //Lowest,Highest
     public Vector2 conditionalHealthPhase = new Vector2(2, 2); //If health is X, goto phase Y
     public List<GameObject> speechBubbles;
@@ -18,6 +19,7 @@ public class TorielBehaviour : MonoBehaviour {
     public int betrayalSentence;
     public string entireTag = "";
     private bool betrayal;
+    private Animator anim;
 
     private void Start()
     {
@@ -33,6 +35,10 @@ public class TorielBehaviour : MonoBehaviour {
         }
 
         monsterSound.clip = monsterTextSound;
+        anim = this.gameObject.GetComponent<Animator>();
+        anim.runtimeAnimatorController = ProjectileManager.staticEnemy.EnemyAnimation;
+
+        GameManager.customUnskippableTextRange = unskippableTextRange;
     }
 
     // Update is called once per frame
@@ -41,6 +47,118 @@ public class TorielBehaviour : MonoBehaviour {
         CalculateNextSentence();
         CustomDefenceSetter();
         ShakyTextSetter();
+        AnimationSetter();
+
+
+
+        if (PhaseManager.nextSentence) //check default next sentence
+        {
+            GameManager.spareCounter += 1;
+            PhaseManager.nextSentence = false;
+            MercySpeechBubble(1);
+
+        }
+    }
+
+    public void AnimationSetter()
+    {
+        if(PhaseManager.isHit) //HIT SETTINGS
+        {
+            if (!ProjectileManager.enemyKilled) //neutral hit
+            {
+                anim.SetTrigger("hurt_0");
+            }
+            if (ProjectileManager.enemyKilled && !PhaseManager.canBeBetrayed) //neutral killing blow
+            {
+                anim.SetTrigger("reallyhurt_0");
+            }
+            else if (ProjectileManager.enemyKilled && PhaseManager.canBeBetrayed) //betrayal killing blow
+            {
+                anim.SetTrigger("murdered_0");
+            }
+        }
+        else if(ProjectileManager.enemyKilled && PhaseManager.canBeBetrayed) //BETRAYAL DEAD SETTINGS 
+        {
+            if(betrayalSentence == 4) //ha...ha...
+            {
+                anim.SetTrigger("kneelsmile_0");
+            }
+            else if (betrayalSentence == 3) //you are no different
+            {
+                anim.SetTrigger("murdered_1");
+            }
+            else
+            {
+                anim.SetTrigger("murdered_0");
+            }
+        }
+        else if(ProjectileManager.enemyKilled && !PhaseManager.canBeBetrayed) //NEUTRAL DEAD SETTINGS 
+        {
+            if (deathSentence >= 6 && deathSentence <= 8) //'...' to 'dont let his plan succeed'
+            {
+                anim.SetTrigger("kneelanguish_0");
+            }
+            else if (deathSentence == 9) //be good wont you?
+            {
+                anim.SetTrigger("kneelanguish2_0"); 
+            }
+            else if (deathSentence == 11) //my child...
+            {
+                anim.SetTrigger("kneelsmile_0"); 
+            }
+            else
+            {
+                anim.SetTrigger("kneel_0");
+            }
+
+        }
+        else if(!ProjectileManager.enemyKilled) //default alive
+        {
+            if (latestSpare == 9 || latestSpare == 11 || latestSpare == 19) //stop looking at me that way
+            {
+                anim.SetTrigger("side_0");
+            }
+            if (latestSpare == 8)
+            {
+                anim.SetTrigger("0");
+            }
+            else if (latestSpare == 12) //...
+            {
+                anim.SetTrigger("sidesad_0");
+            }
+            else if (latestSpare == 13 || latestSpare == 18) //you want to go home || why are you making this difficult
+            {
+                anim.SetTrigger("sad_0");
+            }
+            else if (latestSpare >= 15 && latestSpare <= 18) //i promise take care --> non-inclusive why are you making this difficult
+            {
+                anim.SetTrigger("sadhappy_0");
+            }
+            else if (latestSpare == 20) //...
+            {
+                anim.SetTrigger("sidesad2_0"); 
+            }
+            else if (latestSpare == 21) //haha
+            {
+                anim.SetTrigger("sidesadhappy_0"); 
+            }
+            else if (latestSpare == 22) //pathetic... even a single chile
+            {
+                anim.SetTrigger("sadhappy_0"); 
+            }
+            else if (latestSpare == 23) //...
+            {
+                anim.SetTrigger("sidesad_0");
+            }
+            else if (latestSpare >= 24) //i understand -> incliusive end (make this unskippable end)
+            {
+                anim.SetTrigger("neutral_0"); 
+            }
+        }
+        else
+        {
+            anim.SetTrigger("0");
+        }
     }
 
     public bool CheckForMoreMercy()
@@ -132,7 +250,6 @@ public class TorielBehaviour : MonoBehaviour {
             {
                 GameManager.currentPhase += 1; //Next phase
             }
-            Debug.Log("The calculated next phase is: " + GameManager.currentPhase);
 
             if (CheckForMoreMercy())
             {
@@ -254,14 +371,17 @@ public class TorielBehaviour : MonoBehaviour {
         {
             TextJitter.CurveScale = 0f; //My child.
         }
-        else if(!betrayal && ProjectileManager.enemyKilled)
+        else if (betrayalSentence == 4)
+        {
+            TextJitter.CurveScale = 0f; //ha.. haa..
+        }
+        else if(ProjectileManager.enemyKilled)
         {
             TextJitter.CurveScale = 0.15f;
-        }
-
-        if (betrayal && ProjectileManager.enemyKilled)
-        {
-            TextJitter.CurveScale = 0.2f;
+            if (betrayal)
+            {
+                TextJitter.CurveScale = 0.2f;
+            }
         }
     }
 

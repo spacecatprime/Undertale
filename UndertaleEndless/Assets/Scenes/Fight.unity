@@ -325,9 +325,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d65a72a2095d4de089ae3bd6d0b57ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AngleMultiplier: 0
-  SpeedMultiplier: 0
-  CurveScale: 0.15
 --- !u!1 &129815817
 GameObject:
   m_ObjectHideFlags: 0
@@ -2615,9 +2612,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d65a72a2095d4de089ae3bd6d0b57ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AngleMultiplier: 0
-  SpeedMultiplier: 0
-  CurveScale: 0.15
 --- !u!1 &659559852
 GameObject:
   m_ObjectHideFlags: 0
@@ -4015,6 +4009,7 @@ GameObject:
   - component: {fileID: 1078771444}
   - component: {fileID: 1078771446}
   - component: {fileID: 1078771447}
+  - component: {fileID: 1078771448}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -4057,7 +4052,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -1
-  m_Sprite: {fileID: 21300000, guid: 25f41d7a4c42b40f7b91589d5aecdcae, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 397b0e1c15981a1498fcd904cf20522e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -4198,6 +4193,24 @@ MonoBehaviour:
     colliderType: 0
     explodeFrom: {x: 0, y: 0}
     explosionForce: {x: 0, y: 0}
+--- !u!95 &1078771448
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1078771443}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 016cebde9735e4ab1ad6f1fe205f7697, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1088058140
 GameObject:
   m_ObjectHideFlags: 0
@@ -6684,9 +6697,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d65a72a2095d4de089ae3bd6d0b57ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AngleMultiplier: 0
-  SpeedMultiplier: 0
-  CurveScale: 0.15
 --- !u!1 &1683715288
 GameObject:
   m_ObjectHideFlags: 0
@@ -8071,9 +8081,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d65a72a2095d4de089ae3bd6d0b57ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AngleMultiplier: 0
-  SpeedMultiplier: 0
-  CurveScale: 0.15
 --- !u!1 &1904458847
 GameObject:
   m_ObjectHideFlags: 0

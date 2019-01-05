@@ -49,6 +49,9 @@ public class PhaseManager : MonoBehaviour {
     public static float health;
     public static bool canBeBetrayed;
     public static bool nextBetrayalSentence;
+    public static bool nextSentence;
+    public static bool shakeHasStopped;
+    public static bool isHit;
 
     // Use this for initialization
     void Start () {
@@ -178,7 +181,7 @@ public class PhaseManager : MonoBehaviour {
         strikeBar.transform.position = new Vector2(-315, strikeBar.transform.position.y);
         player.transform.position = new Vector2(0, 0);
 
-        yield return new WaitForSeconds(0.75f);
+        yield return new WaitForSeconds(0.25f);
 
         player.SetActive(true);
         if(!monsterTalking)
@@ -266,7 +269,7 @@ public class PhaseManager : MonoBehaviour {
 
         yield return new WaitForSeconds(0.75f);
 
-
+        isHit = true;
         StartCoroutine(Shake());
         realValue -= damageDealt;
         strikeBar.GetComponent<AudioSource>().Play();
@@ -276,14 +279,9 @@ public class PhaseManager : MonoBehaviour {
 
         if(realValue <= 0)
         {
-            MMVibrationManager.Haptic(HapticTypes.HeavyImpact);
+            MMVibrationManager.Vibrate();
             monster.GetComponent<AudioSource>().Stop();
-            monster.GetComponent<SpriteRenderer>().sprite = ProjectileManager.staticEnemy.ReallyHurt;
             ProjectileManager.enemyKilled = true;
-        }
-        else
-        {
-            MMVibrationManager.Haptic(HapticTypes.LightImpact);
         }
 
         yield return new WaitForSeconds(0.5f);
@@ -305,8 +303,6 @@ public class PhaseManager : MonoBehaviour {
             dumbTarget.SetActive(false);
             monsterHealth.SetActive(false);
             damage.SetActive(false);
-            yield return new WaitForSeconds(2f);
-            monster.GetComponent<SpriteRenderer>().sprite = ProjectileManager.staticEnemy.DeathSprite;
         }
     }
 
@@ -343,6 +339,7 @@ public class PhaseManager : MonoBehaviour {
 
     IEnumerator Shake()
     {
+        shakeHasStopped = false;
         shakeAmount = 0.75f;
         float shakeRecovery = 0.5f;
 
@@ -364,10 +361,9 @@ public class PhaseManager : MonoBehaviour {
             monster.transform.position = new Vector2(enemyOriginalPos.x - Mathf.Abs(shakeAmount), enemyOriginalPos.y);
         }
 
-        if(ProjectileManager.enemyKilled)
-        {
-            monster.GetComponent<SpriteRenderer>().sprite = ProjectileManager.staticEnemy.DeathSprite;
-        }
+        shakeHasStopped = true;
+        isHit = false;
+
     }
 
     public void Fight()
@@ -396,13 +392,17 @@ public class PhaseManager : MonoBehaviour {
     public void MonsterTalkContinue()
     {
         monsterContinueButton.SetActive(false);
-        if (ProjectileManager.enemyKilled && !canBeBetrayed)
+        if (ProjectileManager.enemyKilled && !canBeBetrayed) //neutral kill
         {
             nextDeathSentence = true;
         }
         else if(ProjectileManager.enemyKilled && canBeBetrayed) //betrayal kill
         {
             nextBetrayalSentence = true;
+        }
+        else if (GameManager.spareCounter >= GameManager.customUnskippableTextRange.x && GameManager.spareCounter <= GameManager.customUnskippableTextRange.y)
+        {
+            nextSentence = true;
         }
         else
         {

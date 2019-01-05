@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour {
     public static int totalPhases;
     public static int currentPhase;
     public static int spareCounter = -1;
+    public static Vector2 customUnskippableTextRange; //inclusive
 
 
     void Start()

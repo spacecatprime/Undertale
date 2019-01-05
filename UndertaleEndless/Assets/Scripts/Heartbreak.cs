@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using MoreMountains.NiceVibrations;
 
 public class Heartbreak : MonoBehaviour {
 
@@ -54,12 +55,14 @@ public class Heartbreak : MonoBehaviour {
 
     public IEnumerator deathSounds() //Death Sounds
     {
+        MMVibrationManager.Haptic(HapticTypes.LightImpact);
         audioSource.loop = false;
         audioReverb.enabled = false;
         audioSource.clip = snap;
         audioSource.Play();
 
         yield return new WaitForSeconds(1.5f);
+        MMVibrationManager.Haptic(HapticTypes.HeavyImpact);
         this.gameObject.GetComponent<SpriteRenderer>().enabled = false;
         spawnDebris();
         audioReverb.enabled = true;

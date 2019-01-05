@@ -15,9 +15,7 @@ MonoBehaviour:
   enemyPhaseDialogueManager: {fileID: 11500000, guid: 840301fb8483e4893845c7d0e800ff7b,
     type: 3}
   enemyDialogue: {fileID: 11400000, guid: 8cdc13bcb4644471985ad8e344cfaebb, type: 2}
-  EnemySprite: {fileID: 21300000, guid: 25f41d7a4c42b40f7b91589d5aecdcae, type: 3}
-  ReallyHurt: {fileID: 21300000, guid: e7a83eea8f0d845c8931ac734be773e0, type: 3}
-  DeathSprite: {fileID: 21300000, guid: 8386e0d2ae47e4e56a34044d473175a1, type: 3}
+  EnemyAnimation: {fileID: 9100000, guid: 016cebde9735e4ab1ad6f1fe205f7697, type: 2}
   Background: {fileID: 21300000, guid: 68935b5fc26914a96aa9459fb729f878, type: 3}
   bossMusic: {fileID: 8300000, guid: ad8c63ed3efcd4060824e046ffab5ba4, type: 3}
   HP: 440

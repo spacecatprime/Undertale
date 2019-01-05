@@ -37,12 +37,8 @@ public class ProjectileManager : MonoBehaviour {
 
     private void Awake() //Add all Projectile Scriptable Objects to List
     {
-        enemyImage.sprite = enemy.EnemySprite;
-
         battleBG.sprite = enemy.Background;
 
-        if(enemy.EnemySprite != null)
-            enemyImage.color = new Color(1.0f, 1.0f, 1.0f);
 
         if (enemy.Background != null)
             battleBG.color = new Color(1.0f, 1.0f, 1.0f);

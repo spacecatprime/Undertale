@@ -10,7 +10,7 @@ using UnityScript;
 public class Enemy : ScriptableObject {
 
     [Box(4, 4, 4, 4, order = 1)]
-    [Group("Enemy", 12)]
+    [Group("Enemy", 11)]
     [Heading(title = "Enemy Settings", order = 1)]
     [StackableField]
     public string enemyName;
@@ -24,17 +24,7 @@ public class Enemy : ScriptableObject {
     [StackableField]
     [Preview]
     [Expandable]
-    public Sprite EnemySprite;
-    [InGroup("Enemy")]
-    [StackableField]
-    [Preview]
-    [Expandable]
-    public Sprite ReallyHurt;
-    [InGroup("Enemy")]
-    [StackableField]
-    [Preview]
-    [Expandable]
-    public Sprite DeathSprite;
+    public RuntimeAnimatorController EnemyAnimation;
     [InGroup("Enemy")]
     [StackableField]
     [Preview]

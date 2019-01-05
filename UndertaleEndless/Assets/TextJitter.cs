@@ -28,12 +28,14 @@ public class TextJitter : MonoBehaviour
 
     void OnEnable()
     {
+        StartCoroutine(AnimateVertexColors());
         // Subscribe to event fired when text object has been regenerated.
         TMPro_EventManager.TEXT_CHANGED_EVENT.Add(ON_TEXT_CHANGED);
     }
 
     void OnDisable()
     {
+        StopAllCoroutines();
         TMPro_EventManager.TEXT_CHANGED_EVENT.Remove(ON_TEXT_CHANGED);
     }
 
@@ -95,7 +97,7 @@ public class TextJitter : MonoBehaviour
             // If No Characters then just yield and wait for some text to be added
             if (characterCount == 0)
             {
-                yield return new WaitForSeconds(0.025f);
+                yield return new WaitForSeconds(0.0125f);
                 continue;
             }
 
@@ -152,6 +154,7 @@ public class TextJitter : MonoBehaviour
                 destinationVertices[vertexIndex + 3] += offset;
 
                 vertexAnim[i] = vertAnim;
+
             }
 
             // Push changes into meshes
@@ -163,7 +166,7 @@ public class TextJitter : MonoBehaviour
 
             loopCount += 1;
 
-            yield return new WaitForSeconds(0.025f);
+            yield return new WaitForSeconds(0.0125f);
         }
     }
 

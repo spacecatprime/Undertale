@@ -56,29 +56,27 @@ MonoBehaviour:
   - The RUINS are very %small once you get %used to them.
   - It would not be %right for you to %grow up in a place %like this.
   - My expectations... ]My loneliness... ] My fear... ]
-  - For you,] my child...
-  - I will put them %aside...
+  - For you,] my child...%I will put them %aside...
   defeatNeutral:
   - Urgh...
-  - "You are stronger %than I thought\u2026"
+  - You are stronger %than I thought...
   - Listen to me,]% small one...
   - If you go beyond %this door,
   - Keep walking as %far as you can.
   - Eventually, you %will reach an %exit.
-  - '...%....'
+  - .[.[.[%.[.[.[.
   - <color="red">ASGORE</color>...]] %Do not let<color="red"> ASGORE </color> %take
     your soul.
   - His plan cannot be %allowed to %succeed.
-  - '.......'
+  - .[.[.[.[.[.[.
   - Be good,%]won't you?
   - M]<space=1em>y]<space=1em> <space=1em>c]<space=1em>h]<space=1em>i]<space=1em>l]<space=1em>d]  .
   defeatBetrayal:
   - Y]o]u].].].]
-  - '... at my most %vulnerable moment...'
+  - '... at my most %vulnerable %moment...'
   - To think I was %worried you %wouldn't fit out %in there...
-  - '[E[h[e[h[e[h[e[h[![![!'
-  - You really are no %different than %them!
-  - H]a].].].] ]H]a].].].]
+  - '[E[h[e[h[e[h[e[h[![![!%You really are no %different than %them!'
+  - H]a].].].] ]h]a].].].]
   defeatGenocide:
   - Y... you... really hate me that much?
   - 'Now I see who I was protecting by keeping you there. '
