@@ -42,6 +42,8 @@ public class PhaseManager : MonoBehaviour {
     public bool hasPlayedDeathSound;
     public GameObject canvas;
     public GameObject bulletBoard;
+    public static bool canBeGenocide;
+    public static bool nextGenocideSentence;
     public static bool monsterTalking;
     public static bool nextDeathSentence;
     public static bool dustNow;
@@ -392,16 +394,24 @@ public class PhaseManager : MonoBehaviour {
     public void MonsterTalkContinue()
     {
         monsterContinueButton.SetActive(false);
-        if (ProjectileManager.enemyKilled && !canBeBetrayed) //neutral kill
+        if (ProjectileManager.enemyKilled && !canBeBetrayed && !canBeGenocide) //neutral kill
         {
+            Debug.Log("Next Neutral");
             nextDeathSentence = true;
         }
-        else if(ProjectileManager.enemyKilled && canBeBetrayed) //betrayal kill
+        else if(ProjectileManager.enemyKilled && canBeBetrayed && !canBeGenocide) //betrayal kill
         {
+            Debug.Log("Next Betrayal");
             nextBetrayalSentence = true;
+        }
+        else if (ProjectileManager.enemyKilled && canBeGenocide && !canBeBetrayed) //betrayal kill
+        {
+            Debug.Log("Next Genocide");
+            nextGenocideSentence = true;
         }
         else if (GameManager.spareCounter >= GameManager.customUnskippableTextRange.x && GameManager.spareCounter <= GameManager.customUnskippableTextRange.y)
         {
+            Debug.Log("Next Default");
             nextSentence = true;
         }
         else

@@ -33,6 +33,9 @@ public class FlavourTextManager : MonoBehaviour
     public static bool item;
     public static bool mercy;
 
+    public static bool calculateFlavourSentence;
+    public static string flavourSentence;
+
     public string entireTag;
     //public static List<string> enemyEntireTag;
 
@@ -85,10 +88,10 @@ public class FlavourTextManager : MonoBehaviour
     public IEnumerator ShowFlavourText()
     {
         shouldShowFT = false;
+        calculateFlavourSentence = true;
         yield return new WaitForSeconds(0.5f);
         flavourText.gameObject.SetActive(true);
-        string sentence = enemy.enemyDialogue.NeutralFlavourText[Random.Range(0, enemy.enemyDialogue.NeutralFlavourText.Count)];
-        StartCoroutine(TypeSentence(sentence));
+        StartCoroutine(TypeSentence(flavourSentence));
     }
 
     private void Update()

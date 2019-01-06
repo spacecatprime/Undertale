@@ -18,7 +18,7 @@ MonoBehaviour:
   Check: Knows best for you.
   NeutralFlavourText:
   - 'Toriel looks through you. '
-  - 'Toriel prepares a magical attack. '
+  - 'Toriel prepares a magical%  attack. '
   - 'Toriel takes a deep breath. '
   - Toriel is acting aloof.
   Talk:
@@ -76,10 +76,10 @@ MonoBehaviour:
   - '... at my most %vulnerable %moment...'
   - To think I was %worried you %wouldn't fit out %in there...
   - '[E[h[e[h[e[h[e[h[![![!%You really are no %different than %them!'
-  - H]a].].].] ]h]a].].].]
+  - H]  a]  .]  .]  .]   %]h]  a]  .]  .]  .]
   defeatGenocide:
-  - Y... you... really hate me that much?
-  - 'Now I see who I was protecting by keeping you there. '
-  - Not you...
-  - But them!
-  - Ha... ha...
+  - Y[.[.[.[ y[o[u[.[.[. [r[e[a[l[l[y[ %h[a[t[e[ m[e[ t[h[a[t [m[u[c[h[?
+  - 'Now I see who I %was protecting by %keeping you there. '
+  - N[o[t[ y[o[u[.[.[.
+  - B[u[t[ t[h[e[m[!
+  - H]  a]  .]  .]  .]   %]h]  a]  .]  .]  .]

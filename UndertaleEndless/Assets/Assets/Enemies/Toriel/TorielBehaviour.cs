@@ -17,8 +17,10 @@ public class TorielBehaviour : MonoBehaviour {
     public AudioSource monsterSound;
     public int deathSentence;
     public int betrayalSentence;
+    public int genocideSentence;
     public string entireTag = "";
     private bool betrayal;
+    private bool genocide;
     private Animator anim;
 
     private void Start()
@@ -39,24 +41,40 @@ public class TorielBehaviour : MonoBehaviour {
         anim.runtimeAnimatorController = ProjectileManager.staticEnemy.EnemyAnimation;
 
         GameManager.customUnskippableTextRange = unskippableTextRange;
+
+        if(PlayerPrefs.GetInt("Level") >= 3)
+        {
+            PhaseManager.canBeGenocide = true;
+            genocide = true;
+            PhaseManager.defence = -9999;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        CalculateNextSentence();
+        CalculateWhatToDoThisTurn();
         CustomDefenceSetter();
         ShakyTextSetter();
         AnimationSetter();
 
-
-
-        if (PhaseManager.nextSentence) //check default next sentence
+        if(FlavourTextManager.calculateFlavourSentence)
         {
-            GameManager.spareCounter += 1;
-            PhaseManager.nextSentence = false;
-            MercySpeechBubble(1);
+            FlavourTextManager.calculateFlavourSentence = false;
+            CalculateFlavourText();
+        }
 
+    }
+
+    private void CalculateFlavourText()
+    {
+        if (GameManager.spareCounter < 13)
+        {
+            FlavourTextManager.flavourSentence = ProjectileManager.staticEnemy.enemyDialogue.NeutralFlavourText[UnityEngine.Random.Range(0, ProjectileManager.staticEnemy.enemyDialogue.NeutralFlavourText.Count)];
+        }
+        else
+        {
+            FlavourTextManager.flavourSentence = "...";
         }
     }
 
@@ -68,7 +86,7 @@ public class TorielBehaviour : MonoBehaviour {
             {
                 anim.SetTrigger("hurt_0");
             }
-            if (ProjectileManager.enemyKilled && !PhaseManager.canBeBetrayed) //neutral killing blow
+            if (ProjectileManager.enemyKilled && !PhaseManager.canBeBetrayed && !PhaseManager.canBeGenocide) //neutral killing blow
             {
                 anim.SetTrigger("reallyhurt_0");
             }
@@ -76,8 +94,12 @@ public class TorielBehaviour : MonoBehaviour {
             {
                 anim.SetTrigger("murdered_0");
             }
+            else if (ProjectileManager.enemyKilled && PhaseManager.canBeGenocide) //genocide killing blow
+            {
+                anim.SetTrigger("murdered_0");
+            }
         }
-        else if(ProjectileManager.enemyKilled && PhaseManager.canBeBetrayed) //BETRAYAL DEAD SETTINGS 
+        else if(ProjectileManager.enemyKilled && PhaseManager.canBeBetrayed && !PhaseManager.canBeGenocide) //BETRAYAL DEAD SETTINGS 
         {
             if(betrayalSentence == 4) //ha...ha...
             {
@@ -92,7 +114,22 @@ public class TorielBehaviour : MonoBehaviour {
                 anim.SetTrigger("murdered_0");
             }
         }
-        else if(ProjectileManager.enemyKilled && !PhaseManager.canBeBetrayed) //NEUTRAL DEAD SETTINGS 
+        else if (ProjectileManager.enemyKilled && PhaseManager.canBeGenocide && !PhaseManager.canBeBetrayed) //GENOCIDE DEAD SETTINGS 
+        {
+            if (genocideSentence == 4) //ha...ha...
+            {
+                anim.SetTrigger("kneelsmile_0");
+            }
+            else if (genocideSentence == 3) //you are no different
+            {
+                anim.SetTrigger("murdered_1");
+            }
+            else
+            {
+                anim.SetTrigger("murdered_0");
+            }
+        }
+        else if(ProjectileManager.enemyKilled && !PhaseManager.canBeBetrayed && !PhaseManager.canBeGenocide) //NEUTRAL DEAD SETTINGS 
         {
             if (deathSentence >= 6 && deathSentence <= 8) //'...' to 'dont let his plan succeed'
             {
@@ -154,6 +191,10 @@ public class TorielBehaviour : MonoBehaviour {
             {
                 anim.SetTrigger("neutral_0"); 
             }
+            else
+            {
+                anim.SetTrigger("0");
+            }
         }
         else
         {
@@ -190,66 +231,15 @@ public class TorielBehaviour : MonoBehaviour {
         }
     }
 
-    private void CalculateNextSentence()
+    private void CalculateWhatToDoThisTurn()
     {
-        if (PhaseManager.nextDeathSentence)
+        SentenceCalculation();
+
+        if (GameManager.nextPhaseCalculation)
         {
-            deathSentence += 1;
-            NeutralDeathBubble(1);
+            DeathThisTurnSentence();
 
-            PhaseManager.nextDeathSentence = false;
-            if (deathSentence == ProjectileManager.staticEnemy.enemyDialogue.defeatNeutral.Count - 1)
-                StartCoroutine(Dust());
-
-        }
-        else if (PhaseManager.nextBetrayalSentence)
-        {
-            betrayal = true;
-            betrayalSentence += 1;
-            BetrayalDeathBubble(1);
-
-            PhaseManager.nextBetrayalSentence = false;
-            if (betrayalSentence == ProjectileManager.staticEnemy.enemyDialogue.defeatBetrayal.Count - 1)
-                StartCoroutine(Dust());
-
-        }
-        else if (GameManager.nextPhaseCalculation)
-        {
-            GameManager.nextPhaseCalculation = false;
-            if (ProjectileManager.enemyKilled && !PhaseManager.canBeBetrayed) //Check for death
-            {
-                monsterSound.clip = ProjectileManager.staticEnemy.enemyDialogue.injuredTalk;
-                NeutralDeathBubble(1);
-                PhaseManager.monsterTalking = true;
-            }
-
-            if (ProjectileManager.enemyKilled && PhaseManager.canBeBetrayed) //Check for death
-            {
-                monsterSound.clip = ProjectileManager.staticEnemy.enemyDialogue.disbeliefTalk;
-                BetrayalDeathBubble(1);
-                PhaseManager.monsterTalking = true;
-            }
-            if (GameManager.totalPhases == 0)
-            {
-                GameManager.currentPhase = startingPhase;
-            }
-            else if (GameManager.spareCounter > 12) //SparePhase
-            {
-                GameManager.currentPhase = 3;
-            }
-            else if (GameManager.health <= conditionalHealthPhase.x) //Health Condition
-            {
-                Debug.Log("Mercy Phase Activated");
-                GameManager.currentPhase = Mathf.RoundToInt(conditionalHealthPhase.y);
-            }
-            else if ((GameManager.currentPhase + 1) > normalLoopRange.y) //Loop maxed condition
-            {
-                GameManager.currentPhase = Mathf.RoundToInt(normalLoopRange.x); //Back to start of loop
-            }
-            else
-            {
-                GameManager.currentPhase += 1; //Next phase
-            }
+            PhaseCalculation();
 
             if (CheckForMoreMercy())
             {
@@ -266,6 +256,97 @@ public class TorielBehaviour : MonoBehaviour {
         }
     }
 
+    private void DeathThisTurnSentence()
+    {
+        GameManager.nextPhaseCalculation = false;
+        if (ProjectileManager.enemyKilled && !PhaseManager.canBeBetrayed && !PhaseManager.canBeGenocide) //Neutral
+        {
+            monsterSound.clip = ProjectileManager.staticEnemy.enemyDialogue.injuredTalk;
+            NeutralDeathBubble(1);
+            PhaseManager.monsterTalking = true;
+        }
+
+        if (ProjectileManager.enemyKilled && PhaseManager.canBeBetrayed && !PhaseManager.canBeGenocide) //Betrayal
+        {
+            monsterSound.clip = ProjectileManager.staticEnemy.enemyDialogue.disbeliefTalk;
+            BetrayalDeathBubble(1);
+            PhaseManager.monsterTalking = true;
+        }
+
+        if (ProjectileManager.enemyKilled && !PhaseManager.canBeBetrayed && PhaseManager.canBeGenocide) //Genocide
+        {
+            monsterSound.clip = ProjectileManager.staticEnemy.enemyDialogue.disbeliefTalk;
+            GenocideDeathBubble(1);
+            PhaseManager.monsterTalking = true;
+        }
+    }
+
+    private void SentenceCalculation()
+    {
+        if (PhaseManager.nextSentence) //Default next sentence
+        {
+            GameManager.spareCounter += 1;
+            PhaseManager.nextSentence = false;
+            MercySpeechBubble(1);
+
+        }
+        else if (PhaseManager.nextDeathSentence && !PhaseManager.canBeBetrayed && !PhaseManager.canBeGenocide) //Neutral death
+        {
+            deathSentence += 1;
+            NeutralDeathBubble(1);
+
+            PhaseManager.nextDeathSentence = false;
+            if (deathSentence == ProjectileManager.staticEnemy.enemyDialogue.defeatNeutral.Count - 1)
+                StartCoroutine(Dust());
+
+        }
+        else if (PhaseManager.nextGenocideSentence && !PhaseManager.canBeBetrayed && PhaseManager.canBeGenocide) //Genocide death
+        {
+            genocideSentence += 1;
+            GenocideDeathBubble(1);
+
+            PhaseManager.nextGenocideSentence = false;
+            if (genocideSentence == ProjectileManager.staticEnemy.enemyDialogue.defeatGenocide.Count - 1)
+                StartCoroutine(Dust());
+
+        }
+        else if (PhaseManager.nextBetrayalSentence && PhaseManager.canBeBetrayed && !PhaseManager.canBeGenocide) //Betrayal death
+        {
+            betrayal = true;
+            betrayalSentence += 1;
+            BetrayalDeathBubble(1);
+
+            PhaseManager.nextBetrayalSentence = false;
+            if (betrayalSentence == ProjectileManager.staticEnemy.enemyDialogue.defeatBetrayal.Count - 1)
+                StartCoroutine(Dust());
+        }
+    }
+
+    private void PhaseCalculation()
+    {
+        if (GameManager.totalPhases == 0)
+        {
+            GameManager.currentPhase = startingPhase;
+        }
+        else if (GameManager.spareCounter > 12) //SparePhase
+        {
+            GameManager.currentPhase = 3;
+        }
+        else if (GameManager.health <= conditionalHealthPhase.x) //Health Condition
+        {
+            Debug.Log("Mercy Phase Activated");
+            GameManager.currentPhase = Mathf.RoundToInt(conditionalHealthPhase.y);
+        }
+        else if ((GameManager.currentPhase + 1) > normalLoopRange.y) //Loop maxed condition
+        {
+            GameManager.currentPhase = Mathf.RoundToInt(normalLoopRange.x); //Back to start of loop
+        }
+        else
+        {
+            GameManager.currentPhase += 1; //Next phase
+        }
+    }
+
     void NeutralDeathBubble(int bubbleID)
     {
         StartCoroutine(TypeBubble(bubbleID, ProjectileManager.staticEnemy.enemyDialogue.defeatNeutral[deathSentence], speechBubbles[bubbleID].GetComponentInChildren<TextMeshPro>(), true));
@@ -274,6 +355,11 @@ public class TorielBehaviour : MonoBehaviour {
     void BetrayalDeathBubble(int bubbleID)
     {
         StartCoroutine(TypeBubble(bubbleID, ProjectileManager.staticEnemy.enemyDialogue.defeatBetrayal[betrayalSentence], speechBubbles[bubbleID].GetComponentInChildren<TextMeshPro>(), true));
+    }
+
+    void GenocideDeathBubble(int bubbleID)
+    {
+        StartCoroutine(TypeBubble(bubbleID, ProjectileManager.staticEnemy.enemyDialogue.defeatGenocide[genocideSentence], speechBubbles[bubbleID].GetComponentInChildren<TextMeshPro>(), true));
     }
 
     void MercySpeechBubble(int bubbleID)
@@ -286,7 +372,7 @@ public class TorielBehaviour : MonoBehaviour {
         PhaseManager.staticMonsterContinueButton.SetActive(false);
 
         if(isDead)
-            if(deathSentence == 0 && betrayalSentence == 0)
+            if(deathSentence == 0 && betrayalSentence == 0 && genocideSentence == 0)
             {
                 yield return new WaitForSeconds(3f);
             }
@@ -375,10 +461,14 @@ public class TorielBehaviour : MonoBehaviour {
         {
             TextJitter.CurveScale = 0f; //ha.. haa..
         }
+        else if (genocideSentence == 4)
+        {
+            TextJitter.CurveScale = 0f; //ha.. haa..
+        }
         else if(ProjectileManager.enemyKilled)
         {
             TextJitter.CurveScale = 0.15f;
-            if (betrayal)
+            if (betrayal || genocide)
             {
                 TextJitter.CurveScale = 0.2f;
             }
