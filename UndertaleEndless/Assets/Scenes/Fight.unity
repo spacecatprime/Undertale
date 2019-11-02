@@ -4895,8 +4895,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 546, y: 120}
+  m_AnchoredPosition: {x: 0.70001, y: -0.59999}
+  m_SizeDelta: {x: 546, y: 160}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1312025892
 MonoBehaviour:
@@ -4919,7 +4919,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: 539fb260467c7465bb13f4156fee2e9e, type: 3}
   m_Type: 0
-  m_PreserveAspect: 1
+  m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -5316,6 +5316,8 @@ MonoBehaviour:
   shake_intensity: 0.05
   shattered: 0
   snapped: {fileID: 21300000, guid: 57a92a0ce54704b458945c2a2c2a5c6b, type: 3}
+  shaking: 0
+  shouldShake: 0
   snap: {fileID: 8300000, guid: 7f81a96ed9f13934bb9a6b5e7558cd67, type: 3}
   shatter: {fileID: 8300000, guid: 4c8ac861a54ac41458cfcec045b394a2, type: 3}
   audioSource: {fileID: 437066374}
@@ -8336,8 +8338,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -334, y: 0}
-  m_SizeDelta: {x: 14, y: 120}
+  m_AnchoredPosition: {x: -339.2, y: 0.0000097752}
+  m_SizeDelta: {x: 15.65, y: 152.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1968093759
 MonoBehaviour:

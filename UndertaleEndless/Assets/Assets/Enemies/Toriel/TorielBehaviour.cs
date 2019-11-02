@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using System;
 
-//Template MonsterBehaviour
+//Toriel MonsterBehaviour
 public class TorielBehaviour : MonoBehaviour {
 
     public int startingPhase = 0;
@@ -99,6 +99,49 @@ public class TorielBehaviour : MonoBehaviour {
                 anim.SetTrigger("murdered_0");
             }
         }
+        else if (!ProjectileManager.enemyKilled) //default alive
+        {
+            if (latestSpare == 9 || latestSpare == 11 || latestSpare == 19) //stop looking at me that way
+            {
+                anim.SetTrigger("side_0");
+            }
+            else if (latestSpare == 12) //...
+            {
+                anim.SetTrigger("sidesad_0");
+            }
+            else if (latestSpare == 13 || latestSpare == 18) //you want to go home || why are you making this difficult
+            {
+                anim.SetTrigger("sad_0");
+            }
+            else if (latestSpare >= 15 && latestSpare <= 18) //i promise take care --> non-inclusive why are you making this difficult
+            {
+                anim.SetTrigger("sadhappy_0");
+            }
+            else if (latestSpare == 20) //...
+            {
+                anim.SetTrigger("sidesad2_0");
+            }
+            else if (latestSpare == 21) //haha
+            {
+                anim.SetTrigger("sidesadhappy_0");
+            }
+            else if (latestSpare == 22) //pathetic... even a single chile
+            {
+                anim.SetTrigger("sadhappy_0");
+            }
+            else if (latestSpare == 23) //...
+            {
+                anim.SetTrigger("sidesad_0");
+            }
+            else if (latestSpare >= 24) //i understand -> incliusive end (make this unskippable end)
+            {
+                anim.SetTrigger("neutral_0");
+            }
+            else
+            {
+                anim.SetTrigger("0");
+            }
+        }
         else if(ProjectileManager.enemyKilled && PhaseManager.canBeBetrayed && !PhaseManager.canBeGenocide) //BETRAYAL DEAD SETTINGS 
         {
             if(betrayalSentence == 4) //ha...ha...
@@ -149,53 +192,6 @@ public class TorielBehaviour : MonoBehaviour {
             }
 
         }
-        else if(!ProjectileManager.enemyKilled) //default alive
-        {
-            if (latestSpare == 9 || latestSpare == 11 || latestSpare == 19) //stop looking at me that way
-            {
-                anim.SetTrigger("side_0");
-            }
-            if (latestSpare == 8)
-            {
-                anim.SetTrigger("0");
-            }
-            else if (latestSpare == 12) //...
-            {
-                anim.SetTrigger("sidesad_0");
-            }
-            else if (latestSpare == 13 || latestSpare == 18) //you want to go home || why are you making this difficult
-            {
-                anim.SetTrigger("sad_0");
-            }
-            else if (latestSpare >= 15 && latestSpare <= 18) //i promise take care --> non-inclusive why are you making this difficult
-            {
-                anim.SetTrigger("sadhappy_0");
-            }
-            else if (latestSpare == 20) //...
-            {
-                anim.SetTrigger("sidesad2_0"); 
-            }
-            else if (latestSpare == 21) //haha
-            {
-                anim.SetTrigger("sidesadhappy_0"); 
-            }
-            else if (latestSpare == 22) //pathetic... even a single chile
-            {
-                anim.SetTrigger("sadhappy_0"); 
-            }
-            else if (latestSpare == 23) //...
-            {
-                anim.SetTrigger("sidesad_0");
-            }
-            else if (latestSpare >= 24) //i understand -> incliusive end (make this unskippable end)
-            {
-                anim.SetTrigger("neutral_0"); 
-            }
-            else
-            {
-                anim.SetTrigger("0");
-            }
-        }
         else
         {
             anim.SetTrigger("0");
@@ -237,10 +233,6 @@ public class TorielBehaviour : MonoBehaviour {
 
         if (GameManager.nextPhaseCalculation)
         {
-            DeathThisTurnSentence();
-
-            PhaseCalculation();
-
             if (CheckForMoreMercy())
             {
                 int defaultBubble = 2;
@@ -252,6 +244,10 @@ public class TorielBehaviour : MonoBehaviour {
                 MercySpeechBubble(defaultBubble);
                 PhaseManager.monsterTalking = true;
             }
+
+            DeathThisTurnSentence();
+
+            PhaseCalculation();
 
         }
     }
@@ -328,7 +324,11 @@ public class TorielBehaviour : MonoBehaviour {
         {
             GameManager.currentPhase = startingPhase;
         }
-        else if (GameManager.spareCounter > 12) //SparePhase
+        else if (GameManager.spareCounter == 11) //Falter Phase
+        {
+            GameManager.currentPhase = 2;
+        }
+        else if (GameManager.spareCounter > 12) //Dud Phase
         {
             GameManager.currentPhase = 3;
         }

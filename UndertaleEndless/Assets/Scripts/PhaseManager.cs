@@ -228,7 +228,7 @@ public class PhaseManager : MonoBehaviour {
         hitButton.SetActive(true);
         dumbTarget.SetActive(true);
         strikeBar.SetActive(true);
-        strikeBar.GetComponent<RectTransform>().transform.position = new Vector2(-200, 666.5f);
+        strikeBar.GetComponent<RectTransform>().transform.position = new Vector2(-20, 666.5f);
         strikeMove = true;
     }
 

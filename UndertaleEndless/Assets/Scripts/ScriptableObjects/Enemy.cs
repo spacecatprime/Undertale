@@ -10,7 +10,7 @@ using UnityScript;
 public class Enemy : ScriptableObject {
 
     [Box(4, 4, 4, 4, order = 1)]
-    [Group("Enemy", 11)]
+    [Group("Enemy", 10)]
     [Heading(title = "Enemy Settings", order = 1)]
     [StackableField]
     public string enemyName;

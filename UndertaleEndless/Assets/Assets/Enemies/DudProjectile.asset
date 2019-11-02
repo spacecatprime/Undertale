@@ -9,56 +9,55 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d9079cb58a4ae48d4abd03fd6a2d1bbd, type: 3}
-  m_Name: MercyFire
+  m_Name: DudProjectile
   m_EditorClassIdentifier: 
-  image: {fileID: 21300000, guid: 4b9b6cdd84bcc4c09b781e2db2402621, type: 3}
+  image: {fileID: 21300000, guid: 397b0e1c15981a1498fcd904cf20522e, type: 3}
   relationships: 0
   projectileType: 0
   child: {fileID: 0}
   ProjectileMovementType: 0
   movementDirection: 0
   speed: 0
-  AffectedByGravity: 1
+  AffectedByGravity: 0
   WaveMagnitude: 0
   WaveFrequency: 0
   RandomWaveTime: 0
   spawnLocation: 5
-  locationSpecific: 1
+  locationSpecific: 2
   specificSpawnX: 10
-  specificSpawnY: 0.8
+  specificSpawnY: 10
   SpawnFrequency:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.5877266
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.33333334
+      outWeight: 0
     - serializedVersion: 3
       time: 1
-      value: 0.5877266
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 34
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 0
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  RandomSpawnFrequency: 1
-  timeSpawnRange: {x: 0.3055449, y: 0.7351904}
-  spawnDeadTime: 0
+  RandomSpawnFrequency: 0
+  timeSpawnRange: {x: 2.5, y: 7.5}
+  spawnDeadTime: 9999
   FlipX: 0
   FlipY: 0
   healAmount: 0
   destroyOnTouch: 0
-  maskInteraction: 1
-  deathTimer: 60
+  maskInteraction: 0
+  deathTimer: 0
   destroyOnPhaseEnd: 1
   waitTimer: 0
-  avoidPlayerRange: 0.3

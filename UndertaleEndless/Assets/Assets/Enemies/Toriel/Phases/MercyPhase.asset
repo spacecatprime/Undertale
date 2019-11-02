@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16c1044ccdcdc434fb3feb48747d1dd8, type: 3}
   m_Name: MercyPhase
   m_EditorClassIdentifier: 
-  AttackLength: 3
+  AttackLength: 6
   PhaseEndsOnDamage: 0
   ProjectileCombo:
   - {fileID: 11400000, guid: 666085d023a2549f8bc918d85a37c945, type: 2}

@@ -154,7 +154,7 @@ public class Projectile : ScriptableObject {
     public float spawnDeadTime;
 
     [Box(4, 4, 4, 4, order = 1)]
-    [Group("Misc", 10)]
+    [Group("Misc", 11)]
     [Heading(title = "Miscellaneous Settings", order = 1)]
     [StackableField]
     public bool FlipX;
@@ -180,6 +180,9 @@ public class Projectile : ScriptableObject {
     [InGroup("Misc")]
     [StackableField]
     public float waitTimer = 0f;
+    [InGroup("Misc")]
+    [StackableField]
+    public float avoidPlayerRange = 0f;
 
     public bool WavesVisible()
     {

@@ -15,6 +15,8 @@ public class MonsterHeartbreak : MonoBehaviour {
     public float shake_intensity;
     public bool shattered;
     public Sprite snapped;
+    public bool shaking;
+    public bool shouldShake;
 
 
     [Header("Audio")]
@@ -49,15 +51,18 @@ public class MonsterHeartbreak : MonoBehaviour {
         if (shake_intensity > 0 && isEnemyKilled)
         {
             this.gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, this.gameObject.GetComponent<SpriteRenderer>().color.a + 0.25f * Time.deltaTime);
-            if (Time.frameCount % 2 == 0) //Shake every 2 frames
+            if(!shaking)
             {
-                transform.position = originPosition + Random.insideUnitSphere * shake_intensity;
+                shouldShake = true;
+                StartCoroutine(Shake());
             }
         }
 
 
         if(this.gameObject.GetComponent<SpriteRenderer>().color.a >= 1 && !shattered)
         {
+            shouldShake = false;
+            transform.position = originPosition;
             shattered = true;
             StartCoroutine(DeathSounds());
             shake_intensity = 0;
@@ -66,6 +71,16 @@ public class MonsterHeartbreak : MonoBehaviour {
         foreach (GameObject debris in debrisList)
         {
             debris.SetActive(true);
+        }
+    }
+
+    public IEnumerator Shake()
+    {
+        shaking = true;
+        while (shouldShake)
+        {
+            transform.position = originPosition + Random.insideUnitSphere * shake_intensity;
+            yield return new WaitForSeconds(0.05f);
         }
     }
 
